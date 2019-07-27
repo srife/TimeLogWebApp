@@ -21,16 +21,18 @@ namespace TimeLog.Models
                     new ActivityType { Name = "Administrative", IsDefault = false },
                     new ActivityType { Name = "Coding", IsDefault = false },
                     new ActivityType { Name = "Conference Call", IsDefault = false },
+                    new ActivityType { Name = "Email", IsDefault = false },
                     new ActivityType { Name = "Errand", IsDefault = false },
                     new ActivityType { Name = "Misc", IsDefault = false },
                     new ActivityType { Name = "Phone Call", IsDefault = false },
+                    new ActivityType { Name = "Research", IsDefault = false },
                     new ActivityType { Name = "Training", IsDefault = true });
 
                 context.Clients.AddRange(
-                    new Client { Name = "Bruce", IsDefault = false },
-                    new Client { Name = "Srife LLC", IsDefault = true },
+                    new Client { Name = "Client B", IsDefault = false },
+                    new Client { Name = "Client W", IsDefault = false },
                     new Client { Name = "Personal", IsDefault = false },
-                    new Client { Name = "webFCE", IsDefault = false });
+                    new Client { Name = "Srife LLC", IsDefault = true });
 
                 context.SaveChanges();
             }
