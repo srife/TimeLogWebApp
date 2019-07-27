@@ -1,0 +1,76 @@
+﻿@page
+@model TimeLog.Pages.Activities.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityEntity[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityEntity[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityEntity[0].Tasks)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityEntity[0].ActivityType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityEntity[0].Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityEntity[0].Billable)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ActivityEntity)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime.TimeOfDay)
+                </td>
+                <td>
+                    @if (item.EndTime.HasValue)
+                    {
+                        //@Html.Display(Convert.ToDateTime(item.EndTime).TimeOfDay.ToString())
+                        @Convert.ToDateTime(item.EndTime).TimeOfDay
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tasks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Billable)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,60 @@
+﻿@page
+@model TimeLog.Pages.Activities.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ActivityEntity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ActivityEntity.Id" />
+            <div class="form-group">
+                <label asp-for="ActivityEntity.StartTime" class="control-label"></label>
+                <input asp-for="ActivityEntity.StartTime" class="form-control" />
+                <span asp-validation-for="ActivityEntity.StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityEntity.EndTime" class="control-label"></label>
+                <input asp-for="ActivityEntity.EndTime" class="form-control" />
+                <span asp-validation-for="ActivityEntity.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityEntity.ActivityTypeId" class="control-label"></label>
+                <select asp-for="ActivityEntity.ActivityTypeId" class="form-control" asp-items="ViewBag.ActivityTypeId"></select>
+                <span asp-validation-for="ActivityEntity.ActivityTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityEntity.Tasks" class="control-label"></label>
+                <textarea asp-for="ActivityEntity.Tasks" class="form-control"></textarea>
+                <span asp-validation-for="ActivityEntity.Tasks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityEntity.ClientId" class="control-label"></label>
+                <select asp-for="ActivityEntity.ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
+                <span asp-validation-for="ActivityEntity.ClientId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ActivityEntity.Billable" /> @Html.DisplayNameFor(model => model.ActivityEntity.Billable)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
