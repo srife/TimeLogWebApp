@@ -12,7 +12,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   wwwrootDir: 'TimeLog/wwwroot'
-
+  dotnetSdkVersion: '2.1.505'
 
 steps:
 - task: DotNetCoreInstaller@0
