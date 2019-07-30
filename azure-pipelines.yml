@@ -15,17 +15,26 @@ variables:
 
 
 steps:
-#- task: DotNetCoreCLI@2
-#  displayName: 'Restore project dependencies'
-#  inputs:
-#    command: 'restore'
-#    projects: '**/*.csproj'
+- task: DotNetCoreInstaller@0
+  displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
+  inputs:
+    version: '$(dotnetSdkVersion)'
+
+- script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
+  displayName: 'Write build info'
+  workingDirectory: $(wwwrootDir)
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore project dependencies'
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
 
   
-  - template: templates/build.yml
+- template: templates/build.yml
   parameters:
     buildConfiguration: 'Debug'
-
+        
 - template: templates/build.yml
   parameters:
     buildConfiguration: 'Release'
