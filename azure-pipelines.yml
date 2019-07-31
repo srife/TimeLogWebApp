@@ -37,6 +37,11 @@ steps:
   parameters:
     buildConfiguration: 'Release'
 
+- task: WhiteSource Bolt@19
+  inputs:
+    displayName: 'Run WhiteSource Bolt'
+    cwd: 'TimeLog/wwwroot'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
