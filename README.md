@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/srifellc/TimeLog/_apis/build/status/srife.TimeLogWebApp?branchName=master)](https://dev.azure.com/srifellc/TimeLog/_build/latest?definitionId=2&branchName=master)
+
 # TimeLog ASP.NET Core Web Application
 
 This sample demonstrates a .NET Core 2.2 Web app that allows an individual to make keep track of their
