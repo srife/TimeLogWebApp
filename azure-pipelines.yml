@@ -11,16 +11,18 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  wwwrootDir: 'TimeLog/wwwroot'
+  dotnetSdkVersion: '2.2.105'
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core SDK 2.2.105'
+  displayName: 'Use .NET Core SDK $(dotnetSdkVersion)
   inputs:
-    version: 2.2.105
+    version: '$(dotnetSdkVersion)
 
 - script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
   displayName: 'Write build info'
-  workingDirectory: TimeLog/wwwroot
+  workingDirectory: $(wwwrootDir)
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
