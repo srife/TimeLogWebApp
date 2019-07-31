@@ -7,16 +7,20 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-18.10'
+  vmImage: 'ubuntu-16.04'
 
 variables:
   buildConfiguration: 'Release'
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core SDK 2.2.0'
+  displayName: 'Use .NET Core SDK 2.1.505'
   inputs:
-    version: 2.2.0
+    version: 2.1.505
+
+- script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
+  displayName: 'Write build info'
+  workingDirectory: Tailspin.SpaceGame.Web/wwwroot
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
