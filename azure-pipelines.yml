@@ -37,6 +37,13 @@ steps:
   parameters:
     buildConfiguration: 'Release'
 
+-task: ResharperCli@1
+ inputs:
+    SolutionOrProjectPath: '$(Build.Target)'
+    AdditionalArguments: '/disable-settings-layers:SolutionPersonal --properties:Configuration=$(Build.Configuration)'
+ env:
+    MSBuildSDKsPath: '$(Agent.ToolsDirectory)/dncs/$(DotNet.Sdk.Version)/x64/sdk/$(DotNet.Sdk.Version)/Sdks'
+
 - task: WhiteSource Bolt@19
   inputs:
     cwd: 'TimeLog'
