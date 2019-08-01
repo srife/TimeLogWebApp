@@ -23,10 +23,10 @@ steps:
   displayName: 'Write build info'
   workingDirectory: $(wwwrootDir)
 
-- task: ResharperCLI@1
-  inputs:
-    SolutionOrProjectPath: 'TimeLog.sln'
-    FailBuildLevelSelector: 'Error'
+#- task: ResharperCLI@1
+#  inputs:
+#    SolutionOrProjectPath: 'TimeLog.sln'
+#    FailBuildLevelSelector: 'Error'
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
