@@ -5,7 +5,7 @@ steps:
 
 - task: ResharperCli@1
   inputs:
-    SolutionOrProjectPath: '*.sln'
+    SolutionOrProjectPath: '**/*.csproj'
     FailBuildLevelSelector: 'Warning'
     
 - task: DotNetCoreCLI@2
