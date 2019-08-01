@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,7 +10,7 @@ namespace TimeLog.Models
 
         [NotMapped]
         [DataType(DataType.Date)]
-        public DateTime? Date => this.StartTime.Date;
+        public DateTime? Date => StartTime.Date;
 
         [Required]
         [Display(Name = "Start")]

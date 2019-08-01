@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using TimeLog.Models;
 
 namespace TimeLog.Pages.Activities
 {
     public class DetailsModel : PageModel
     {
-        private readonly TimeLog.Models.TimeLogContext _context;
+        private readonly TimeLogContext _context;
 
-        public DetailsModel(TimeLog.Models.TimeLogContext context)
+        public DetailsModel(TimeLogContext context)
         {
             _context = context;
         }

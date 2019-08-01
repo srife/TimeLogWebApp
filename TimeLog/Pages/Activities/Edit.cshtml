@@ -15,27 +15,27 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ActivityEntity.Id" />
             <div class="form-group">
-                <label asp-for="ActivityEntity.StartTime" class="control-label"></label>
+                <label asp-for="ActivityEntity.StartTime"></label>
                 <input asp-for="ActivityEntity.StartTime" class="form-control" />
                 <span asp-validation-for="ActivityEntity.StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ActivityEntity.EndTime" class="control-label"></label>
+                <label asp-for="ActivityEntity.EndTime"></label>
                 <input asp-for="ActivityEntity.EndTime" class="form-control" />
                 <span asp-validation-for="ActivityEntity.EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ActivityEntity.ActivityTypeId" class="control-label"></label>
+                <label asp-for="ActivityEntity.ActivityTypeId"></label>
                 <select asp-for="ActivityEntity.ActivityTypeId" class="form-control" asp-items="ViewBag.ActivityTypeId"></select>
                 <span asp-validation-for="ActivityEntity.ActivityTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ActivityEntity.Tasks" class="control-label"></label>
+                <label asp-for="ActivityEntity.Tasks"></label>
                 <textarea asp-for="ActivityEntity.Tasks" class="form-control"></textarea>
                 <span asp-validation-for="ActivityEntity.Tasks" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ActivityEntity.ClientId" class="control-label"></label>
+                <label asp-for="ActivityEntity.ClientId"></label>
                 <select asp-for="ActivityEntity.ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
                 <span asp-validation-for="ActivityEntity.ClientId" class="text-danger"></span>
             </div>

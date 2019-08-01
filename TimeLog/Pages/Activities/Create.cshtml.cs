@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using TimeLog.Models;
 
 namespace TimeLog.Pages.Activities
 {
     public class CreateModel : PageModel
     {
-        private readonly TimeLog.Models.TimeLogContext _context;
+        private readonly TimeLogContext _context;
 
-        public CreateModel(TimeLog.Models.TimeLogContext context)
+        public CreateModel(TimeLogContext context)
         {
             _context = context;
         }

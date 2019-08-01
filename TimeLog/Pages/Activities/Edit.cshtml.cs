@@ -10,9 +10,9 @@ namespace TimeLog.Pages.Activities
 {
     public class EditModel : PageModel
     {
-        private readonly TimeLog.Models.TimeLogContext _context;
+        private readonly TimeLogContext _context;
 
-        public EditModel(TimeLog.Models.TimeLogContext context)
+        public EditModel(TimeLogContext context)
         {
             _context = context;
         }
