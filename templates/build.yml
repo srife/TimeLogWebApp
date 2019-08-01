@@ -4,11 +4,10 @@ parameters:
 steps:
 
 - task: ResharperCli@1
- inputs:
-    SolutionOrProjectPath: '**/*.csproj'
-    AdditionalArguments: '/disable-settings-layers:SolutionPersonal --properties:Configuration=${{parameters.buildConfiguration }}'
- env:
-    MSBuildSDKsPath: '$(Agent.ToolsDirectory)/dncs/$(DotNet.Sdk.Version)/x64/sdk/$(DotNet.Sdk.Version)/Sdks'
+  inputs:
+    SolutionOrProjectPath: '*.sln'
+    FailBuildLevelSelector: 'Warning'
+    
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - ${{parameters.buildConfiguration }}'
   inputs:
