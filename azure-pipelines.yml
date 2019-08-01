@@ -37,7 +37,7 @@ steps:
   parameters:
     buildConfiguration: 'Release'
 
--task: ResharperCli@1
+- task: ResharperCli@1
  inputs:
     SolutionOrProjectPath: '$(Build.Target)'
     AdditionalArguments: '/disable-settings-layers:SolutionPersonal --properties:Configuration=$(Build.Configuration)'
