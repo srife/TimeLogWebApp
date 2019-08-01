@@ -2,12 +2,6 @@ parameters:
   buildConfiguration: 'Release'
 
 steps:
-
-- task: ResharperCli@1
-  inputs:
-    SolutionOrProjectPath: 'TimeLog.sln'
-    FailBuildLevelSelector: 'Warning'
-    
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - ${{parameters.buildConfiguration }}'
   inputs:
