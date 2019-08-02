@@ -41,25 +41,7 @@ namespace TimeLog.Models
         public Client Client { get; set; }
     }
 
-    public class ActivityType
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public bool IsDefault { get; set; }
-    }
-
-    public class Client
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public bool IsDefault { get; set; }
-    }
-
-    public class Location
+    public class Project
     {
         public int Id { get; set; }
         public string Name { get; set; }

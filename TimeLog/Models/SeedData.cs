@@ -36,6 +36,12 @@ namespace TimeLog.Models
 
                 context.Locations.AddRange(
                     new Location { Name = "Home", IsDefault = true });
+
+                context.Projects.AddRange(
+                    new Project { Name = "TimeLog", IsDefault = false },
+                    new Project { Name = "Crew Tracker", IsDefault = false },
+                    new Project { Name = "webFCE", IsDefault = false });
+
                 context.SaveChanges();
             }
         }

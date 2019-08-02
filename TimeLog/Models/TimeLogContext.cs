@@ -13,5 +13,6 @@ namespace TimeLog.Models
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Project> Projects { get; set; }
     }
 }
