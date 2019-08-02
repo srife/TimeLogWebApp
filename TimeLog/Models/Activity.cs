@@ -15,14 +15,16 @@ namespace TimeLog.Models
         [Required]
         [Display(Name = "Start")]
         [DataType(DataType.DateTime)]
+        //[DisplayFormat(DataFormatString = "{0:H:mm}")]
         [System.ComponentModel.DefaultValue(typeof(DateTime), "")]
         public DateTime StartTime { get; set; }
 
         [Display(Name = "End")]
+        //[DisplayFormat(DataFormatString = "{0:H:mm}")]
         [DataType(DataType.DateTime)]
         public DateTime? EndTime { get; set; }
 
-        [Display(Name = "Activity Type")]
+        [Display(Name = "Type")]
         public int ActivityTypeId { get; set; }
 
         [Display(Name = "Activity Details")]

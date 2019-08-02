@@ -31,6 +31,7 @@
                 <label asp-for="ActivityEntity.Tasks"></label>
                 <textarea asp-for="ActivityEntity.Tasks" class="form-control"></textarea>
                 <span asp-validation-for="ActivityEntity.Tasks" class="text-danger"></span>
+                <script>CKEDITOR.replace("ActivityEntity.Tasks");</script>
             </div>
             <div class="form-group">
                 <label asp-for="ActivityEntity.ClientId"></label>

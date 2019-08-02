@@ -76,6 +76,21 @@ namespace TimeLog.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("TimeLog.Models.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsDefault");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+                });
+
             modelBuilder.Entity("TimeLog.Models.ActivityEntity", b =>
                 {
                     b.HasOne("TimeLog.Models.ActivityType", "ActivityType")

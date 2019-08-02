@@ -15,17 +15,13 @@
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityEntity[0].StartTime)
+                Time
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityEntity[0].EndTime)
+                @Html.DisplayNameFor(model => model.ActivityEntity[0].ActivityTypeId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ActivityEntity[0].Tasks)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.ActivityEntity[0].ActivityType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ActivityEntity[0].Client)
@@ -44,20 +40,23 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartTime.TimeOfDay)
-                </td>
-                <td>
-                    @if (item.EndTime.HasValue)
-                    {
-                        //@Html.Display(Convert.ToDateTime(item.EndTime).TimeOfDay.ToString())
-                        @Convert.ToDateTime(item.EndTime).TimeOfDay
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tasks)
+                    <span style="white-space: nowrap">
+                        @*@Html.DisplayFor(modelItem => item.StartTime.TimeOfDay)*@
+                        @item.StartTime.ToString("H:mm") -
+                        @if (item.EndTime.HasValue)
+                        {
+                            //@Html.Display(Convert.ToDateTime(item.EndTime).TimeOfDay.ToString())
+                            //@Convert.ToDateTime(item.EndTime).TimeOfDay.ToString()
+                            @item.EndTime.Value.ToString("H:mm")
+                        }
+                    </span>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ActivityType.Name)
+                </td>
+                <td>
+                    @Html.Raw(item.Tasks)
+                    @*@Html.DisplayFor(modelItem => item.Tasks)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Client.Name)
