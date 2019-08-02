@@ -25,10 +25,22 @@
             @Html.DisplayFor(model => model.ActivityEntity.EndTime)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActivityEntity.ActivityType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ActivityEntity.ActivityType.Name)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ActivityEntity.Tasks)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ActivityEntity.Tasks)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActivityEntity.Client)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ActivityEntity.Client.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ActivityEntity.Billable)
@@ -36,20 +48,8 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ActivityEntity.Billable)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ActivityEntity.ActivityType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ActivityEntity.ActivityType.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ActivityEntity.Client)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ActivityEntity.Client.Id)
-        </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="ActivityEntity.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

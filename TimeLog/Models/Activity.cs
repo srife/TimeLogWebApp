@@ -25,7 +25,9 @@ namespace TimeLog.Models
         [Display(Name = "Activity Type")]
         public int ActivityTypeId { get; set; }
 
-        [DataType(DataType.MultilineText)] public string Tasks { get; set; }
+        [Display(Name = "Activity Details")]
+        [DataType(DataType.MultilineText)]
+        public string Tasks { get; set; }
 
         [Display(Name = "Client")]
         public int ClientId { get; set; }
@@ -52,6 +54,13 @@ namespace TimeLog.Models
 
         public string Name { get; set; }
 
+        public bool IsDefault { get; set; }
+    }
+
+    public class Location
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
         public bool IsDefault { get; set; }
     }
 }

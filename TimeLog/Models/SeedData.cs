@@ -34,6 +34,8 @@ namespace TimeLog.Models
                     new Client { Name = "Personal", IsDefault = false },
                     new Client { Name = "Srife LLC", IsDefault = true });
 
+                context.Locations.AddRange(
+                    new Location { Name = "Home", IsDefault = true });
                 context.SaveChanges();
             }
         }

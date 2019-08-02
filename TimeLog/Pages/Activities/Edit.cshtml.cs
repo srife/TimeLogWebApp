@@ -35,8 +35,8 @@ namespace TimeLog.Pages.Activities
             {
                 return NotFound();
             }
-            ViewData["ActivityTypeId"] = new SelectList(_context.ActivityTypes, "Id", "Id");
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
+            ViewData["ActivityTypeId"] = new SelectList(_context.ActivityTypes.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
+            ViewData["ClientId"] = new SelectList(_context.Clients.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
             return Page();
         }
 
