@@ -24,6 +24,10 @@ namespace TimeLog.Models
         [DataType(DataType.DateTime)]
         public DateTime? EndTime { get; set; }
 
+        public int? ProjectId { get; set; }
+
+        public int? LocationId { get; set; }
+
         [Display(Name = "Type")]
         public int ActivityTypeId { get; set; }
 
@@ -39,6 +43,9 @@ namespace TimeLog.Models
         public ActivityType ActivityType { get; set; }
 
         public Client Client { get; set; }
+
+        public Location Location { get; set; }
+        public Project Project { get; set; }
     }
 
     public class Project
@@ -46,8 +53,8 @@ namespace TimeLog.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDefault { get; set; }
-        public int DefaultClientId { get; set; }
-        public int DefaultLocationId { get; set; }
-        public int DefaultActivityTypeId { get; set; }
+        public int? DefaultClientId { get; set; }
+        public int? DefaultLocationId { get; set; }
+        public int? DefaultActivityTypeId { get; set; }
     }
 }

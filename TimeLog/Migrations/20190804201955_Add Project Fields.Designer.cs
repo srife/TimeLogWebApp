@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeLog.Models;
 
 namespace TimeLog.Migrations
 {
     [DbContext(typeof(TimeLogContext))]
-    partial class TimeLogContextModelSnapshot : ModelSnapshot
+    [Migration("20190804201955_Add Project Fields")]
+    partial class AddProjectFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,10 +35,6 @@ namespace TimeLog.Migrations
 
                     b.Property<DateTime?>("EndTime");
 
-                    b.Property<int?>("LocationId");
-
-                    b.Property<int?>("ProjectId");
-
                     b.Property<DateTime>("StartTime");
 
                     b.Property<string>("Tasks");
@@ -46,10 +44,6 @@ namespace TimeLog.Migrations
                     b.HasIndex("ActivityTypeId");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("ActivityEntity");
                 });
@@ -131,14 +125,6 @@ namespace TimeLog.Migrations
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TimeLog.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
-                    b.HasOne("TimeLog.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId");
                 });
 #pragma warning restore 612, 618
         }
