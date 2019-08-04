@@ -30,19 +30,20 @@ namespace TimeLog.Models
 
                 context.Clients.AddRange(
                     new Client { Name = "Client B", IsDefault = false },
+                    new Client { Name = "Client S", IsDefault = true },
                     new Client { Name = "Client W", IsDefault = false },
-                    new Client { Name = "Personal", IsDefault = false },
-                    new Client { Name = "Srife LLC", IsDefault = true });
+                    new Client { Name = "Personal", IsDefault = false });
 
                 context.Locations.AddRange(
-                    new Location { Name = "Home", IsDefault = true });
-
-                context.Projects.AddRange(
-                    new Project { Name = "TimeLog", IsDefault = false },
-                    new Project { Name = "Crew Tracker", IsDefault = false },
-                    new Project { Name = "webFCE", IsDefault = false });
+                    new Location { Name = "Home", IsDefault = true },
+                    new Location() { Name = "Office", IsDefault = false });
 
                 context.SaveChanges();
+
+                context.Projects.AddRange(
+                    new Project { Name = "Project A", IsDefault = false },
+                    new Project { Name = "Project B", IsDefault = false },
+                    new Project { Name = "Project C", IsDefault = false });
             }
         }
     }

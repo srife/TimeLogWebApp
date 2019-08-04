@@ -46,5 +46,8 @@ namespace TimeLog.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDefault { get; set; }
+        public int DefaultClientId { get; set; }
+        public int DefaultLocationId { get; set; }
+        public int DefaultActivityTypeId { get; set; }
     }
 }
