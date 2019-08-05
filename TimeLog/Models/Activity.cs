@@ -36,7 +36,7 @@ namespace TimeLog.Models
         public string Tasks { get; set; }
 
         [Display(Name = "Client")]
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
 
         public bool Billable { get; set; }
 
