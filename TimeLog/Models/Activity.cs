@@ -40,6 +40,10 @@ namespace TimeLog.Models
 
         public bool Billable { get; set; }
 
+        [Display(Name = "Invoice Statement")]
+        [DataType(DataType.MultilineText)]
+        public string InvoiceStatement { get; set; }
+
         public ActivityType ActivityType { get; set; }
 
         public Client Client { get; set; }
