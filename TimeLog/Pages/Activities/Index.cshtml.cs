@@ -24,7 +24,10 @@ namespace TimeLog.Pages.Activities
         {
             ActivityEntity = await _context.ActivityEntity
                 .Include(a => a.ActivityType)
-                .Include(a => a.Client).ToListAsync();
+                .Include(a => a.Client)
+                .Include(a => a.Project)
+                .OrderByDescending(x => x.StartTime)
+                .ToListAsync();
         }
 
         public ActionResult OnPostExport()
