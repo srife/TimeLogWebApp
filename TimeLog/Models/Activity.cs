@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -50,6 +51,9 @@ namespace TimeLog.Models
 
         public Location Location { get; set; }
         public Project Project { get; set; }
+
+        public virtual ActivityEntity Parent { get; set; }
+        public virtual ICollection<ActivityEntity> Children { get; set; }
     }
 
     public class Project
