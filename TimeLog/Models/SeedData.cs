@@ -85,11 +85,13 @@ namespace TimeLog.Models
                 else
                 {
                     List<ActivityType> activityTypes = new List<ActivityType>();
+                    var atEmpty = new ActivityType { Name = "", IsDefault = true };
                     var atAdmin = new ActivityType { Name = "Administrative", IsDefault = false };
                     var atCoding = new ActivityType { Name = "Coding", IsDefault = false };
                     var atConfer = new ActivityType { Name = "Conference Call", IsDefault = false };
                     var atEmail = new ActivityType { Name = "Email", IsDefault = false };
                     var atErrand = new ActivityType { Name = "Errand", IsDefault = false };
+                    activityTypes.Add(atEmpty);
                     activityTypes.Add(atAdmin);
                     activityTypes.Add(atCoding);
                     activityTypes.Add(atConfer);
@@ -98,15 +100,17 @@ namespace TimeLog.Models
                     activityTypes.Add(new ActivityType { Name = "Misc", IsDefault = false });
                     activityTypes.Add(new ActivityType { Name = "Phone Call", IsDefault = false });
                     activityTypes.Add(new ActivityType { Name = "Research", IsDefault = false });
-                    activityTypes.Add(new ActivityType { Name = "Training", IsDefault = true });
+                    activityTypes.Add(new ActivityType { Name = "Training", IsDefault = false });
 
                     context.ActivityTypes.AddRange(activityTypes);
 
                     List<Client> clients = new List<Client>();
+                    var clientEmpty = new Client { Name = "", IsDefault = true };
                     var clientA = new Client { Name = "Client B", IsDefault = false };
-                    var clientB = new Client { Name = "Client S", IsDefault = true };
+                    var clientB = new Client { Name = "Client S", IsDefault = false };
                     var clientW = new Client { Name = "Client W", IsDefault = false };
                     var clientP = new Client { Name = "Personal", IsDefault = false };
+                    clients.Add(clientEmpty);
                     clients.Add(clientA);
                     clients.Add(clientB);
                     clients.Add(clientW);
@@ -114,8 +118,10 @@ namespace TimeLog.Models
                     context.Clients.AddRange(clients);
 
                     List<Location> locations = new List<Location>();
-                    var locHome = new Location { Name = "Home", IsDefault = true };
+                    var locEmpty = new Location { Name = "", IsDefault = true };
+                    var locHome = new Location { Name = "Home", IsDefault = false };
                     var locOffice = new Location() { Name = "Office", IsDefault = false };
+                    locations.Add(locEmpty);
                     locations.Add(locHome);
                     locations.Add(locOffice);
                     context.Locations.AddRange(locations);
@@ -123,15 +129,17 @@ namespace TimeLog.Models
                     context.SaveChanges();
 
                     List<Project> projects = new List<Project>();
+                    var projectEmpty = new Project { Name = "", IsDefault = true };
                     var projectA = new Project()
                     {
                         Name = "Project A",
-                        IsDefault = true,
+                        IsDefault = false,
                         DefaultClientId = clientB.Id,
                         DefaultLocationId = locHome.Id
                     };
                     var projectB = new Project { Name = "Project B", IsDefault = false };
                     var projectC = new Project { Name = "Project C", IsDefault = false };
+                    projects.Add(projectEmpty);
                     projects.Add(projectA);
                     projects.Add(projectB);
                     projects.Add(projectC);

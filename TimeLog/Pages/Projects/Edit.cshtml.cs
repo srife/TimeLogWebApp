@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
-namespace TimeLog.Pages.Activities
+namespace TimeLog.Pages.Projects
 {
     public class EditModel : PageModel
     {
@@ -18,7 +18,7 @@ namespace TimeLog.Pages.Activities
         }
 
         [BindProperty]
-        public ActivityEntity ActivityEntity { get; set; }
+        public Project Project { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,29 +27,18 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ActivityEntity = await _context.ActivityEntity
-                .Include(a => a.ActivityType)
-                .Include(a => a.Client)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Project = await _context.Projects
+                .Include(p => p.DefaultActivityType)
+                .Include(p => p.DefaultClient)
+                .Include(p => p.DefaultLocation).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ActivityEntity == null)
+            if (Project == null)
             {
                 return NotFound();
             }
-
-            ViewData["ActivityTypeId"] =
-                new SelectList(_context.ActivityTypes.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
-                    "Name");
-            ViewData["ClientId"] =
-                new SelectList(_context.Clients.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
-
-            ViewData["ProjectId"] =
-                new SelectList(_context.Projects.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
-
-            ViewData["LocationId"] =
-                new SelectList(_context.Locations.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
-                    "Name");
-
+            ViewData["DefaultActivityTypeId"] = new SelectList(_context.ActivityTypes, "Id", "Name");
+            ViewData["DefaultClientId"] = new SelectList(_context.Clients, "Id", "Name");
+            ViewData["DefaultLocationId"] = new SelectList(_context.Locations, "Id", "Name");
             return Page();
         }
 
@@ -60,15 +49,23 @@ namespace TimeLog.Pages.Activities
                 return Page();
             }
 
-            _context.Attach(ActivityEntity).State = EntityState.Modified;
+            _context.Attach(Project).State = EntityState.Modified;
 
             try
             {
+                if (Project.IsDefault)
+                {
+                    var projects = _context.Projects.Where(x => x.IsDefault);
+                    foreach (var p in projects)
+                    {
+                        p.IsDefault = false;
+                    }
+                }
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ActivityEntityExists(ActivityEntity.Id))
+                if (!ProjectExists(Project.Id))
                 {
                     return NotFound();
                 }
@@ -81,9 +78,9 @@ namespace TimeLog.Pages.Activities
             return RedirectToPage("./Index");
         }
 
-        private bool ActivityEntityExists(int id)
+        private bool ProjectExists(int id)
         {
-            return _context.ActivityEntity.Any(e => e.Id == id);
+            return _context.Projects.Any(e => e.Id == id);
         }
     }
 }

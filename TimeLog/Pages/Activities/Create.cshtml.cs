@@ -20,9 +20,20 @@ namespace TimeLog.Pages.Activities
         public IActionResult OnGet()
         {
             ActivityEntity = new ActivityEntity() { StartTime = DateTime.Now };
-            //ActivityEntity.StartTime = DateTime.Now;
-            ViewData["ActivityTypeId"] = new SelectList(_context.ActivityTypes.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
-            ViewData["ClientId"] = new SelectList(_context.Clients.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
+            ViewData["ActivityTypeId"] =
+                new SelectList(_context.ActivityTypes.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
+                    "Name");
+
+            ViewData["ClientId"] =
+                new SelectList(_context.Clients.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
+
+            ViewData["ProjectId"] =
+                new SelectList(_context.Projects.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
+
+            ViewData["LocationId"] =
+                new SelectList(_context.Locations.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
+                    "Name");
+
             return Page();
         }
 

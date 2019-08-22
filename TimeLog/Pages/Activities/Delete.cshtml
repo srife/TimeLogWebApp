@@ -25,6 +25,12 @@
             @Html.DisplayFor(model => model.ActivityEntity.EndTime)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActivityEntity.Project)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ActivityEntity.Project.Name)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ActivityEntity.ActivityType)
         </dt>
         <dd class="col-sm-10">

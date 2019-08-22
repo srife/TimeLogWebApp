@@ -22,6 +22,16 @@
             </div>
             <div class="form-row">
                 <div class="col-md-3 mb-3">
+                    <label asp-for="ActivityEntity.ProjectId"></label>
+                    <select asp-for="ActivityEntity.ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="ActivityEntity.LocationId"></label>
+                    <select asp-for="ActivityEntity.LocationId" class="form-control" asp-items="ViewBag.LocationId"></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
                     <label asp-for="ActivityEntity.ActivityTypeId"></label>
                     <select asp-for="ActivityEntity.ActivityTypeId" class="form-control" asp-items="ViewBag.ActivityTypeId"></select>
                 </div>

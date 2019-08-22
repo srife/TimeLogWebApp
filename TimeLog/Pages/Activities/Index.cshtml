@@ -90,7 +90,7 @@
                 <td>
                     <a asp-page="./Details" asp-route-id="@item.Id">
                         <svg class="icon">
-                            <use xlink:href="#selecticon"/>
+                            <use xlink:href="#selecticon" />
                         </svg>
                     </a>
                 </td>
@@ -103,12 +103,12 @@
                 </td>
                 <td>
                     <span style="white-space: nowrap">
-                        @Html.DisplayFor(modelItem => item.Date)
+                        @item.Date.ToString("yyyy/MM/dd")&nbsp;&nbsp;
                         <span style="white-space: nowrap">
-                            @item.StartTime.ToString("H:mm")-
+                            @item.StartTime.ToString("HH:mm")-
                             @if (item.EndTime.HasValue)
                             {
-                                @item.EndTime.Value.ToString("H:mm")
+                                @item.EndTime.Value.ToString("HH:mm")
                             }
                         </span>
                     </span>
@@ -132,7 +132,7 @@
                     <span style="white-space: nowrap;">
                         <a asp-page="./Delete" asp-route-id="@item.Id">
                             <svg class="icon">
-                                <use xlink:href="#deleteicon"/>
+                                <use xlink:href="#deleteicon" />
                             </svg>
                         </a>
                         @*<a asp-page="./Details" asp-route-id="@item.Id"><embed class="icon" src="images/glyphicons-basic-224-chevron-right.svg" /></a>*@

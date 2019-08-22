@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
-namespace TimeLog.Pages.Activities
+namespace TimeLog.Pages.Locations
 {
     public class DetailsModel : PageModel
     {
@@ -15,7 +15,7 @@ namespace TimeLog.Pages.Activities
             _context = context;
         }
 
-        public ActivityEntity ActivityEntity { get; set; }
+        public Location Location { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -24,13 +24,9 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ActivityEntity = await _context.ActivityEntity
-                .Include(a => a.ActivityType)
-                .Include(a => a.Client)
-                .Include(a => a.Project)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Location = await _context.Locations.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ActivityEntity == null)
+            if (Location == null)
             {
                 return NotFound();
             }

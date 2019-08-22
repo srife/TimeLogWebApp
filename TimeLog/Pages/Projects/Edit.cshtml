@@ -1,0 +1,49 @@
+﻿@page
+@model TimeLog.Pages.Projects.EditModel
+
+<h4>Project</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Project.Id" />
+            <div class="form-group">
+                <label asp-for="Project.Name"></label>
+                <input asp-for="Project.Name" class="form-control" />
+                <span asp-validation-for="Project.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Project.IsDefault" /> @Html.DisplayNameFor(model => model.Project.IsDefault)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.DefaultClientId"></label>
+                <select asp-for="Project.DefaultClientId" class="form-control" asp-items="ViewBag.DefaultClientId"></select>
+                <span asp-validation-for="Project.DefaultClientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.DefaultLocationId"></label>
+                <select asp-for="Project.DefaultLocationId" class="form-control" asp-items="ViewBag.DefaultLocationId"></select>
+                <span asp-validation-for="Project.DefaultLocationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.DefaultActivityTypeId"></label>
+                <select asp-for="Project.DefaultActivityTypeId" class="form-control" asp-items="ViewBag.DefaultActivityTypeId"></select>
+                <span asp-validation-for="Project.DefaultActivityTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

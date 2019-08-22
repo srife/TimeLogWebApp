@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
-namespace TimeLog.Pages.Activities
+namespace TimeLog.Pages.Projects
 {
     public class DeleteModel : PageModel
     {
@@ -16,7 +16,7 @@ namespace TimeLog.Pages.Activities
         }
 
         [BindProperty]
-        public ActivityEntity ActivityEntity { get; set; }
+        public Project Project { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -25,13 +25,12 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ActivityEntity = await _context.ActivityEntity
-                .Include(a => a.ActivityType)
-                .Include(a => a.Client)
-                .Include(a => a.Project)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Project = await _context.Projects
+                .Include(p => p.DefaultActivityType)
+                .Include(p => p.DefaultClient)
+                .Include(p => p.DefaultLocation).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ActivityEntity == null)
+            if (Project == null)
             {
                 return NotFound();
             }
@@ -45,11 +44,11 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ActivityEntity = await _context.ActivityEntity.FindAsync(id);
+            Project = await _context.Projects.FindAsync(id);
 
-            if (ActivityEntity != null)
+            if (Project != null)
             {
-                _context.ActivityEntity.Remove(ActivityEntity);
+                _context.Projects.Remove(Project);
                 await _context.SaveChangesAsync();
             }
 

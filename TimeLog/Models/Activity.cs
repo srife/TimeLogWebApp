@@ -11,22 +11,22 @@ namespace TimeLog.Models
 
         [NotMapped]
         [DataType(DataType.Date)]
-        public DateTime? Date => StartTime.Date;
+        public DateTime Date => StartTime.Date;
 
         [Required]
         [Display(Name = "Start")]
         [DataType(DataType.DateTime)]
-        //[DisplayFormat(DataFormatString = "{0:H:mm}")]
         [System.ComponentModel.DefaultValue(typeof(DateTime), "")]
         public DateTime StartTime { get; set; }
 
         [Display(Name = "End")]
-        //[DisplayFormat(DataFormatString = "{0:H:mm}")]
         [DataType(DataType.DateTime)]
         public DateTime? EndTime { get; set; }
 
+        [Display(Name = "Project")]
         public int? ProjectId { get; set; }
 
+        [Display(Name = "Location")]
         public int? LocationId { get; set; }
 
         [Display(Name = "Type")]
@@ -50,19 +50,11 @@ namespace TimeLog.Models
         public Client Client { get; set; }
 
         public Location Location { get; set; }
+
         public Project Project { get; set; }
 
         public virtual ActivityEntity Parent { get; set; }
-        public virtual ICollection<ActivityEntity> Children { get; set; }
-    }
 
-    public class Project
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsDefault { get; set; }
-        public int? DefaultClientId { get; set; }
-        public int? DefaultLocationId { get; set; }
-        public int? DefaultActivityTypeId { get; set; }
+        public virtual ICollection<ActivityEntity> Children { get; set; }
     }
 }
