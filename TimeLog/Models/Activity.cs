@@ -45,6 +45,9 @@ namespace TimeLog.Models
         [DataType(DataType.MultilineText)]
         public string InvoiceStatement { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
         public ActivityType ActivityType { get; set; }
 
         public Client Client { get; set; }

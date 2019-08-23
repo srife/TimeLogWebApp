@@ -26,6 +26,7 @@ namespace TimeLog.Pages.Activities
             }
 
             ActivityEntity = await _context.ActivityEntity
+                .AsNoTracking()
                 .Include(a => a.ActivityType)
                 .Include(a => a.Client)
                 .Include(a => a.Project)
@@ -45,7 +46,7 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ActivityEntity = await _context.ActivityEntity.FindAsync(id);
+            ActivityEntity = await _context.ActivityEntity.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
             if (ActivityEntity != null)
             {

@@ -25,6 +25,7 @@ namespace TimeLog.Pages.Activities
             }
 
             ActivityEntity = await _context.ActivityEntity
+                .AsNoTracking()
                 .Include(a => a.ActivityType)
                 .Include(a => a.Client)
                 .Include(a => a.Project)

@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
 namespace TimeLog.Pages.Activities
 {
-    public class CreateModel : PageModel
+    public class CreateModel : ActivitiesBasePageModel
     {
         private readonly TimeLogContext _context;
 
@@ -20,19 +17,11 @@ namespace TimeLog.Pages.Activities
         public IActionResult OnGet()
         {
             ActivityEntity = new ActivityEntity() { StartTime = DateTime.Now };
-            ViewData["ActivityTypeId"] =
-                new SelectList(_context.ActivityTypes.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
-                    "Name");
 
-            ViewData["ClientId"] =
-                new SelectList(_context.Clients.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
-
-            ViewData["ProjectId"] =
-                new SelectList(_context.Projects.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
-
-            ViewData["LocationId"] =
-                new SelectList(_context.Locations.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
-                    "Name");
+            PopulateActivityTypesDropDownList(_context);
+            PopulateClientDropDownList(_context);
+            PopulateProjectsDropDownList(_context);
+            PopulateLocationDropDownList(_context);
 
             return Page();
         }
@@ -47,10 +36,29 @@ namespace TimeLog.Pages.Activities
                 return Page();
             }
 
-            _context.ActivityEntity.Add(ActivityEntity);
-            await _context.SaveChangesAsync();
+            var emptyActivityEntity = new ActivityEntity();
 
-            return RedirectToPage("./Index");
+            if (await TryUpdateModelAsync(
+                emptyActivityEntity,
+                "ActivityEntity",
+                s => s.StartTime,
+                s => s.LocationId,
+                s => s.ProjectId,
+                s => s.ActivityTypeId,
+                s => s.ClientId,
+                s => s.Billable,
+                s => s.Tasks))
+            {
+                _context.ActivityEntity.Add(emptyActivityEntity);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+
+            PopulateActivityTypesDropDownList(_context, emptyActivityEntity.ActivityTypeId);
+            PopulateClientDropDownList(_context, emptyActivityEntity.ClientId);
+            PopulateProjectsDropDownList(_context, emptyActivityEntity.ProjectId);
+            PopulateLocationDropDownList(_context, emptyActivityEntity.LocationId);
+            return Page();
         }
     }
 }

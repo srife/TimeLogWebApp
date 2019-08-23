@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
 namespace TimeLog.Pages.Activities
 {
-    public class EditModel : PageModel
+    public class EditModel : ActivitiesBasePageModel
     {
         private readonly TimeLogContext _context;
 
@@ -28,8 +25,6 @@ namespace TimeLog.Pages.Activities
             }
 
             ActivityEntity = await _context.ActivityEntity
-                .Include(a => a.ActivityType)
-                .Include(a => a.Client)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (ActivityEntity == null)
@@ -37,53 +32,67 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ViewData["ActivityTypeId"] =
-                new SelectList(_context.ActivityTypes.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
-                    "Name");
-            ViewData["ClientId"] =
-                new SelectList(_context.Clients.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
-
-            ViewData["ProjectId"] =
-                new SelectList(_context.Projects.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name");
-
-            ViewData["LocationId"] =
-                new SelectList(_context.Locations.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id",
-                    "Name");
+            PopulateActivityTypesDropDownList(_context, ActivityEntity.ActivityTypeId);
+            PopulateClientDropDownList(_context, ActivityEntity.ClientId);
+            PopulateProjectsDropDownList(_context, ActivityEntity.ProjectId);
+            PopulateLocationDropDownList(_context, ActivityEntity.LocationId);
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(ActivityEntity).State = EntityState.Modified;
+            var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
 
-            try
+            if (await TryUpdateModelAsync(activityEntityToUpdate,
+                "ActivityEntity",
+                s => s.StartTime,
+                s => s.EndTime,
+                s => s.LocationId,
+                s => s.ProjectId,
+                s => s.ActivityTypeId,
+                s => s.ClientId,
+                s => s.Billable,
+                s => s.Tasks,
+                s => s.InvoiceStatement))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActivityEntityExists(ActivityEntity.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            PopulateActivityTypesDropDownList(_context, ActivityEntity.ActivityTypeId);
+            PopulateProjectsDropDownList(_context, ActivityEntity.ProjectId);
+            return Page();
+
+            //_context.Attach(ActivityEntity).State = EntityState.Modified;
+
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!ActivityEntityExists(ActivityEntity.Id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return RedirectToPage("./Index");
         }
 
-        private bool ActivityEntityExists(int id)
-        {
-            return _context.ActivityEntity.Any(e => e.Id == id);
-        }
+        //private bool ActivityEntityExists(int id)
+        //{
+        //    return _context.ActivityEntity.Any(e => e.Id == id);
+        //}
     }
 }
