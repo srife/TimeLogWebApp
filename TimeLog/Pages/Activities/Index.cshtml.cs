@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -22,6 +23,20 @@ namespace TimeLog.Pages.Activities
 
         public async Task OnGetAsync()
         {
+            ActivityEntity = await _context.ActivityEntity
+                .Include(a => a.ActivityType)
+                .Include(a => a.Client)
+                .Include(a => a.Project)
+                .OrderByDescending(x => x.StartTime)
+                .ToListAsync();
+        }
+
+        public async Task OnGetClose(int id)
+        {
+            var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
+            activityEntityToUpdate.EndTime = DateTime.Now;
+            await _context.SaveChangesAsync();
+
             ActivityEntity = await _context.ActivityEntity
                 .Include(a => a.ActivityType)
                 .Include(a => a.Client)

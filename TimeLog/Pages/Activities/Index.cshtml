@@ -129,15 +129,18 @@
                     @Html.DisplayFor(modelItem => item.Billable)
                 </td>
                 <td>
+                    @if (item.EndTime == null)
+                    {
+                        <a asp-page-handler="Close" asp-route-id="@item.Id">Close Entry</a>
+                    }
+                </td>
+                <td>
                     <span style="white-space: nowrap;">
                         <a asp-page="./Delete" asp-route-id="@item.Id">
                             <svg class="icon">
                                 <use xlink:href="#deleteicon" />
                             </svg>
                         </a>
-                        @*<a asp-page="./Details" asp-route-id="@item.Id"><embed class="icon" src="images/glyphicons-basic-224-chevron-right.svg" /></a>*@
-                        @*<a asp-page="./Edit" asp-route-id="@item.Id"><embed class="icon" src="images/glyphicons-basic-31-pencil.svg" /></a>*@
-                        @*<a asp-page="./Delete" asp-route-id="@item.Id"><embed class="icon" src="images/glyphicons-basic-293-square-empty-remove.svg" /></a>*@
                     </span>
                 </td>
             </tr>
