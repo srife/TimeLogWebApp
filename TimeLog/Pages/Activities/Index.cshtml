@@ -65,6 +65,7 @@
             <th></th>
             <th></th>
             <th>Date</th>
+            <th>Duration</th>
             <th>
                 @Html.DisplayNameFor(model => model.ActivityEntity[0].ActivityTypeId)
             </th>
@@ -112,6 +113,12 @@
                             }
                         </span>
                     </span>
+                </td>
+                <td>
+                    @if (item.EndTime.HasValue)
+                    {
+                        @item.EndTime.Value.Subtract(@item.StartTime)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ActivityType.Name)

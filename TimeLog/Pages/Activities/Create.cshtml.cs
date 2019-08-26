@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using TimeLog.Models;
+using TimeLog.Extensions;
 
 namespace TimeLog.Pages.Activities
 {
@@ -49,6 +50,7 @@ namespace TimeLog.Pages.Activities
                 s => s.Billable,
                 s => s.Tasks))
             {
+                emptyActivityEntity.StartTime = DateTimeExtensions.RoundUp(emptyActivityEntity.StartTime, TimeSpan.FromMinutes(1));
                 _context.ActivityEntity.Add(emptyActivityEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
