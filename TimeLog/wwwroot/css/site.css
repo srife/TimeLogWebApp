@@ -37,6 +37,10 @@ button.accept-policy {
     line-height: inherit;
 }
 
+.chart, .chart2 {
+    color: gray;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -62,9 +66,11 @@ body {
 .table.activity > thead > tr > th:nth-child(1) {
     width: 1%;
 }
+
 .table.activity > thead > tr > th:nth-child(2) {
     width: 1%;
 }
+
 .table.activity > thead > tr > th:nth-child(3) {
     width: 10%;
 }
@@ -79,8 +85,29 @@ svg.defs-only {
     border: none;
     overflow: hidden;
 }
+
 svg.icon {
     height: 32px;
     width: 32px;
     fill: white;
+}
+
+.bar {
+    fill: red; /* changes the background */
+    height: 21px;
+    transition: fill .3s ease;
+    cursor: pointer;
+    font-family: Helvetica, sans-serif;
+}
+
+    .bar text {
+        fill: white;
+    }
+
+    .bar:hover, .bar:focus {
+        fill: gray;
+    }
+
+circle {
+    transition: stroke-dasharray .3s ease;
 }
