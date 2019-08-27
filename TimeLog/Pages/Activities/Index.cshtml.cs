@@ -19,15 +19,45 @@ namespace TimeLog.Pages.Activities
             _context = context;
         }
 
-        public IList<ActivityEntity> ActivityEntity { get; set; }
+        public string DateSort { get; set; }
 
-        public async Task OnGetAsync()
+        public string CurrentFilter { get; set; }
+
+        public string CurrentSort { get; set; }
+
+        public IList<ActivityEntity> ActivityEntities { get; set; }
+
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
-            ActivityEntity = await _context.ActivityEntity
+            DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+            CurrentFilter = searchString;
+
+            IQueryable<ActivityEntity> ae = _context.ActivityEntity
                 .Include(a => a.ActivityType)
                 .Include(a => a.Client)
-                .Include(a => a.Project)
-                .OrderByDescending(x => x.StartTime)
+                .Include(a => a.Project);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                ae = ae.Where(s => s.Tasks.Contains(searchString) || s.InvoiceStatement.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "Date":
+                    ae = ae.OrderBy(s => s.StartTime);
+                    break;
+
+                case "date_desc":
+                    ae = ae.OrderByDescending(s => s.StartTime);
+                    break;
+
+                default:
+                    ae = ae.OrderByDescending(s => s.StartTime);
+                    break;
+            }
+
+            ActivityEntities = await ae
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -38,7 +68,7 @@ namespace TimeLog.Pages.Activities
                 Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1));
             await _context.SaveChangesAsync();
 
-            ActivityEntity = await _context.ActivityEntity
+            ActivityEntities = await _context.ActivityEntity
                 .Include(a => a.ActivityType)
                 .Include(a => a.Client)
                 .Include(a => a.Project)
@@ -69,7 +99,7 @@ namespace TimeLog.Pages.Activities
             string activities = JsonConvert.SerializeObject(activityEntities.ToArray());
             System.IO.File.WriteAllText(@"Models/CustomSeedData/activities.json", activities);
 
-            ActivityEntity = _context.ActivityEntity
+            ActivityEntities = _context.ActivityEntity
                 .Include(a => a.ActivityType)
                 .Include(a => a.Client)
                 .Include(a => a.Project)
