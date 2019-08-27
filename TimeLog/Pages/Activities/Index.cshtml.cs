@@ -71,7 +71,10 @@ namespace TimeLog.Pages.Activities
 
             ActivityEntity = _context.ActivityEntity
                 .Include(a => a.ActivityType)
-                .Include(a => a.Client).ToList();
+                .Include(a => a.Client)
+                .Include(a => a.Project)
+                .OrderByDescending(x => x.StartTime)
+                .ToList();
 
             return Page();
         }
