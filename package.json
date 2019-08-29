@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/srife/TimeLogWebApp/issues"
   },
-  "homepage": "https://github.com/srife/TimeLogWebApp#readme"
+  "homepage": "https://github.com/srife/TimeLogWebApp#readme",
+  "dependencies": {
+    "knockout": "^3.5.0"
+  }
 }
