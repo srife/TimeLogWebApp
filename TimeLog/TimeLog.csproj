@@ -8,14 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\lib\requirejs\**" />
-    <Content Remove="wwwroot\lib\requirejs\**" />
-    <EmbeddedResource Remove="wwwroot\lib\requirejs\**" />
-    <None Remove="wwwroot\lib\requirejs\**" />
-    <TypeScriptCompile Remove="wwwroot\lib\requirejs\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="file.ts" />
   </ItemGroup>
 
@@ -42,6 +34,13 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\CustomSeedData\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\js\file.js" />
+    <None Include="wwwroot\js\file.js.map" />
+    <None Include="wwwroot\lib\requirejs\dist\require.js\require.js" />
   </ItemGroup>
 
 </Project>
