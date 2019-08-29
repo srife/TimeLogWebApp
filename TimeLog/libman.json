@@ -8,22 +8,22 @@
     },
     {
       "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/dist/",
       "files": [
         "jquery.min.js",
         "jquery.js",
         "jquery.min.map"
-      ],
-      "destination": "wwwroot/lib/jquery/dist/"
+      ]
     },
     {
       "library": "jquery-validate@1.19.1",
+      "destination": "wwwroot/lib/jquery-validation/dist/",
       "files": [
         "additional-methods.js",
         "additional-methods.min.js",
         "jquery.validate.js",
         "jquery.validate.min.js"
-      ],
-      "destination": "wwwroot/lib/jquery-validation/dist/"
+      ]
     },
     {
       "library": "jquery-validation-unobtrusive@3.2.11",
@@ -32,6 +32,16 @@
     {
       "library": "font-awesome@5.10.2",
       "destination": "wwwroot/lib/font-awesome/dist"
+    },
+    {
+      "provider": "filesystem",
+      "library": "node_modules/requirejs/require.js",
+      "destination": "wwwroot/lib/requirejs/dist/require.js"
+    },
+    {
+      "provider": "filesystem",
+      "library": "node_modules/knockout/build/output//knockout-latest.js",
+      "destination": "wwwroot/lib/knockout/dist/knockout.js"
     }
   ]
 }
