@@ -12,10 +12,13 @@ namespace TimeLog.Models
         [Display(Name = "Default")]
         public bool IsDefault { get; set; }
 
+        [Display(Name = "Default Client")]
         public int? DefaultClientId { get; set; }
 
+        [Display(Name = "Default Location")]
         public int? DefaultLocationId { get; set; }
 
+        [Display(Name = "Default Activity Type")]
         public int? DefaultActivityTypeId { get; set; }
 
         [Display(Name = "Default Client")]

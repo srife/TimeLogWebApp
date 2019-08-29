@@ -33,8 +33,8 @@ namespace TimeLog.Pages.Projects
                 return NotFound();
             }
 
+            PopulateActivityTypesDropDownList(_context);
             PopulateClientDropDownList(_context);
-            PopulateProjectsDropDownList(_context);
             PopulateLocationDropDownList(_context);
 
             return Page();
@@ -67,8 +67,8 @@ namespace TimeLog.Pages.Projects
                 return RedirectToPage("./Index");
             }
 
+            PopulateActivityTypesDropDownList(_context);
             PopulateClientDropDownList(_context);
-            PopulateProjectsDropDownList(_context);
             PopulateLocationDropDownList(_context);
 
             return Page();

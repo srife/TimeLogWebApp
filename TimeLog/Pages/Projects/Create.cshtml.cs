@@ -16,8 +16,8 @@ namespace TimeLog.Pages.Projects
 
         public IActionResult OnGet()
         {
+            PopulateActivityTypesDropDownList(_context);
             PopulateClientDropDownList(_context);
-            PopulateProjectsDropDownList(_context);
             PopulateLocationDropDownList(_context);
 
             return Page();
@@ -54,9 +54,10 @@ namespace TimeLog.Pages.Projects
                 }
             }
 
+            PopulateActivityTypesDropDownList(_context);
             PopulateClientDropDownList(_context);
-            PopulateProjectsDropDownList(_context);
             PopulateLocationDropDownList(_context);
+
             return Page();
         }
     }
