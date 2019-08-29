@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\requirejs\**" />
+    <Content Remove="wwwroot\lib\requirejs\**" />
+    <EmbeddedResource Remove="wwwroot\lib\requirejs\**" />
+    <None Remove="wwwroot\lib\requirejs\**" />
+    <TypeScriptCompile Remove="wwwroot\lib\requirejs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="file.ts" />
   </ItemGroup>
 
