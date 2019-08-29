@@ -18,6 +18,7 @@
   "homepage": "https://github.com/srife/TimeLogWebApp#readme",
   "dependencies": {
     "@types/knockout": "^3.4.66",
-    "knockout": "^3.5.0"
+    "knockout": "^3.5.0",
+    "requirejs": "^2.3.6"
   }
 }
