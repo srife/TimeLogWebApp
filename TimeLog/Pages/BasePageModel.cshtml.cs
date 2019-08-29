@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using TimeLog.Models;
 
-namespace TimeLog.Pages.Activities
+namespace TimeLog.Pages
 {
-    public class ActivitiesBasePageModel : PageModel
+    public class BasePageModelModel : PageModel
     {
         public SelectList ProjectsSelectList { get; set; }
         public SelectList ActivityTypesSelectList { get; set; }

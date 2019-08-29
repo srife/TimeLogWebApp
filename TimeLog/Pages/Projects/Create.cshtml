@@ -19,15 +19,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Project.DefaultClientId"></label>
-                <select asp-for="Project.DefaultClientId" class="form-control" asp-items="ViewBag.DefaultClientId"></select>
+                <select asp-for="Project.DefaultClientId" class="form-control" asp-items="@Model.ClientSelectList"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Project.DefaultLocationId"></label>
-                <select asp-for="Project.DefaultLocationId" class="form-control" asp-items="ViewBag.DefaultLocationId"></select>
+                <select asp-for="Project.DefaultLocationId" class="form-control" asp-items="@Model.ClientSelectList"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Project.DefaultActivityTypeId"></label>
-                <select asp-for="Project.DefaultActivityTypeId" class="form-control" asp-items="ViewBag.DefaultActivityTypeId"></select>
+                <select asp-for="Project.DefaultActivityTypeId" class="form-control" asp-items="@Model.ActivityTypesSelectList"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

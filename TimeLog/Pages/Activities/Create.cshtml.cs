@@ -6,7 +6,7 @@ using TimeLog.Extensions;
 
 namespace TimeLog.Pages.Activities
 {
-    public class CreateModel : ActivitiesBasePageModel
+    public class CreateModel : BasePageModelModel
     {
         private readonly TimeLogContext _context;
 
@@ -53,6 +53,7 @@ namespace TimeLog.Pages.Activities
                 emptyActivityEntity.StartTime = DateTimeExtensions.RoundUp(emptyActivityEntity.StartTime, TimeSpan.FromMinutes(1));
                 _context.ActivityEntity.Add(emptyActivityEntity);
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("./Index");
             }
 
@@ -60,6 +61,7 @@ namespace TimeLog.Pages.Activities
             PopulateClientDropDownList(_context, emptyActivityEntity.ClientId);
             PopulateProjectsDropDownList(_context, emptyActivityEntity.ProjectId);
             PopulateLocationDropDownList(_context, emptyActivityEntity.LocationId);
+
             return Page();
         }
     }

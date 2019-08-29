@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +6,7 @@ using TimeLog.Models;
 
 namespace TimeLog.Pages.Projects
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModelModel
     {
         private readonly TimeLogContext _context;
 
@@ -28,30 +26,33 @@ namespace TimeLog.Pages.Projects
             }
 
             Project = await _context.Projects
-                .Include(p => p.DefaultActivityType)
-                .Include(p => p.DefaultClient)
-                .Include(p => p.DefaultLocation).FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Project == null)
             {
                 return NotFound();
             }
-            ViewData["DefaultActivityTypeId"] = new SelectList(_context.ActivityTypes, "Id", "Name");
-            ViewData["DefaultClientId"] = new SelectList(_context.Clients, "Id", "Name");
-            ViewData["DefaultLocationId"] = new SelectList(_context.Locations, "Id", "Name");
+
+            PopulateClientDropDownList(_context);
+            PopulateProjectsDropDownList(_context);
+            PopulateLocationDropDownList(_context);
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Project).State = EntityState.Modified;
+            var projectToUpdate = await _context.Projects.FindAsync(id);
 
-            try
+            if (await TryUpdateModelAsync(projectToUpdate,
+                "Project",
+                s => s.Name,
+                s => s.IsDefault))
             {
                 if (Project.IsDefault)
                 {
@@ -61,26 +62,16 @@ namespace TimeLog.Pages.Projects
                         p.IsDefault = false;
                     }
                 }
+
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProjectExists(Project.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
-        }
+            PopulateClientDropDownList(_context);
+            PopulateProjectsDropDownList(_context);
+            PopulateLocationDropDownList(_context);
 
-        private bool ProjectExists(int id)
-        {
-            return _context.Projects.Any(e => e.Id == id);
+            return Page();
         }
     }
 }

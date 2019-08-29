@@ -1,13 +1,11 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
 namespace TimeLog.Pages.Projects
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModelModel
     {
         private readonly TimeLogContext _context;
 
@@ -18,14 +16,14 @@ namespace TimeLog.Pages.Projects
 
         public IActionResult OnGet()
         {
-            ViewData["DefaultActivityTypeId"] = new SelectList(_context.ActivityTypes, "Id", "Name");
-            ViewData["DefaultClientId"] = new SelectList(_context.Clients, "Id", "Name");
-            ViewData["DefaultLocationId"] = new SelectList(_context.Locations, "Id", "Name");
+            PopulateClientDropDownList(_context);
+            PopulateProjectsDropDownList(_context);
+            PopulateLocationDropDownList(_context);
+
             return Page();
         }
 
-        [BindProperty]
-        public Project Project { get; set; }
+        [BindProperty] public Project Project { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -34,19 +32,32 @@ namespace TimeLog.Pages.Projects
                 return Page();
             }
 
-            if (Project.IsDefault)
+            var emptyProject = new Project();
+
+            if (await TryUpdateModelAsync(
+                emptyProject,
+                "Project",
+                s => s.Name,
+                s => s.IsDefault))
             {
-                var projects = _context.Projects.Where(x => x.IsDefault);
-                foreach (var p in projects)
+                if (Project.IsDefault)
                 {
-                    p.IsDefault = false;
+                    var projects = _context.Projects.Where(x => x.IsDefault);
+                    foreach (var p in projects)
+                    {
+                        p.IsDefault = false;
+                    }
+
+                    _context.Projects.Add(emptyProject);
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("./Index");
                 }
             }
 
-            _context.Projects.Add(Project);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            PopulateClientDropDownList(_context);
+            PopulateProjectsDropDownList(_context);
+            PopulateLocationDropDownList(_context);
+            return Page();
         }
     }
 }
