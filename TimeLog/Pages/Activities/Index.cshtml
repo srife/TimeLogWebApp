@@ -26,91 +26,93 @@
     </div>
 </div>
 
-<table class="table activity">
-    <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort">
-                    Date
-                </a>
-            </th>
-            <th>Duration</th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActivityEntities[0].ActivityTypeId)/
-                @Html.DisplayNameFor(model => model.ActivityEntities[0].Project)/@Html.DisplayNameFor(model => model.ActivityEntities[0].Client)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActivityEntities[0].Tasks)
-            </th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ActivityEntities)
-        {
+<div class="table-responsive">
+    <table class="table activity">
+        <thead>
             <tr>
-                <td>
-                    <a asp-page="./Details" asp-route-id="@item.Id">
-                        <i class="fa fa-angle-right"></i>
+                <th></th>
+                <th></th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort">
+                        Date
                     </a>
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                </td>
-                <td>
-                    <span>
-                        @item.Date.ToString("yyyy/MM/dd")
-                    </span>
-                    <span>
-                        @item.StartTime.ToString("HH:mm")-
+                </th>
+                <th>Duration</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityEntities[0].ActivityTypeId)/
+                    @Html.DisplayNameFor(model => model.ActivityEntities[0].Project)/@Html.DisplayNameFor(model => model.ActivityEntities[0].Client)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityEntities[0].Tasks)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ActivityEntities)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <span>
+                            @item.Date.ToString("yyyy/MM/dd")
+                        </span>
+                        <span>
+                            @item.StartTime.ToString("HH:mm")-
+                            @if (item.EndTime.HasValue)
+                            {
+                                @item.EndTime.Value.ToString("HH:mm")
+                            }
+                        </span>
+                    </td>
+                    <td>
                         @if (item.EndTime.HasValue)
                         {
-                            @item.EndTime.Value.ToString("HH:mm")
+                            @item.EndTime.Value.Subtract(@item.StartTime)
                         }
-                    </span>
-                </td>
-                <td>
-                    @if (item.EndTime.HasValue)
-                    {
-                        @item.EndTime.Value.Subtract(@item.StartTime)
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
-                    @if (!string.IsNullOrEmpty(item.Project.Name) || !string.IsNullOrEmpty(item.Client.Name))
-                    {
-                        <span>@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
-                        <span>@Html.DisplayFor(modelItem => item.Client.Name)</span>
-                    }
-                </td>
-                <td>
-                    <div class="short-task-display">
-                        @Html.Raw(item.Tasks)
-                    </div>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Billable)
-                </td>
-                <td>
-                    @if (item.EndTime == null)
-                    {
-                        <a asp-page-handler="Close" asp-route-id="@item.Id"><i class="fa fa-flag-checkered"></i></a>
-                    }
-                </td>
-                <td>
-                    <span>
-                        <a asp-page="./Delete" asp-route-id="@item.Id">
-                            <i class="fa fa-trash-alt"></i>
-                        </a>
-                    </span>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
+                        @if (!string.IsNullOrEmpty(item.Project.Name) || !string.IsNullOrEmpty(item.Client.Name))
+                        {
+                            <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
+                            <span class="client-display-small">@Html.DisplayFor(modelItem => item.Client.Name)</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="short-task-display">
+                            @Html.Raw(item.Tasks)
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Billable)
+                    </td>
+                    <td>
+                        @if (item.EndTime == null)
+                        {
+                            <a asp-page-handler="Close" asp-route-id="@item.Id"><i class="fa fa-flag-checkered"></i></a>
+                        }
+                    </td>
+                    <td>
+                        <span>
+                            <a asp-page="./Delete" asp-route-id="@item.Id">
+                                <i class="fa fa-trash-alt"></i>
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

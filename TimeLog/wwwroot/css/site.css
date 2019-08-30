@@ -68,36 +68,46 @@ body {
     table-layout: fixed;
     width: 100%;
 }
+
     .table.activity > thead > tr > th {
         width: auto;
     }
+
         .table.activity > thead > tr > th:nth-child(1) {
             width: 2%;
         }
+
         .table.activity > thead > tr > th:nth-child(2) {
             width: 2%;
         }
+
         .table.activity > thead > tr > th:nth-child(3) {
             width: 10%;
         }
+
     .table.activity > tbody > tr > td:nth-child(3) {
         text-align: center;
     }
-        .table.activity > thead > tr > th:nth-child(4) {
-            width: 9%;
-        }
-        .table.activity > thead > tr > th:nth-child(5) {
-            width: 15%;
-        }
-        .table.activity > thead > tr > th:nth-child(6) {
-            width: 55%;
-        }
-        .table.activity > thead > tr > th:nth-child(7) {
-            width: 2%;
-        }
-        .table.activity > thead > tr > th:nth-child(8) {
-            width: 2%;
-        }
+
+    .table.activity > thead > tr > th:nth-child(4) {
+        width: 9%;
+    }
+
+    .table.activity > thead > tr > th:nth-child(5) {
+        width: 15%;
+    }
+
+    .table.activity > thead > tr > th:nth-child(6) {
+        width: 55%;
+    }
+
+    .table.activity > thead > tr > th:nth-child(7) {
+        width: 2%;
+    }
+
+    .table.activity > thead > tr > th:nth-child(8) {
+        width: 2%;
+    }
 
 .short-task-display {
     max-height: 6em;
@@ -105,15 +115,28 @@ body {
     overflow: hidden;
 }
 
+.invoice-statement {
+    font-size: 100%;
+}
+
+.project-display-small {
+    font-size: 90%;
+    color: darkgray;
+}
+
+.client-display-small {
+    font-size: 80%;
+    font-variant: small-caps;
+}
+
 /* table overrides end */
-
-
 
 /* SVG tests */
 /* Chart Stuff */
 .chart, .chart2 {
     color: gray;
 }
+
 svg.defs-only {
     display: block;
     position: absolute;
@@ -124,11 +147,13 @@ svg.defs-only {
     border: none;
     overflow: hidden;
 }
+
 svg.icon {
     height: 32px;
     width: 32px;
     fill: white;
 }
+
 .bar {
     fill: red; /* changes the background */
     height: 21px;
@@ -136,15 +161,19 @@ svg.icon {
     cursor: pointer;
     font-family: Helvetica, sans-serif;
 }
+
     .bar text {
         fill: white;
     }
+
     .bar:hover, .bar:focus {
         fill: gray;
     }
+
 .chart1 {
     background: gray;
 }
+
 .chart {
     background: white;
     width: 500px;
@@ -153,31 +182,38 @@ svg.icon {
     border-bottom: 1px dotted #555;
     padding: 20px 20px 20px 0;
 }
+
 .graph .labels.x-labels {
     text-anchor: middle;
 }
+
 .graph .labels.y-labels {
     text-anchor: end;
 }
+
 .graph {
     height: 500px;
     width: 800px;
 }
+
     .graph .grid {
         stroke: #ccc;
         stroke-dasharray: 0;
         stroke-width: 1;
     }
+
 .labels {
     font-size: 13px;
     color: black;
 }
+
 .label-title {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 12px;
     fill: black;
 }
+
 .data {
     fill: red;
     stroke-width: 1;
