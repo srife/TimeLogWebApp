@@ -8,9 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="file.ts" />
+    <Content Remove="wwwroot\js\site.ts" />
   </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -30,17 +29,19 @@
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
-
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\CustomSeedData\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
-
   <ItemGroup>
-    <None Include="wwwroot\js\file.js" />
-    <None Include="wwwroot\js\file.js.map" />
     <None Include="wwwroot\lib\requirejs\dist\require.js\require.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <TypeScriptCompile Update="site.ts">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </TypeScriptCompile>
+  </ItemGroup>
 </Project>

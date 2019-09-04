@@ -1,23 +1,27 @@
+﻿///<reference path="./node_modules/@types/jquery/JQuery.d.ts"/>
 "use strict";
+
 class Main {
     constructor() {
         "use strict";
         $(() => {
-            const billableEl = document.getElementById("ActivityEntity_Billable");
-            const invoiceStatementDiv = document.getElementById("invoice-statement");
+            //alert("Hello");
+
+            const billableEl = (document.getElementById("ActivityEntity_Billable") as HTMLInputElement);
+            const invoiceStatementDiv = document.getElementById("invoice-statement") as HTMLDivElement;
+
             if (billableEl !== null && billableEl !== undefined) {
                 if (!billableEl.checked) {
                     invoiceStatementDiv.style.setProperty("display", "none");
-                }
-                else {
+                } else {
                     invoiceStatementDiv.style.removeProperty("display");
                 }
+
                 billableEl.addEventListener("click", () => {
                     console.log(`billable: ${billableEl.checked}`);
                     if (!billableEl.checked) {
                         invoiceStatementDiv.style.setProperty("display", "none");
-                    }
-                    else {
+                    } else {
                         invoiceStatementDiv.style.removeProperty("display");
                     }
                 });
@@ -25,5 +29,7 @@ class Main {
         });
     }
 }
+
 var main = new Main();
-//# sourceMappingURL=site.js.map
+//let titleEl = document.querySelector("h1");
+//titleEl.innerText = "Hello from TypeScript";

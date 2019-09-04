@@ -21,6 +21,9 @@ namespace TimeLog.Models
                 .HasMany(e => e.Children)
                 .WithOne(m => m.Parent)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ActivityEntity>()
+                .Property(c => c.RowVersion).IsRowVersion();
         }
     }
 }

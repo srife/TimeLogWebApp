@@ -115,10 +115,6 @@ body {
     overflow: hidden;
 }
 
-.invoice-statement {
-    font-size: 100%;
-}
-
 .project-display-small {
     font-size: 90%;
     color: darkgray;
