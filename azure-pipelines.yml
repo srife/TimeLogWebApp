@@ -29,7 +29,8 @@ steps:
 #    FailBuildLevelSelector: 'Error'
 
 -task: Npm@1
-  inputs:
+  displayName: "npm install"
+  inputs:    
     command: 'install'
 
 - task: DotNetCoreCLI@2
