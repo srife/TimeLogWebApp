@@ -28,6 +28,10 @@ steps:
 #    SolutionOrProjectPath: 'TimeLog.sln'
 #    FailBuildLevelSelector: 'Error'
 
+-task: Npm@1
+  inputs:
+    command: 'install'
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
   inputs:
