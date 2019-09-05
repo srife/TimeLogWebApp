@@ -28,7 +28,7 @@ steps:
 #    SolutionOrProjectPath: 'TimeLog.sln'
 #    FailBuildLevelSelector: 'Error'
 
--task: Npm@1
+- task: Npm@1
   displayName: "npm install"
   inputs:    
     command: 'install'
