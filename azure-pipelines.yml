@@ -28,20 +28,20 @@ steps:
 #    SolutionOrProjectPath: 'TimeLog.sln'
 #    FailBuildLevelSelector: 'Error'
 
+- task: Npm@1
+  displayName: "npm install"
+  inputs:    
+    command: 'install'
+    workingDir: 'TimeLog/'
+
+    #- script:  npm install 
+#  displayName: 'Install npm'
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
-
-- task: Npm@1
-  displayName: "npm install"
-  inputs:    
-    command: 'install'
-    workingDir: '/TimeLog/TimeLog'
-
-#- script:  npm install 
-#  displayName: 'Install npm'
 
  template: templates/build.yml
   parameters:
