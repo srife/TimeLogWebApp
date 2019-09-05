@@ -34,9 +34,6 @@ steps:
     command: 'install'
     workingDir: 'TimeLog/'
 
-    #- script:  npm install 
-#  displayName: 'Install npm'
-
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
   inputs:
