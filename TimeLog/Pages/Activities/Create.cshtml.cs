@@ -59,7 +59,10 @@ namespace TimeLog.Pages.Activities
                 if (InterruptCurrentActivity)
                 {
                     var currentActivity = await _context.ActivityEntity.OrderByDescending(i => i.StartTime).FirstOrDefaultAsync(i => i.EndTime == null);
-                    currentActivity.EndTime = currentTime;
+                    if (!(currentActivity is null))
+                    {
+                        currentActivity.EndTime = currentTime;
+                    }
                 }
 
                 emptyActivityEntity.StartTime = currentTime;
