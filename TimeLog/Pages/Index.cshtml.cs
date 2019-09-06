@@ -21,7 +21,7 @@ namespace TimeLog.Pages
 
         public bool ActivityEntityExists { get; set; }
 
-        private IList<ViewModels.Summary> Summary { get; set; }
+        public IList<ViewModels.Summary> Summary { get; set; }
 
         public string Project1Points { get; set; }
 

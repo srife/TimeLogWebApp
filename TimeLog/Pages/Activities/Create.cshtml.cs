@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TimeLog.Extensions;
 using TimeLog.Models;
 
@@ -30,6 +32,8 @@ namespace TimeLog.Pages.Activities
         [BindProperty]
         public ActivityEntity ActivityEntity { get; set; }
 
+        public bool InterruptCurrentActivity { get; set; } = true;
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -50,7 +54,15 @@ namespace TimeLog.Pages.Activities
                 s => s.Billable,
                 s => s.Tasks))
             {
-                emptyActivityEntity.StartTime = DateTimeExtensions.RoundUp(emptyActivityEntity.StartTime, TimeSpan.FromMinutes(1));
+                var currentTime = DateTimeExtensions.RoundUp(emptyActivityEntity.StartTime, TimeSpan.FromMinutes(1));
+
+                if (InterruptCurrentActivity)
+                {
+                    var currentActivity = await _context.ActivityEntity.OrderByDescending(i => i.StartTime).FirstOrDefaultAsync(i => i.EndTime == null);
+                    currentActivity.EndTime = currentTime;
+                }
+
+                emptyActivityEntity.StartTime = currentTime;
                 _context.ActivityEntity.Add(emptyActivityEntity);
                 await _context.SaveChangesAsync();
 

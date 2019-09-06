@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeLog.ViewModels
 {
@@ -6,16 +8,15 @@ namespace TimeLog.ViewModels
     {
         public int Id { get; set; }
 
+        [Display(Name = "Date")]
         public DateTime Date { get; set; }
 
-        public string Month { get; set; }
-
+        [Display(Name = "Weekday")]
         public string DayOfWeek { get; set; }
 
+        [Display(Name = "Total Hours")]
+        [DisplayFormat(DataFormatString = "{0:#.####}")]
+        [Column(TypeName = "decimal(8,1)")]
         public decimal SumTotalDurationHours { get; set; }
-
-        public int ProjectId { get; set; }
-
-        public string ProjectName { get; set; }
     }
 }

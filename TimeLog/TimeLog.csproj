@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190906143758_summary-table-test.cs" />
+    <Compile Remove="Migrations\20190906143758_summary-table-test.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\js\site.ts" />
   </ItemGroup>
 

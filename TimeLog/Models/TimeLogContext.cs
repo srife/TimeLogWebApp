@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace TimeLog.Models
 {
@@ -15,6 +16,7 @@ namespace TimeLog.Models
         public DbSet<Location> Locations { get; set; }
         public DbSet<Project> Projects { get; set; }
 
+        [NotMapped]
         public virtual DbSet<ViewModels.Summary> Summary { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

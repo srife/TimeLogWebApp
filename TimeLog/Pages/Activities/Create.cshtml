@@ -50,6 +50,11 @@
                 <span asp-validation-for="ActivityEntity.Tasks" class="text-danger"></span>
                 <script>CKEDITOR.replace("ActivityEntity.Tasks");</script>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="InterruptCurrentActivity" /> Interrupt Current Activity
+                </label>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
