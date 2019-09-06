@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeLog.Models;
@@ -21,13 +21,31 @@ namespace TimeLog.Pages
 
         public bool ActivityEntityExists { get; set; }
 
-        public IList<ViewModels.Summary> Summary { get; set; }
+        private IList<ViewModels.Summary> Summary { get; set; }
+
+        public string Project1Points { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             ActivityEntity = await _context.ActivityEntity.FirstOrDefaultAsync(m => m.EndTime == null);
 
             ActivityEntityExists = (ActivityEntity != null);
+
+            Summary = await _context.Summary.FromSql("EXEC sp_Summary").ToListAsync();
+
+            for (int i = 0; i < Summary.Count; i++)
+            {
+                var item = Summary[i];
+
+                if (i == 0)
+                {
+                    Project1Points += $"{100},{400 - item.SumTotalDurationHours * 50} ";
+                }
+                else
+                {
+                    Project1Points += $"{i * 97 + 100},{400 - item.SumTotalDurationHours * 50} ";
+                }
+            }
 
             return Page();
         }

@@ -15,6 +15,8 @@ namespace TimeLog.Models
         public DbSet<Location> Locations { get; set; }
         public DbSet<Project> Projects { get; set; }
 
+        public virtual DbSet<ViewModels.Summary> Summary { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ActivityEntity>()

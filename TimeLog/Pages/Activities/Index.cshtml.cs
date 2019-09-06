@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,7 +61,7 @@ namespace TimeLog.Pages.Activities
                 .ToListAsync();
         }
 
-        public async Task OnGetClose(int id)
+        public async Task OnGetFinish(int id)
         {
             var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
             activityEntityToUpdate.EndTime =
@@ -72,8 +72,38 @@ namespace TimeLog.Pages.Activities
                 .Include(a => a.ActivityType)
                 .Include(a => a.Client)
                 .Include(a => a.Project)
+                .AsNoTracking()
                 .OrderByDescending(x => x.StartTime)
                 .ToListAsync();
+        }
+
+        public async Task<IActionResult> OnGetDuplicate(int id)
+        {
+            var activityEntityToDuplicate = await _context.ActivityEntity
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            var newActivityEntity = new ActivityEntity
+            {
+                ActivityTypeId = activityEntityToDuplicate.ActivityTypeId,
+                Billable = activityEntityToDuplicate.Billable,
+                ClientId = activityEntityToDuplicate.ClientId,
+                LocationId = activityEntityToDuplicate.LocationId,
+                ProjectId = activityEntityToDuplicate.ProjectId,
+                StartTime = Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1))
+            };
+
+            _context.ActivityEntity.Add(newActivityEntity);
+            await _context.SaveChangesAsync();
+
+            ActivityEntities = _context.ActivityEntity
+                .Include(a => a.ActivityType)
+                .Include(a => a.Client)
+                .Include(a => a.Project)
+                .OrderByDescending(x => x.StartTime)
+                .ToList();
+
+            return Page();
         }
 
         public ActionResult OnPostExport()

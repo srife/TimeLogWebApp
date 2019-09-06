@@ -32,6 +32,8 @@
             <tr>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
                 <th>
                     <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort">
                         Date
@@ -47,71 +49,73 @@
                 </th>
                 <th></th>
                 <th></th>
-                <th></th>
+
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.ActivityEntities)
             {
-                <tr>
-                    <td>
-                        <a asp-page="./Details" asp-route-id="@item.Id">
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <span>
-                            @item.Date.ToString("yyyy/MM/dd")
-                        </span>
-                        <span>
-                            @item.StartTime.ToString("HH:mm")-
-                            @if (item.EndTime.HasValue)
-                            {
-                                @item.EndTime.Value.ToString("HH:mm")
-                            }
-                        </span>
-                    </td>
-                    <td>
+            <tr>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    @if (item.EndTime == null)
+                    {
+                        <a asp-page-handler="Finish" asp-route-id="@item.Id"><i class="fa fa-flag-checkered" title="Finish"></i></a>
+                    }
+                </td>
+                <td>
+                    @if (item.EndTime != null)
+                    {
+                        <a asp-page-handler="Duplicate" asp-route-id="@item.Id"><i class="fa fa-clone" title="Resume"></i></a>
+                    }
+                </td>
+                <td>
+                    <span>
+                        @item.Date.ToString("yyyy/MM/dd")
+                    </span>
+                    <span>
+                        @item.StartTime.ToString("HH:mm")-
                         @if (item.EndTime.HasValue)
                         {
-                            @item.EndTime.Value.Subtract(@item.StartTime)
+                            @item.EndTime.Value.ToString("HH:mm")
                         }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
-                        @if (!string.IsNullOrEmpty(item.Project.Name) || !string.IsNullOrEmpty(item.Client.Name))
-                        {
-                            <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
-                            <span class="client-display-small">@Html.DisplayFor(modelItem => item.Client.Name)</span>
-                        }
-                    </td>
-                    <td>
-                        <div class="short-task-display">
-                            @Html.Raw(item.Tasks)
-                        </div>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Billable)
-                    </td>
-                    <td>
-                        @if (item.EndTime == null)
-                        {
-                            <a asp-page-handler="Close" asp-route-id="@item.Id"><i class="fa fa-flag-checkered"></i></a>
-                        }
-                    </td>
-                    <td>
-                        <span>
-                            <a asp-page="./Delete" asp-route-id="@item.Id">
-                                <i class="fa fa-trash-alt"></i>
-                            </a>
-                        </span>
-                    </td>
-                </tr>
+                    </span>
+                </td>
+                <td>
+                    @if (item.EndTime.HasValue)
+                    {
+                        @item.EndTime.Value.Subtract(@item.StartTime)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
+                    @if (!string.IsNullOrEmpty(item.Project.Name) || !string.IsNullOrEmpty(item.Client.Name))
+                    {
+                        <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
+                        <span class="client-display-small">@Html.DisplayFor(modelItem => item.Client.Name)</span>
+                    }
+                </td>
+                <td>
+                    <div class="short-task-display">
+                        @Html.Raw(item.Tasks)
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Billable)
+                </td>
+                <td>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fa fa-trash-alt"></i></a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
