@@ -5,31 +5,26 @@ class Main {
     constructor() {
         "use strict";
         $(() => {
-            //alert("Hello");
+            //const activityEntityProjectId = $("#ActivityEntity_ProjectId");
+            //const activityEntityActivityTypeId = $("#ActivityEntity_ActivityTypeId");
+            //const activityEntityClientId = $("ActivityEntity_ClientId");
 
-            const billableEl = (document.getElementById("ActivityEntity_Billable") as HTMLInputElement);
-            const invoiceStatementDiv = document.getElementById("invoice-statement") as HTMLDivElement;
-
-            if (billableEl !== null && billableEl !== undefined) {
-                if (!billableEl.checked) {
-                    invoiceStatementDiv.style.setProperty("display", "none");
-                } else {
-                    invoiceStatementDiv.style.removeProperty("display");
+            if (document.getElementById("ActivityEntity_Billable")) {
+                if (document.getElementById("invoice-statement")) {
+                    $("#invoice-statement").toggle($("#ActivityEntity_Billable").is(":checked"));
                 }
-
-                billableEl.addEventListener("click", () => {
-                    console.log(`billable: ${billableEl.checked}`);
-                    if (!billableEl.checked) {
-                        invoiceStatementDiv.style.setProperty("display", "none");
-                    } else {
-                        invoiceStatementDiv.style.removeProperty("display");
-                    }
-                });
             }
+
+            $("#ActivityEntity_Billable").change(() => {
+                if ($("#invoice-statement").length) {
+                    $("#invoice-statement").toggle($("#ActivityEntity_Billable").is(":checked"));
+                }
+            });
+            $("#ActivityEntity_ProjectId").change((event) => {
+                alert($(event.currentTarget).val() + " " + $(event.currentTarget).find("option:selected").text());
+            });
         });
     }
 }
 
 var main = new Main();
-//let titleEl = document.querySelector("h1");
-//titleEl.innerText = "Hello from TypeScript";

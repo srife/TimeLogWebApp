@@ -3,25 +3,19 @@ class Main {
     constructor() {
         "use strict";
         $(() => {
-            const billableEl = document.getElementById("ActivityEntity_Billable");
-            const invoiceStatementDiv = document.getElementById("invoice-statement");
-            if (billableEl !== null && billableEl !== undefined) {
-                if (!billableEl.checked) {
-                    invoiceStatementDiv.style.setProperty("display", "none");
+            if (document.getElementById("ActivityEntity_Billable")) {
+                if (document.getElementById("invoice-statement")) {
+                    $("#invoice-statement").toggle($("#ActivityEntity_Billable").is(":checked"));
                 }
-                else {
-                    invoiceStatementDiv.style.removeProperty("display");
-                }
-                billableEl.addEventListener("click", () => {
-                    console.log(`billable: ${billableEl.checked}`);
-                    if (!billableEl.checked) {
-                        invoiceStatementDiv.style.setProperty("display", "none");
-                    }
-                    else {
-                        invoiceStatementDiv.style.removeProperty("display");
-                    }
-                });
             }
+            $("#ActivityEntity_Billable").change(() => {
+                if ($("#invoice-statement").length) {
+                    $("#invoice-statement").toggle($("#ActivityEntity_Billable").is(":checked"));
+                }
+            });
+            $("#ActivityEntity_ProjectId").change((event) => {
+                alert($(event.currentTarget).val() + " " + $(event.currentTarget).find("option:selected").text());
+            });
         });
     }
 }

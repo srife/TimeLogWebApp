@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
@@ -22,6 +23,8 @@ namespace TimeLog.Pages
         public bool ActivityEntityExists { get; set; }
 
         public IList<ViewModels.Summary> Summary { get; set; }
+
+        public decimal TotalWeeklyHours { get; set; }
 
         public string Project1Points { get; set; }
 
@@ -46,6 +49,8 @@ namespace TimeLog.Pages
                     Project1Points += $"{i * 97 + 100},{400 - item.SumTotalDurationHours * 50} ";
                 }
             }
+
+            TotalWeeklyHours = Summary.Sum(i => i.SumTotalDurationHours);
 
             return Page();
         }

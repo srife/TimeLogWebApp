@@ -80,7 +80,7 @@ namespace TimeLog.Pages.Activities
             return Page();
         }
 
-        public async Task<IActionResult> OnPostSelectProject()
+        public async Task<IActionResult> OnGetAsyncProjectSelected()
         {
             if (!ModelState.IsValid)
             {
