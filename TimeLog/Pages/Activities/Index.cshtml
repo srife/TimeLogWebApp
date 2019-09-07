@@ -41,8 +41,7 @@
                 </th>
                 <th>Duration</th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ActivityEntities[0].ActivityTypeId)/
-                    @Html.DisplayNameFor(model => model.ActivityEntities[0].Project)/@Html.DisplayNameFor(model => model.ActivityEntities[0].Client)
+                    @Html.DisplayNameFor(model => model.ActivityEntities[0].ActivityTypeId)/@Html.DisplayNameFor(model => model.ActivityEntities[0].Client)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ActivityEntities[0].Tasks)
@@ -98,14 +97,17 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
-                    @if (!string.IsNullOrEmpty(item.Project.Name) || !string.IsNullOrEmpty(item.Client.Name))
-                    {
-                        <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
+                    @if (!string.IsNullOrEmpty(item.Client.Name))
+                    {                        
                         <span class="client-display-small">@Html.DisplayFor(modelItem => item.Client.Name)</span>
                     }
                 </td>
                 <td>
                     <div class="short-task-display">
+                        @if (!string.IsNullOrEmpty(item.Project.Name))
+                        {
+                            <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
+                        }
                         @Html.Raw(item.Tasks)
                     </div>
                 </td>

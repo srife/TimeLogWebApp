@@ -33,9 +33,9 @@ namespace TimeLog.Pages.Projects
                 return NotFound();
             }
 
-            PopulateActivityTypesDropDownList(_context);
-            PopulateClientDropDownList(_context);
-            PopulateLocationDropDownList(_context);
+            PopulateActivityTypesDropDownList(_context, Project.DefaultActivityTypeId);
+            PopulateClientDropDownList(_context, Project.DefaultClientId);
+            PopulateLocationDropDownList(_context, Project.DefaultLocationId);
 
             return Page();
         }
@@ -52,9 +52,12 @@ namespace TimeLog.Pages.Projects
             if (await TryUpdateModelAsync(projectToUpdate,
                 "Project",
                 s => s.Name,
-                s => s.IsDefault))
+                s => s.IsDefault,
+                s => s.DefaultActivityTypeId,
+                s => s.DefaultClientId,
+                s => s.DefaultLocationId))
             {
-                if (Project.IsDefault)
+                if (projectToUpdate.IsDefault)
                 {
                     var projects = _context.Projects.Where(x => x.IsDefault);
                     foreach (var p in projects)
@@ -67,9 +70,9 @@ namespace TimeLog.Pages.Projects
                 return RedirectToPage("./Index");
             }
 
-            PopulateActivityTypesDropDownList(_context);
-            PopulateClientDropDownList(_context);
-            PopulateLocationDropDownList(_context);
+            PopulateActivityTypesDropDownList(_context, projectToUpdate.DefaultActivityTypeId);
+            PopulateClientDropDownList(_context, projectToUpdate.DefaultClientId);
+            PopulateLocationDropDownList(_context, projectToUpdate.DefaultLocationId);
 
             return Page();
         }

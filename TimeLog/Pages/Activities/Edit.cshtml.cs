@@ -76,10 +76,10 @@ namespace TimeLog.Pages.Activities
                 return RedirectToPage("./Index");
             }
 
-            PopulateActivityTypesDropDownList(_context, ActivityEntity.ActivityTypeId);
-            PopulateClientDropDownList(_context, ActivityEntity.ClientId);
-            PopulateProjectsDropDownList(_context, ActivityEntity.ProjectId);
-            PopulateLocationDropDownList(_context, ActivityEntity.LocationId);
+            PopulateActivityTypesDropDownList(_context, activityEntityToUpdate.ActivityTypeId);
+            PopulateClientDropDownList(_context, activityEntityToUpdate.ClientId);
+            PopulateProjectsDropDownList(_context, activityEntityToUpdate.ProjectId);
+            PopulateLocationDropDownList(_context, activityEntityToUpdate.LocationId);
 
             return Page();
         }

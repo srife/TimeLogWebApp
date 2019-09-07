@@ -14,7 +14,49 @@ class Main {
                 }
             });
             $("#ActivityEntity_ProjectId").change((event) => {
-                alert($(event.currentTarget).val() + " " + $(event.currentTarget).find("option:selected").text());
+                $.ajax({
+                    type: "GET",
+                    url: window.location.pathname + "?handler=ProjectSelected&id=" + $(event.currentTarget).val(),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: response => {
+                        $(response).each(function (i, val) {
+                            $.each(val, function (k, v) {
+                                switch (k) {
+                                    case "defaultActivityTypeId":
+                                        if (v !== null && v !== undefined) {
+                                            $("#ActivityEntity_ActivityTypeId option[value=" + v + "]").attr("selected", "selected");
+                                        }
+                                        else {
+                                            $("#ActivityEntity_ActivityTypeId option[value=" + 0 + "]").attr("selected", "selected");
+                                        }
+                                        break;
+                                    case "defaultClientId":
+                                        if (v !== null && v !== undefined) {
+                                            $("#ActivityEntity_ClientId option[value=" + v + "]").attr("selected", "selected");
+                                        }
+                                        else {
+                                            $("#ActivityEntity_ClientId option[value=" + 0 + "]").attr("selected", "selected");
+                                        }
+                                        break;
+                                    case "defaultLocationId":
+                                        if (v !== null && v !== undefined) {
+                                            $("#ActivityEntity_LocationId option[value=" + v + "]").attr("selected", "selected");
+                                        }
+                                        else {
+                                            $("#ActivityEntity_LocationId option[value=" + 0 + "]").attr("selected", "selected");
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            });
+                        });
+                    },
+                    error: function (ex) {
+                        alert("Failed to retrieve items " + ex);
+                    }
+                });
             });
         });
     }
