@@ -5,10 +5,6 @@ class Main {
     constructor() {
         "use strict";
         $(() => {
-            //const activityEntityProjectId = $("#ActivityEntity_ProjectId");
-            //const activityEntityActivityTypeId = $("#ActivityEntity_ActivityTypeId");
-            //const activityEntityClientId = $("ActivityEntity_ClientId");
-
             //alert(window.location.pathname);
             //this function will return the full URL up to the last '/'
             //function getAbsolutePath() {
