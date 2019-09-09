@@ -83,12 +83,14 @@ namespace TimeLog.Pages
             return Page();
         }
 
-        public async Task OnGetClose(int id)
+        public async Task<IActionResult> OnGetClose(int id)
         {
             var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
             activityEntityToUpdate.EndTime =
                 Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1));
             await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }

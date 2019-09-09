@@ -7,6 +7,13 @@ namespace TimeLog.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             var sp = @"
+/****** Object:  StoredProcedure [dbo].[sp_Summary]    Script Date: 9/9/2019 10:09:21 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[sp_Summary]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[sp_Summary] AS'
@@ -28,21 +35,26 @@ BEGIN
 	WHERE DATEADD(DD,ID-1,@StartDate)<=@EndDate
 
 	;WITH CTE AS(
-		SELECT [Id]
+		SELECT ae.[Id]
 			  ,d.date AS [Date]
-			  ,DATENAME(WEEKDAY,StartTime) AS [DayOfWeek]
-			  ,CAST((DATEDIFF(second,StartTime,ISNULL(EndTime,GETDATE())) / 3600.0) AS decimal(8,1)) AS TotalDurationHours
-		  FROM [dbo].[ActivityEntity]
-		  RIGHT OUTER JOIN @dates d ON CAST(ActivityEntity.StartTime AS Date) = d.[date]
+			  ,DATEPART(ww,d.[date]) AS WeekNumber
+			  ,DATENAME(WEEKDAY,d.[date]) AS [DayOfWeek]
+			  ,CAST(
+				ISNULL((DATEDIFF(second,ae.StartTime,ISNULL(ae.EndTime,GETDATE())) / 3600.0),0) AS decimal(8,1)
+				) AS TotalDurationHours
+			  ,ClientId
+		  FROM [dbo].[ActivityEntity] ae
+		  RIGHT OUTER JOIN @dates d ON CAST(ae.StartTime AS Date) = d.[date]
 	)
 
-	SELECT CAST(ROW_NUMBER() OVER (ORDER BY [Date]) AS int) AS Id
-	    ,[Date]
-		,DATENAME(WEEKDAY,[Date]) AS [DayOfWeek]
-		,ISNULL(SUM(TotalDurationHours),0) AS SumTotalDurationHours
+	SELECT CAST(ROW_NUMBER() OVER (ORDER BY d.[Date]) AS int) AS Id
+	    ,d.[Date]
+		,DATENAME(WEEKDAY,d.[Date]) AS [DayOfWeek]
+		,(SELECT ISNULL(SUM(cte2.TotalDurationHours),0) FROM CTE cte2 WHERE cte2.[Date] = d.[date] AND (cte2.ClientId = 2 OR cte2.ClientId IS NULL)) AS SumTotalDurationHours
 	FROM CTE
-	GROUP By [Date]
-	ORDER BY [Date]
+	RIGHT OUTER JOIN @dates d ON CTE.[Date] = d.[date]
+	GROUP By d.[Date]
+	ORDER BY d.[Date]
 END
 GO
 ";
