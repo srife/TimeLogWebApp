@@ -64,8 +64,8 @@ namespace TimeLog.Pages.Activities
         public async Task OnGetFinish(int id)
         {
             var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
-            activityEntityToUpdate.EndTime =
-                Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1));
+            activityEntityToUpdate.EndTime = Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1));
+
             await _context.SaveChangesAsync();
 
             ActivityEntities = await _context.ActivityEntity

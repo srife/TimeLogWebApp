@@ -54,7 +54,8 @@ namespace TimeLog.Pages.Activities
                 s => s.Billable,
                 s => s.Tasks))
             {
-                var currentTime = DateTimeExtensions.RoundUp(emptyActivityEntity.StartTime, TimeSpan.FromMinutes(1));
+                var currentTime = DateTimeExtensions.RoundUp2(emptyActivityEntity.StartTime, TimeSpan.FromMinutes(1));
+                //var currentTime = emptyActivityEntity.StartTime;
 
                 if (InterruptCurrentActivity)
                 {

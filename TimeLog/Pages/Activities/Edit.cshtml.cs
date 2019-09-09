@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using TimeLog.Extensions;
 using TimeLog.Models;
@@ -62,13 +62,11 @@ namespace TimeLog.Pages.Activities
                 s => s.Tasks,
                 s => s.InvoiceStatement))
             {
-                activityEntityToUpdate.StartTime =
-                    DateTimeExtensions.RoundUp(activityEntityToUpdate.StartTime, TimeSpan.FromMinutes(1));
+                activityEntityToUpdate.StartTime = DateTimeExtensions.RoundUp2(activityEntityToUpdate.StartTime, TimeSpan.FromMinutes(1));
 
                 if (activityEntityToUpdate.EndTime != null)
                 {
-                    activityEntityToUpdate.EndTime =
-                        DateTimeExtensions.RoundUp(activityEntityToUpdate.EndTime.Value, TimeSpan.FromMinutes(1));
+                    activityEntityToUpdate.EndTime = activityEntityToUpdate.EndTime.Value;
                 }
 
                 await _context.SaveChangesAsync();

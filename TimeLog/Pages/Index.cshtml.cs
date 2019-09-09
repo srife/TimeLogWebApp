@@ -71,8 +71,8 @@ namespace TimeLog.Pages
             {
                 if (activityEntityToUpdate.EndTime != null)
                 {
-                    activityEntityToUpdate.EndTime =
-                        Extensions.DateTimeExtensions.RoundUp(activityEntityToUpdate.EndTime.Value, TimeSpan.FromMinutes(1));
+                    activityEntityToUpdate.EndTime = Extensions.DateTimeExtensions.RoundUp2(activityEntityToUpdate.EndTime.Value, TimeSpan.FromMinutes(1));
+                    //activityEntityToUpdate.EndTime = activityEntityToUpdate.EndTime.Value;
                 }
 
                 await _context.SaveChangesAsync();
@@ -86,8 +86,8 @@ namespace TimeLog.Pages
         public async Task<IActionResult> OnGetClose(int id)
         {
             var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
-            activityEntityToUpdate.EndTime =
-                Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1));
+            activityEntityToUpdate.EndTime = Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1));
+            //activityEntityToUpdate.EndTime = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

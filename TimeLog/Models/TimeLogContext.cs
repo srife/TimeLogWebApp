@@ -27,6 +27,14 @@ namespace TimeLog.Models
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ActivityEntity>()
+                .Property(p => p.StartTime)
+                .HasColumnType("datetimeoffset(7)");
+
+            modelBuilder.Entity<ActivityEntity>()
+                .Property(p => p.EndTime)
+                .HasColumnType("datetimeoffset(7)");
+
+            modelBuilder.Entity<ActivityEntity>()
                 .Property(c => c.RowVersion).IsRowVersion();
         }
     }
