@@ -34,11 +34,12 @@ Sample json:
   "ConnectionStrings:TimeLogContext": "Server=(localdb)\\mssqllocaldb;Database=TimeLog_db;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
 ```
+To find out how to add/edit user secrets for a project visit https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows.
+
 ##### YAML for Azure Pipelines
 
 ###### WhiteSource Bolt
 
 ##### TypeScript, node.js, jQuery
 
-To find out how to add/edit user secrets for a project visit https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows.
 
