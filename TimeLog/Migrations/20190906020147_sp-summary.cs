@@ -27,6 +27,7 @@ BEGIN
 
 	DECLARE @StartDate datetime = (SELECT DATEADD(ww, DATEDIFF(ww,0,GETDATE()), 0))
 	DECLARE @EndDate datetime = @StartDate+6
+	DECLARE @Now datetime = GETDATE()
 
 	DECLARE @dates TABLE ([date] datetime NOT NULL)
 	INSERT INTO @dates ([date])
@@ -39,14 +40,15 @@ BEGIN
 			  ,d.date AS [Date]
 			  ,DATEPART(ww,d.[date]) AS WeekNumber
 			  ,DATENAME(WEEKDAY,d.[date]) AS [DayOfWeek]
+			  ,ae.StartTime
+			  ,ae.EndTime
 			  ,CAST(
-				ISNULL((DATEDIFF(second,ae.StartTime,ISNULL(ae.EndTime,GETDATE())) / 3600.0),0) AS decimal(8,1)
+				ISNULL((DATEDIFF(second,ae.StartTime,ISNULL(ae.EndTime,DATEADD(HH,4,@Now))) / 3600.0),0) AS decimal(8,1)
 				) AS TotalDurationHours
 			  ,ClientId
 		  FROM [dbo].[ActivityEntity] ae
 		  RIGHT OUTER JOIN @dates d ON CAST(ae.StartTime AS Date) = d.[date]
 	)
-
 	SELECT CAST(ROW_NUMBER() OVER (ORDER BY d.[Date]) AS int) AS Id
 	    ,d.[Date]
 		,DATENAME(WEEKDAY,d.[Date]) AS [DayOfWeek]
@@ -54,8 +56,7 @@ BEGIN
 	FROM CTE
 	RIGHT OUTER JOIN @dates d ON CTE.[Date] = d.[date]
 	GROUP By d.[Date]
-	ORDER BY d.[Date]
-END
+	ORDER BY d.[Date]END
 GO
 ";
             migrationBuilder.Sql(sp);
