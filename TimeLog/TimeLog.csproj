@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Content Remove="Controllers\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <None Remove="Controllers\**" />
+    <TypeScriptCompile Remove="Controllers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20190906143758_summary-table-test.cs" />
     <Compile Remove="Migrations\20190906143758_summary-table-test.Designer.cs" />
   </ItemGroup>
@@ -35,7 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Models\CustomSeedData\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
