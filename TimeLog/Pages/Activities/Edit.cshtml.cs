@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using TimeLog.Extensions;
 using TimeLog.Models;
@@ -26,8 +26,7 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ActivityEntity = await _context.ActivityEntity
-                .FirstOrDefaultAsync(m => m.Id == id);
+            ActivityEntity = await _context.ActivityEntity.FirstOrDefaultAsync(m => m.Id == id);
 
             if (ActivityEntity == null)
             {
@@ -63,13 +62,11 @@ namespace TimeLog.Pages.Activities
                 s => s.Tasks,
                 s => s.InvoiceStatement))
             {
-                activityEntityToUpdate.StartTime =
-                    DateTimeExtensions.RoundUp(activityEntityToUpdate.StartTime, TimeSpan.FromMinutes(1));
+                activityEntityToUpdate.StartTime = DateTimeExtensions.RoundUp2(activityEntityToUpdate.StartTime, TimeSpan.FromMinutes(1));
 
                 if (activityEntityToUpdate.EndTime != null)
                 {
-                    activityEntityToUpdate.EndTime =
-                        DateTimeExtensions.RoundUp(activityEntityToUpdate.EndTime.Value, TimeSpan.FromMinutes(1));
+                    activityEntityToUpdate.EndTime = activityEntityToUpdate.EndTime.Value;
                 }
 
                 await _context.SaveChangesAsync();
@@ -77,10 +74,10 @@ namespace TimeLog.Pages.Activities
                 return RedirectToPage("./Index");
             }
 
-            PopulateActivityTypesDropDownList(_context, ActivityEntity.ActivityTypeId);
-            PopulateClientDropDownList(_context, ActivityEntity.ClientId);
-            PopulateProjectsDropDownList(_context, ActivityEntity.ProjectId);
-            PopulateLocationDropDownList(_context, ActivityEntity.LocationId);
+            PopulateActivityTypesDropDownList(_context, activityEntityToUpdate.ActivityTypeId);
+            PopulateClientDropDownList(_context, activityEntityToUpdate.ClientId);
+            PopulateProjectsDropDownList(_context, activityEntityToUpdate.ProjectId);
+            PopulateLocationDropDownList(_context, activityEntityToUpdate.LocationId);
 
             return Page();
         }

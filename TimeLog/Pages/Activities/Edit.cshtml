@@ -57,7 +57,7 @@
                 <span asp-validation-for="ActivityEntity.Tasks" class="text-danger"></span>
                 <script>CKEDITOR.replace("ActivityEntity.Tasks");</script>
             </div>
-            <div class="form-group invoice-statement">
+            <div id="invoice-statement" class="form-group">
                 <label asp-for="ActivityEntity.InvoiceStatement"></label>
                 <textarea asp-for="ActivityEntity.InvoiceStatement" class="form-control"></textarea>
                 <span asp-validation-for="ActivityEntity.InvoiceStatement" class="text-danger"></span>

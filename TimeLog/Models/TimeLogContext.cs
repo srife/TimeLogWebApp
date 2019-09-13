@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace TimeLog.Models
 {
@@ -15,12 +16,26 @@ namespace TimeLog.Models
         public DbSet<Location> Locations { get; set; }
         public DbSet<Project> Projects { get; set; }
 
+        [NotMapped]
+        public virtual DbSet<ViewModels.Summary> Summary { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ActivityEntity>()
                 .HasMany(e => e.Children)
                 .WithOne(m => m.Parent)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ActivityEntity>()
+                .Property(p => p.StartTime)
+                .HasColumnType("datetimeoffset(7)");
+
+            modelBuilder.Entity<ActivityEntity>()
+                .Property(p => p.EndTime)
+                .HasColumnType("datetimeoffset(7)");
+
+            modelBuilder.Entity<ActivityEntity>()
+                .Property(c => c.RowVersion).IsRowVersion();
         }
     }
 }

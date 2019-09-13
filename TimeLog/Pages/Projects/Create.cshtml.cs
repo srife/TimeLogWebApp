@@ -38,25 +38,28 @@ namespace TimeLog.Pages.Projects
                 emptyProject,
                 "Project",
                 s => s.Name,
-                s => s.IsDefault))
+                s => s.IsDefault,
+                s => s.DefaultActivityTypeId,
+                s => s.DefaultClientId,
+                s => s.DefaultLocationId))
             {
-                if (Project.IsDefault)
+                if (emptyProject.IsDefault)
                 {
                     var projects = _context.Projects.Where(x => x.IsDefault);
                     foreach (var p in projects)
                     {
                         p.IsDefault = false;
                     }
-
-                    _context.Projects.Add(emptyProject);
-                    await _context.SaveChangesAsync();
-                    return RedirectToPage("./Index");
                 }
+
+                _context.Projects.Add(emptyProject);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
 
-            PopulateActivityTypesDropDownList(_context);
-            PopulateClientDropDownList(_context);
-            PopulateLocationDropDownList(_context);
+            PopulateActivityTypesDropDownList(_context, emptyProject.DefaultActivityTypeId);
+            PopulateClientDropDownList(_context, emptyProject.DefaultClientId);
+            PopulateLocationDropDownList(_context, emptyProject.DefaultLocationId);
 
             return Page();
         }

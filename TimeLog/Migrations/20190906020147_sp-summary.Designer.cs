@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeLog.Models;
 
 namespace TimeLog.Migrations
 {
     [DbContext(typeof(TimeLogContext))]
-    partial class TimeLogContextModelSnapshot : ModelSnapshot
+    [Migration("20190906020147_sp-summary")]
+    partial class spsummary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +33,7 @@ namespace TimeLog.Migrations
 
                     b.Property<int?>("ClientId");
 
-                    b.Property<DateTimeOffset?>("EndTime")
-                        .HasColumnType("datetimeoffset(7)");
+                    b.Property<DateTime?>("EndTime");
 
                     b.Property<string>("InvoiceStatement");
 
@@ -46,8 +47,7 @@ namespace TimeLog.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<DateTimeOffset>("StartTime")
-                        .HasColumnType("datetimeoffset(7)");
+                    b.Property<DateTime>("StartTime");
 
                     b.Property<string>("Tasks");
 
@@ -136,24 +136,6 @@ namespace TimeLog.Migrations
                     b.HasIndex("DefaultLocationId");
 
                     b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("TimeLog.ViewModels.Summary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("DayOfWeek");
-
-                    b.Property<decimal>("SumTotalDurationHours")
-                        .HasColumnType("decimal(8,1)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Summary");
                 });
 
             modelBuilder.Entity("TimeLog.Models.ActivityEntity", b =>
