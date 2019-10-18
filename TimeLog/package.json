@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.31",
     "@types/knockout": "^3.4.66",
+    "@types/tinymce": "^4.5.23",
     "knockout": "^3.5.0",
     "requirejs": "^2.3.6"
   }

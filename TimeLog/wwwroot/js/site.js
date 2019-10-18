@@ -3,10 +3,10 @@ class Main {
     constructor() {
         "use strict";
         $(() => {
-            if (document.getElementById("ActivityEntity_Billable")) {
-                if (document.getElementById("invoice-statement")) {
-                    $("#invoice-statement").toggle($("#ActivityEntity_Billable").is(":checked"));
-                }
+            const activityEntity_Billable = document.getElementById("ActivityEntity_Billable");
+            const invoiceStatement = document.getElementById("invoice-statement");
+            if (activityEntity_Billable && invoiceStatement) {
+                $("#invoice-statement").toggle($("#ActivityEntity_Billable").is(":checked"));
             }
             $("#ActivityEntity_Billable").change(() => {
                 if ($("#invoice-statement").length) {
@@ -58,6 +58,8 @@ class Main {
                     }
                 });
             });
+            var edit = document.getElementById("edit");
+            var editTasks = document.getElementById("ActivityEntity_Tasks");
         });
     }
 }
