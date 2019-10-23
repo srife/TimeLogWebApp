@@ -62,6 +62,8 @@ namespace TimeLog
                 app.UseHsts();
             }
 
+            app.UseSecurityHeaders();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
