@@ -37,10 +37,24 @@ namespace TimeLog.Pages.Activities
                 .Include(a => a.Client)
                 .Include(a => a.Project);
 
-            if (!string.IsNullOrEmpty(searchString))
+            var billable = false;
+            if (!string.IsNullOrEmpty(CurrentFilter))
             {
-                ae = ae.Where(s => s.Tasks.Contains(searchString) || s.InvoiceStatement.Contains(searchString));
+                billable = CurrentFilter.Contains("billable");
+                if (billable)
+                {
+                    CurrentFilter = CurrentFilter.Replace("billable", "");
+                    ae = ae.Where(s => s.Billable);
+                }
             }
+
+            if (!string.IsNullOrEmpty(CurrentFilter))
+            {
+                ae = ae.Where(s => s.Tasks.Contains(CurrentFilter) ||
+                s.InvoiceStatement.Contains(CurrentFilter) ||
+                s.Client.Name.Contains(CurrentFilter));
+            }
+
             switch (sortOrder)
             {
                 case "Date":
