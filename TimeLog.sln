@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeLog", "TimeLog\TimeLog.csproj", "{6FD2F943-593C-4948-9833-549181FB98B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeLog", "TimeLog\TimeLog.csproj", "{6FD2F943-593C-4948-9833-549181FB98B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeLog.Tests", "TimeLog.Tests\TimeLog.Tests.csproj", "{19227DD9-3D8C-418A-A6FA-39730E33DEDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6FD2F943-593C-4948-9833-549181FB98B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FD2F943-593C-4948-9833-549181FB98B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FD2F943-593C-4948-9833-549181FB98B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19227DD9-3D8C-418A-A6FA-39730E33DEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19227DD9-3D8C-418A-A6FA-39730E33DEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19227DD9-3D8C-418A-A6FA-39730E33DEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19227DD9-3D8C-418A-A6FA-39730E33DEDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
