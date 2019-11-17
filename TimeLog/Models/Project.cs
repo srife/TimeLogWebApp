@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeLog.Models
 {
@@ -29,5 +30,8 @@ namespace TimeLog.Models
 
         [Display(Name = "Default Activity Type")]
         public ActivityType DefaultActivityType { get; set; }
+
+        [Column(TypeName = "money")]
+        public decimal DefaultBillableRate { get; set; }
     }
 }

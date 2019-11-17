@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeLog.Models;
 
 namespace TimeLog.Migrations
 {
     [DbContext(typeof(TimeLogContext))]
-    partial class TimeLogContextModelSnapshot : ModelSnapshot
+    [Migration("20191117161838_sp_ReportDetailsByDay-Update")]
+    partial class sp_ReportDetailsByDayUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +89,6 @@ namespace TimeLog.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("DefaultBillableRate")
-                        .HasColumnType("money");
-
                     b.Property<bool>("IsDefault");
 
                     b.Property<string>("Name");
@@ -122,9 +121,6 @@ namespace TimeLog.Migrations
 
                     b.Property<int?>("DefaultActivityTypeId");
 
-                    b.Property<decimal>("DefaultBillableRate")
-                        .HasColumnType("money");
-
                     b.Property<int?>("DefaultClientId");
 
                     b.Property<int?>("DefaultLocationId");
@@ -152,38 +148,15 @@ namespace TimeLog.Migrations
 
                     b.Property<bool>("Billable");
 
-                    b.Property<decimal>("BillableAmount")
-                        .HasColumnType("money");
+                    b.Property<decimal>("BillableAmount");
 
-                    b.Property<decimal>("Duration")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<decimal>("Duration");
 
                     b.HasKey("ClientId", "ProjectId");
 
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Report");
-                });
-
-            modelBuilder.Entity("TimeLog.ViewModels.ReportDetailsByDay", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amt")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("DayOfWeek");
-
-                    b.Property<decimal>("Hrs")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("StartDay");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReportDetailsByDay");
                 });
 
             modelBuilder.Entity("TimeLog.ViewModels.Summary", b =>

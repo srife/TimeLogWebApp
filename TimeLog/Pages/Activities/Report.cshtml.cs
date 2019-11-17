@@ -16,8 +16,6 @@ namespace TimeLog.Pages.Activities
         public ReportModel(TimeLogContext context)
         {
             _context = context;
-            StartTime = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
-            Rate = 37.5M;
         }
 
         public DateTime StartTime { get; set; }
@@ -25,9 +23,14 @@ namespace TimeLog.Pages.Activities
         public IList<Client> Clients { get; set; }
         public IList<Project> Projects { get; set; }
         public IList<ViewModels.Report> Report { get; set; }
+        public IList<ViewModels.ReportDetailsByDay> ReportDetailsByDay { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var dayofweek = DateTime.UtcNow.DayOfWeek;
+            StartTime = dayofweek == DayOfWeek.Sunday ? DateTime.UtcNow.AddDays(-7) : DateTime.UtcNow.AddDays(-(int)dayofweek + (int)DayOfWeek.Sunday);
+
+            Rate = 37.5M;
             var p = new object[]
             {
                 new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) {Value = StartTime.ToUniversalTime()},
@@ -41,6 +44,10 @@ namespace TimeLog.Pages.Activities
             Report = await _context
                 .Report
                 .FromSql("execute sp_Report @p0, @p1, @p2, @p3", p)
+                .ToListAsync();
+
+            ReportDetailsByDay = await _context.ReportDetailsByDay
+                .FromSql("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
                 .ToListAsync();
 
             PopulateActivityTypesDropDownList(_context);

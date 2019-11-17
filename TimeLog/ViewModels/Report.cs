@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TimeLog.Models;
 
 namespace TimeLog.ViewModels
@@ -16,9 +17,11 @@ namespace TimeLog.ViewModels
         //[Column(Order = 9)]
         public bool Billable { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Duration { get; set; }
 
         [Display(Name = "Billable Amount")]
+        [Column(TypeName = "money")]
         public decimal BillableAmount { get; set; }
 
         public Client Client { get; set; }

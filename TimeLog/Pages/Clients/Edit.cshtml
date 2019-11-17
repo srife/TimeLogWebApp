@@ -19,6 +19,11 @@
                 </label>
             </div>
             <div class="form-group">
+                <label asp-for="Client.DefaultBillableRate"></label>
+                <input asp-for="Client.DefaultBillableRate" class="form-control" autofocus />
+                <span asp-validation-for="Client.DefaultBillableRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

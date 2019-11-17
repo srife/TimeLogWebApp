@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 using TimeLog.Models;
 
@@ -35,37 +34,22 @@ namespace TimeLog.Pages.Clients
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Client).State = EntityState.Modified;
+            var clientToUpdate = await _context.Clients.FindAsync(id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClientExists(Client.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            if (!await TryUpdateModelAsync(clientToUpdate,
+                "Client",
+                s => s.Name,
+                s => s.IsDefault,
+                s => s.DefaultBillableRate)) return Page();
+            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
-        }
-
-        private bool ClientExists(int id)
-        {
-            return _context.Clients.Any(e => e.Id == id);
         }
     }
 }

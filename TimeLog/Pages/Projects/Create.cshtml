@@ -30,6 +30,11 @@
                 <select asp-for="Project.DefaultActivityTypeId" class="form-control" asp-items="@Model.ActivityTypesSelectList"></select>
             </div>
             <div class="form-group">
+                <label asp-for="Project.DefaultBillableRate"></label>
+                <input asp-for="Project.DefaultBillableRate" class="form-control" autofocus />
+                <span asp-validation-for="Project.DefaultBillableRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

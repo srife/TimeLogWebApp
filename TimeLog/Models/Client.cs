@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeLog.Models
 {
@@ -11,5 +12,9 @@ namespace TimeLog.Models
 
         [Display(Name = "Default")]
         public bool IsDefault { get; set; }
+
+        [Display(Name = "Default Billing Rate")]
+        [Column(TypeName = "money")]
+        public decimal DefaultBillableRate { get; set; }
     }
 }

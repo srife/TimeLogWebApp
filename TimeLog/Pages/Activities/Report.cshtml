@@ -4,70 +4,92 @@
 <h1>Activities</h1>
 
 <div class="d-flex">
-
-    <form asp-page="./Report" method="get">
-        <div class="p-3 bg-primary"><input asp-for="StartTime" class="form-control" placeholder="StartTime" type="date" /></div>
-        <div class="p-3 bg-primary flex-grow-1"><input asp-for="Rate" class="form-control" placeholder="Rate" type="number" max="100.00" min="0.00" /></div>
-        <div class="p-3 bg-primary">
-
-            <div class="input-group">
-                <span class="input-group-prepend">
-                    <div class="input-group-text bg-transparent border-right-0 border"><i class="fa fa-search"></i></div>
-                </span>
-                <input class="form-control py-2 border-left-0 border" type="search" name="SearchString" />
-                <span class="input-group-append">
-                    <button class="btn btn-outline-secondary border-left-0 border" type="button">
-                        Search
-                    </button>
-                </span>
-            </div>
-        </div>
-    </form>
 </div>
 
 <div class="table-responsive">
     <table class="table activity">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Clients[0].Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Projects[0].Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Report[0].Billable)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Report[0].Duration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Report[0].BillableAmount)
-                </th>
-            </tr>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].DayOfWeek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Amt)
+            </th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Report)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Client.Name)
-                    </td>
+        @foreach (var item in Model.ReportDetailsByDay)
+        {
+            <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Project.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Billable)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Duration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BillableAmount)
-                    </td>
-                </tr>
-            }
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayOfWeek)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hrs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amt)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive">
+    <table class="table activity">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Clients[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Projects[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Report[0].Billable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Report[0].Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Report[0].BillableAmount)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Report)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Billable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillableAmount)
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

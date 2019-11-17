@@ -55,7 +55,8 @@ namespace TimeLog.Pages.Projects
                 s => s.IsDefault,
                 s => s.DefaultActivityTypeId,
                 s => s.DefaultClientId,
-                s => s.DefaultLocationId))
+                s => s.DefaultLocationId,
+                s => s.DefaultBillableRate))
             {
                 if (projectToUpdate.IsDefault)
                 {
