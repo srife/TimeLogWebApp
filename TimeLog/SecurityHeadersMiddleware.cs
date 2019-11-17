@@ -1,43 +1,48 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 
-public static class IApplicationBuilderExtensions
+namespace TimeLog
 {
-    public static void UseSecurityHeaders(
-        this IApplicationBuilder app)
+    // ReSharper disable once InconsistentNaming
+    public static class IApplicationBuilderExtensions
     {
-        app.UseMiddleware<SecurityHeadersMiddleware>();
-    }
-}
-
-public class SecurityHeadersMiddleware
-{
-    private readonly RequestDelegate next;
-
-    public SecurityHeadersMiddleware(RequestDelegate next)
-    {
-        this.next = next;
+        public static void UseSecurityHeaders(
+            this IApplicationBuilder app)
+        {
+            app.UseMiddleware<SecurityHeadersMiddleware>();
+        }
     }
 
-    public async Task Invoke(HttpContext context)
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class SecurityHeadersMiddleware
     {
-        context.Response.Headers.Add(
-            "Content-Security-Policy-Report-Only", "style-src 'self' " +
-            "https://stackpath.bootstrapcdn.com https://fonts.googleapis.com;" +
-            "frame-ancestors 'none'; ");
-        //context.Response.Headers.Add(
-        //    "Content-Security-Policy", "frame-ancestors 'none'");
+        private readonly RequestDelegate _next;
 
-        context.Response.Headers.Add(
-            "Feature-Policy", "camera 'none'");
+        public SecurityHeadersMiddleware(RequestDelegate next)
+        {
+            this._next = next;
+        }
 
-        context.Response.Headers.Add(
-            "X-Content-Type-Options", "nosniff");
+        public async Task Invoke(HttpContext context)
+        {
+            context.Response.Headers.Add(
+                "Content-Security-Policy-Report-Only", "style-src 'self' " +
+                                                       "https://stackpath.bootstrapcdn.com https://fonts.googleapis.com;" +
+                                                       "frame-ancestors 'none'; ");
+            //context.Response.Headers.Add(
+            //    "Content-Security-Policy", "frame-ancestors 'none'");
 
-        context.Response.Headers.Add(
-            "Referrer-Policy", "no-referrer");
+            context.Response.Headers.Add(
+                "Feature-Policy", "camera 'none'");
 
-        await next(context);
+            context.Response.Headers.Add(
+                "X-Content-Type-Options", "nosniff");
+
+            context.Response.Headers.Add(
+                "Referrer-Policy", "no-referrer");
+
+            await _next(context);
+        }
     }
 }

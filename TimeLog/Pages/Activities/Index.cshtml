@@ -1,14 +1,17 @@
 ﻿@page
 @model TimeLog.Pages.Activities.IndexModel
 
-@{
-    ViewData["Title"] = "Index";
-}
-<h1>Activities test</h1>
+@{ViewData["Title"] = "Index";}
+<h1>Activities</h1>
 
 <div class="d-flex">
     <div class="p-3 bg-primary"><a asp-page="Create" class="btn btn-link"><i class="fa fa-plus"></i> Create New</a></div>
-    <div class="p-3 bg-primary flex-grow-1"><form method="post"><button type="submit" class="btn btn-link" asp-page-handler="Export">Export</button></form></div>
+    <div class="p-3 bg-primary flex-grow-1">
+        <form method="post">
+            <button type="submit" class="btn btn-link" asp-page-handler="Export">Export</button>
+        </form>
+    </div>
+    <div class="p-3 bg-primary flex-grow-1"><a asp-page="Report" class="btn-link">Report</a></div>
     <div class="p-3 bg-primary">
         <form asp-page="./Index" method="get">
             <div class="input-group">

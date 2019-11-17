@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeLog.Models;
 
 namespace TimeLog.Migrations
 {
     [DbContext(typeof(TimeLogContext))]
-    partial class TimeLogContextModelSnapshot : ModelSnapshot
+    [Migration("20191111013043_StoredProcedureReport")]
+    partial class StoredProcedureReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,25 +140,6 @@ namespace TimeLog.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("TimeLog.ViewModels.Report", b =>
-                {
-                    b.Property<int>("ClientId");
-
-                    b.Property<int>("ProjectId");
-
-                    b.Property<bool>("Billable");
-
-                    b.Property<decimal>("BillableAmount");
-
-                    b.Property<decimal>("Duration");
-
-                    b.HasKey("ClientId", "ProjectId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Report");
-                });
-
             modelBuilder.Entity("TimeLog.ViewModels.Summary", b =>
                 {
                     b.Property<int>("Id")
@@ -213,19 +196,6 @@ namespace TimeLog.Migrations
                     b.HasOne("TimeLog.Models.Location", "DefaultLocation")
                         .WithMany()
                         .HasForeignKey("DefaultLocationId");
-                });
-
-            modelBuilder.Entity("TimeLog.ViewModels.Report", b =>
-                {
-                    b.HasOne("TimeLog.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TimeLog.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

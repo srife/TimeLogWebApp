@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeLog.Models
 {
@@ -15,6 +15,9 @@ namespace TimeLog.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Project> Projects { get; set; }
+
+        [NotMapped]
+        public virtual DbSet<ViewModels.Report> Report { get; set; }
 
         [NotMapped]
         public virtual DbSet<ViewModels.Summary> Summary { get; set; }
@@ -36,6 +39,9 @@ namespace TimeLog.Models
 
             modelBuilder.Entity<ActivityEntity>()
                 .Property(c => c.RowVersion).IsRowVersion();
+
+            modelBuilder.Entity<ViewModels.Report>()
+                .HasKey(c => new { c.ClientId, c.ProjectId });
         }
     }
 }

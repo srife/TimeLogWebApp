@@ -37,10 +37,9 @@ namespace TimeLog.Pages.Activities
                 .Include(a => a.Client)
                 .Include(a => a.Project);
 
-            var billable = false;
             if (!string.IsNullOrEmpty(CurrentFilter))
             {
-                billable = CurrentFilter.Contains("billable");
+                var billable = CurrentFilter.Contains("billable");
                 if (billable)
                 {
                     CurrentFilter = CurrentFilter.Replace("billable", "");

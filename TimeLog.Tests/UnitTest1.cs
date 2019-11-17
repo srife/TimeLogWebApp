@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace TimeLog.Tests
@@ -8,7 +7,6 @@ namespace TimeLog.Tests
         [Fact]
         public void Test1()
         {
-
         }
     }
 }
