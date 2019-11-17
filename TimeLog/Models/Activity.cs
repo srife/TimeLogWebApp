@@ -51,10 +51,18 @@ namespace TimeLog.Models
         [Column(Order = 9)]
         public bool Billable { get; set; }
 
+        [Display(Name = "Billing Rate")]
+        [Column(TypeName = "money")]
+        public decimal BillableRate { get; set; }
+
         [Display(Name = "Invoice Statement")]
         [DataType(DataType.MultilineText)]
         [Column(Order = 10)]
         public string InvoiceStatement { get; set; }
+
+        [Display(Name = "Billing Rate")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal ActualBilledDuration { get; set; }
 
         public ActivityType ActivityType { get; set; }
 
