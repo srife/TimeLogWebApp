@@ -58,9 +58,9 @@ namespace TimeLog.Pages
             var p = new object[]
             {
                 new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) {Value = startTime},
-                new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) {Value = startTime.AddDays(6)},
+                new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) {Value = startTime.AddDays(7)},
                 new SqlParameter("@p2", SqlDbType.Money, 4) {Value = Rate},
-                new SqlParameter("@p3", SqlDbType.Bit, 1) {Value = false}
+                new SqlParameter("@p3", SqlDbType.Bit, 1) {Value = 0}
             };
 
             ReportDetailsByDay = await _context.ReportDetailsByDay
