@@ -2,9 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
+//using System.Data;
+//using System.Data.SqlClient;
+//using System.Linq;
 using System.Threading.Tasks;
 using TimeLog.Models;
+using TimeLog.ViewModels;
 
 namespace TimeLog.Pages
 {
@@ -22,7 +26,7 @@ namespace TimeLog.Pages
 
         public bool ActivityEntityExists { get; set; }
 
-        public IList<ViewModels.Summary> Summary { get; set; }
+        public IList<Summary> Summary { get; set; }
 
         public decimal TotalWeeklyHours { get; set; }
 
@@ -34,23 +38,51 @@ namespace TimeLog.Pages
 
             ActivityEntityExists = (ActivityEntity != null);
 
-            Summary = await _context.Summary.FromSql("EXEC sp_Summary").ToListAsync();
+            var startTime = DateTimeOffset.UtcNow;
 
-            for (int i = 0; i < Summary.Count; i++)
-            {
-                var item = Summary[i];
+            //remove hours, minutes, seconds, milliseconds
+            startTime = startTime
+                .AddMilliseconds(-startTime.Millisecond)
+                .AddSeconds(-startTime.Second)
+                .AddMinutes(-startTime.Minute)
+                .AddHours(-startTime.Hour);
 
-                if (i == 0)
-                {
-                    Project1Points += $"{100},{400 - item.SumTotalDurationHours * 50} ";
-                }
-                else
-                {
-                    Project1Points += $"{i * 97 + 100},{400 - item.SumTotalDurationHours * 50} ";
-                }
-            }
+            //get current day of week
+            var dayOfWeek = startTime.DayOfWeek;
 
-            TotalWeeklyHours = Summary.Sum(i => i.SumTotalDurationHours);
+            //if Sunday subtract 6 to get the previous Monday, otherwise subtract the day of week index plus one
+            var daysToSubtract = (dayOfWeek) == DayOfWeek.Sunday ? -6 : -(int)dayOfWeek + 1;
+            startTime = startTime.AddDays(daysToSubtract);
+            var endTime = startTime.AddDays(6);
+
+            //var p = new object[]
+            //{
+            //    new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) {Value = startTime},
+            //    new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) {Value = endTime}
+            //};
+
+            Summary = new List<Summary>();
+
+            //Summary = await _context
+            //    .Summary
+            //    .FromSql("exec sp_Summary @p0, p1", p)
+            //    .ToListAsync();
+
+            //for (int i = 0; i < Summary.Count; i++)
+            //{
+            //    var item = Summary[i];
+
+            //    if (i == 0)
+            //    {
+            //        Project1Points += $"{100},{400 - item.SumTotalDurationHours * 50} ";
+            //    }
+            //    else
+            //    {
+            //        Project1Points += $"{i * 97 + 100},{400 - item.SumTotalDurationHours * 50} ";
+            //    }
+            //}
+
+            //TotalWeeklyHours = Summary.Sum(i => i.SumTotalDurationHours);
 
             return Page();
         }

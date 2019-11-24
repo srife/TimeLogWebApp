@@ -52,6 +52,10 @@ steps:
   inputs:
     cwd: 'TimeLog'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  condition: succeeded()
+    # Package and deliver your code
+    
+- #task: PublishBuildArtifacts@1
+  #displayName: 'Publish Artifact: drop'
+  #condition: succeeded()
+
+  

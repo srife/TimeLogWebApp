@@ -18,7 +18,7 @@ namespace TimeLog.Pages.Activities
             _context = context;
         }
 
-        public DateTime StartTime { get; set; }
+        public DateTimeOffset StartTime { get; set; }
         public decimal Rate { get; set; }
         public IList<Client> Clients { get; set; }
         public IList<Project> Projects { get; set; }
@@ -27,14 +27,23 @@ namespace TimeLog.Pages.Activities
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var dayofweek = DateTime.UtcNow.DayOfWeek;
-            StartTime = dayofweek == DayOfWeek.Sunday ? DateTime.UtcNow.AddDays(-7) : DateTime.UtcNow.AddDays(-(int)dayofweek + (int)DayOfWeek.Sunday);
+            StartTime = DateTimeOffset.UtcNow;
+
+            //remove hours, minutes, seconds, milliseconds
+            StartTime = StartTime.AddMilliseconds(-StartTime.Millisecond).AddSeconds(-StartTime.Second).AddMinutes(-StartTime.Minute).AddHours(-StartTime.Hour);
+
+            //get current day of week
+            var dayOfWeek = StartTime.DayOfWeek;
+
+            //if Sunday subtract 6 to get the previous Monday, otherwise subtract the day of week index plus one
+            var daysToSubtract = (dayOfWeek) == DayOfWeek.Sunday ? -6 : -(int)dayOfWeek + 1;
+            StartTime = StartTime.AddDays(daysToSubtract);
 
             Rate = 37.5M;
             var p = new object[]
             {
-                new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) {Value = StartTime.ToUniversalTime()},
-                new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) {Value = StartTime.AddDays(8)},
+                new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) {Value = StartTime},
+                new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) {Value = StartTime.AddDays(6)},
                 new SqlParameter("@p2", SqlDbType.Money, 4) {Value = Rate},
                 new SqlParameter("@p3", SqlDbType.Bit, 1) {Value = true}
             };
