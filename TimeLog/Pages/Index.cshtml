@@ -18,18 +18,18 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.Summary[0].Date)</th>
-                            <th>@Html.DisplayNameFor(model => model.Summary[0].DayOfWeek)</th>
-                            <th>@Html.DisplayNameFor(model => model.Summary[0].SumTotalDurationHours)</th>
+                            <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)</th>
+                            <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].DayOfWeek)</th>
+                            <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Summary)
+                        @foreach (var item in Model.ReportDetailsByDay)
                         {
                             <tr>
-                                <td>@item.Date.ToString("yyyy/MM/dd")</td>
+                                <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
                                 <td>@Html.DisplayFor(modelItem => item.DayOfWeek)</td>
-                                <td>@Html.DisplayFor(modelItem => item.SumTotalDurationHours)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Hrs)</td>
                             </tr>
                         }
                         <tr>
