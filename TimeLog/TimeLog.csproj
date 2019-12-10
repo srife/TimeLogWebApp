@@ -18,6 +18,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190906143758_summary-table-test.cs" />
     <Compile Remove="Migrations\20190906143758_summary-table-test.Designer.cs" />
+    <Compile Remove="Migrations\20191125173137_add-invoice-support.cs" />
+    <Compile Remove="Migrations\20191125173137_add-invoice-support.Designer.cs" />
+    <Compile Remove="Migrations\20191125174539_add-invoice-support.cs" />
+    <Compile Remove="Migrations\20191125174539_add-invoice-support.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

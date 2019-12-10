@@ -15,6 +15,11 @@ namespace TimeLog.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<SubmitType> SubmitTypes { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceItem> InvoiceItems { get; set; }
 
         [NotMapped]
         public virtual DbSet<ViewModels.Report> Report { get; set; }

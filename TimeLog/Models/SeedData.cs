@@ -84,6 +84,19 @@ namespace TimeLog.Models
                 }
                 else
                 {
+                    List<SubmitType> submitTypes = new List<SubmitType>
+                    {
+                        new SubmitType
+                        {
+                            Name = "Email"
+                        },
+                        new SubmitType
+                        {
+                            Name="Postal"
+                        }
+                    };
+                    context.SubmitTypes.AddRange(submitTypes);
+
                     List<ActivityType> activityTypes = new List<ActivityType>();
                     var atEmpty = new ActivityType { Name = "", IsDefault = true };
                     var atAdmin = new ActivityType { Name = "Administrative", IsDefault = false };
