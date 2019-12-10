@@ -61,36 +61,6 @@ namespace TimeLog.Pages
                 .FromSql("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
                 .ToListAsync();
 
-            //var startTime = DateTimeOffset.UtcNow;
-
-            ////remove hours, minutes, seconds, milliseconds
-            //startTime = startTime
-            //    .AddMilliseconds(-startTime.Millisecond)
-            //    .AddSeconds(-startTime.Second)
-            //    .AddMinutes(-startTime.Minute)
-            //    .AddHours(-startTime.Hour);
-
-            ////get current day of week
-            //var dayOfWeek = startTime.DayOfWeek;
-
-            ////if Sunday subtract 6 to get the previous Monday, otherwise subtract the day of week index plus one
-            //var daysToSubtract = (dayOfWeek) == DayOfWeek.Sunday ? -6 : -(int)dayOfWeek + 1;
-            //startTime = startTime.AddDays(daysToSubtract);
-            //var endTime = startTime.AddDays(6);
-
-            //var p = new object[]
-            //{
-            //    new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) {Value = startTime},
-            //    new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) {Value = endTime}
-            //};
-
-            //Summary = new List<Summary>();
-
-            //Summary = await _context
-            //    .Summary
-            //    .FromSql("exec sp_Summary @p0, p1", p)
-            //    .ToListAsync();
-
             for (int i = 0; i < ReportDetailsByDay.Count; i++)
             {
                 var item = ReportDetailsByDay[i];
@@ -105,7 +75,6 @@ namespace TimeLog.Pages
                 }
             }
 
-            //TotalWeeklyHours = Summary.Sum(i => i.SumTotalDurationHours);
             TotalWeeklyHours = ReportDetailsByDay.Sum(i => i.Hrs);
 
             return Page();
@@ -128,7 +97,6 @@ namespace TimeLog.Pages
                 if (activityEntityToUpdate.EndTime != null)
                 {
                     activityEntityToUpdate.EndTime = Extensions.DateTimeExtensions.RoundUp2(activityEntityToUpdate.EndTime.Value, TimeSpan.FromMinutes(1));
-                    //activityEntityToUpdate.EndTime = activityEntityToUpdate.EndTime.Value;
                 }
 
                 await _context.SaveChangesAsync();
@@ -143,7 +111,6 @@ namespace TimeLog.Pages
         {
             var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
             activityEntityToUpdate.EndTime = Extensions.DateTimeExtensions.RoundUp(DateTime.Now, TimeSpan.FromMinutes(1));
-            //activityEntityToUpdate.EndTime = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
