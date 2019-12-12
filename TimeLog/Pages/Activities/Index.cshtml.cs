@@ -25,6 +25,18 @@ namespace TimeLog.Pages.Activities
 
         public string CurrentSort { get; set; }
 
+        public TimeSpan MyConvert(long? seconds)
+        {
+            if (seconds is null)
+            {
+                return new TimeSpan(0, 0, 0, 0);
+            }
+            else
+            {
+                return TimeSpan.FromSeconds(Convert.ToInt64(seconds));
+            }
+        }
+
         public IList<ActivityEntity> ActivityEntities { get; set; }
 
         public async Task OnGetAsync(string sortOrder, string searchString)

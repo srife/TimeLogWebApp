@@ -43,6 +43,7 @@
                     </a>
                 </th>
                 <th>Duration</th>
+                @*<th>Duration</th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.ActivityEntities[0].ActivityTypeId)/@Html.DisplayNameFor(model => model.ActivityEntities[0].Client)
                 </th>
@@ -92,11 +93,14 @@
                         </span>
                     </td>
                     <td>
-                        @if (item.EndTime.HasValue)
-                        {
-                            @item.EndTime.Value.Subtract(@item.StartTime)
-                        }
+                        @Model.MyConvert(item.DurationSec)
                     </td>
+                    @*<td>
+                            @if (item.EndTime.HasValue)
+                            {
+                                @item.EndTime.Value.Subtract(@item.StartTime)
+                            }
+                        </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
                         @if (!string.IsNullOrEmpty(item.Client.Name))

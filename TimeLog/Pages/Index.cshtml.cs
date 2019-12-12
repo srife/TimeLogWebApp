@@ -6,10 +6,12 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using TimeLog.Models;
 
 namespace TimeLog.Pages
 {
+    [AllowAnonymous]
     public class IndexModel : BasePageModelModel
     {
         private readonly TimeLogContext _context;

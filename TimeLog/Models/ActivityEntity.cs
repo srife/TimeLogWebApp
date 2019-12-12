@@ -64,6 +64,9 @@ namespace TimeLog.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal ActualBilledDuration { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public long? DurationSec { get; private set; }
+
         public ActivityType ActivityType { get; set; }
 
         public Client Client { get; set; }
