@@ -54,7 +54,7 @@ class Main {
                         });
                     },
                     error: function (ex) {
-                        alert("Failed to retrieve items " + ex);
+                        alert("Failed to retrieve items " + ex + " " + $(event.currentTarget).val());
                     }
                 });
             });
