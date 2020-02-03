@@ -57,74 +57,105 @@
         <tbody>
             @foreach (var item in Model.ActivityEntities)
             {
-                <tr>
-                    <td>
-                        <a asp-page="./Details" asp-route-id="@item.Id">
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    </td>
-                    <td>
-                        @if (item.EndTime == null)
-                        {
-                            <a asp-page-handler="Finish" asp-route-id="@item.Id"><i class="fa fa-flag-checkered" title="Finish"></i></a>
-                        }
-                    </td>
-                    <td>
-                        @if (item.EndTime != null)
-                        {
-                            <a asp-page-handler="Duplicate" asp-route-id="@item.Id"><i class="fa fa-clone" title="Resume"></i></a>
-                        }
-                    </td>
-                    <td>
-                        <span>
-                            @item.Date.ToString("yyyy/MM/dd")
-                        </span>
-                        <span>
-                            @item.StartTime.ToString("HH:mm")-
-                            @if (item.EndTime.HasValue)
-                            {
-                                @item.EndTime.Value.ToString("HH:mm")
-                            }
-                        </span>
-                    </td>
-                    <td>
-                        @Model.MyConvert(item.DurationSec)
-                    </td>
-                    @*<td>
-                            @if (item.EndTime.HasValue)
-                            {
-                                @item.EndTime.Value.Subtract(@item.StartTime)
-                            }
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
-                        @if (!string.IsNullOrEmpty(item.Client.Name))
-                        {
-                            <span class="client-display-small">@Html.DisplayFor(modelItem => item.Client.Name)</span>
-                        }
-                    </td>
-                    <td>
-                        <div class="short-task-display">
-                            @if (!string.IsNullOrEmpty(item.Project.Name))
-                            {
-                                <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
-                            }
-                            @Html.Raw(item.Tasks)
-                        </div>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Billable)
-                    </td>
-                    <td>
-                        <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fa fa-trash-alt"></i></a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                switch (item.Date.DayOfWeek)
+                {
+                    case DayOfWeek.Monday:
+                        @Html.Raw("<tr class='monday'>")
+                        break;
+                    case DayOfWeek.Tuesday:
+                        @Html.Raw("<tr class='tuesday'>");
+                        break;
+                    case DayOfWeek.Wednesday:
+                        @Html.Raw("<tr class='wednesday'>");
+                        break;
+                    case DayOfWeek.Thursday:
+                        @Html.Raw("<tr class='thursday'>");
+                        break;
+                    case DayOfWeek.Friday:
+                        @Html.Raw("<tr class='friday'>");
+                        break;
+                    case DayOfWeek.Saturday:
+                        @Html.Raw("<tr class='saturday'>");
+                        break;
+                    case DayOfWeek.Sunday:
+                        @Html.Raw("<tr class='sunday'>");
+                        break;
+                    default:
+                        @Html.Raw("<tr>");
+                        break;
+
+                }
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">
+                    <i class="fa fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                @if (item.EndTime == null)
+                {
+                    <a asp-page-handler="Finish" asp-route-id="@item.Id"><i class="fa fa-flag-checkered" title="Finish"></i></a>
+                }
+            </td>
+            <td>
+                @if (item.EndTime != null)
+                {
+                    <a asp-page-handler="Duplicate" asp-route-id="@item.Id"><i class="fa fa-clone" title="Resume"></i></a>
+                }
+            </td>
+            <td>
+                <span>
+                    @item.Date.ToString("yyyy/MM/dd")
+                </span>
+                <span>
+                    @item.StartTime.ToString("HH:mm")-
+                    @if (item.EndTime.HasValue)
+                    {
+                        @item.EndTime.Value.ToString("HH:mm")
+                    }
+                </span>
+                <span>
+                    @item.Date.DayOfWeek
+                </span>
+            </td>
+            <td>
+                @Model.MyConvert(item.DurationSec)
+            </td>
+            @*<td>
+                                                                @if (item.EndTime.HasValue)
+                {
+                    @item.EndTime.Value.Subtract(@item.StartTime)
+                                                                }
+                                                            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
+                @if (!string.IsNullOrEmpty(item.Client.Name))
+                {
+                    <span class="client-display-small">@Html.DisplayFor(modelItem => item.Client.Name)</span>
+                }
+            </td>
+            <td>
+                <div class="short-task-display">
+                    @if (!string.IsNullOrEmpty(item.Project.Name))
+                    {
+                        <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
+                    }
+                    @Html.Raw(item.Tasks)
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Billable)
+            </td>
+            <td>
+                <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fa fa-trash-alt"></i></a>
+            </td>
+            @Html.Raw("</tr>");
+
+        }
+            </tbody>
+        </table>
+    </div>

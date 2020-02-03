@@ -17,6 +17,7 @@ namespace TimeLog.ViewModels
         //[Column(Order = 9)]
         public bool Billable { get; set; }
 
+        [Display(Name = "Hrs")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Duration { get; set; }
 

@@ -9,96 +9,158 @@
     <div class="p-3 bg-primary flex-grow-1">
         <form method="post">
             <button type="submit" class="btn btn-link" asp-page-handler="LastWeek">Last Week</button>
+            <button type="submit" class="btn btn-link" asp-page-handler="TwoWeeksAgo">Two Weeks Ago</button>
         </form>
     </div>
     <div class="p-3 bg-primary">
         <div><span>Start: @Html.DisplayFor(model => model.StartTime)</span></div>
-        <div><span>End: @Html.DisplayFor(model => model.EndTime)</span></div>        
+        <div><span>End: @Html.DisplayFor(model => model.EndTime)</span></div>
     </div>
 </div>
 
-<div class="table-responsive">
-    <table class="table activity">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].DayOfWeek)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Amt)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ReportDetailsByDay)
-            {
+<fieldset>
+    <legend>Billable By Day</legend>
+    <div class="table-responsive">
+        <table class="table activity-rt">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDay)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DayOfWeek)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Hrs)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amt)
-                    </td>
+                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)</th>
+                    <th></th>
+                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)</th>
+                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Amt)</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<div class="table-responsive">
-    <table class="table activity">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Clients[0].Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Projects[0].Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Report[0].Billable)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Report[0].Duration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Report[0].BillableAmount)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Report)
-            {
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ReportDetailsByDay)
+                {
+                    <tr class="@item.DayOfWeek.ToString().ToLower()">
+                        <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
+                        <td>@Html.DisplayFor(modelItem => item.DayOfWeek)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Hrs)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Amt)</td>
+                    </tr>
+                }
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Client.Name)
-                    </td>
+                    <td>Total:</td>
+                    <td></td>
+                    <td>@Model.ReportDetailsByDay.Sum(x => x.Hrs).ToString("0.00")</td>
+                    <td>@Model.ReportDetailsByDay.Sum(x => x.Amt).ToString("0.00")</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Billable By Project</legend>
+    <div class="table-responsive">
+        <table class="table activity-r">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Clients[0].Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Projects[0].Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Report[0].Duration)</th>
+                    <th>@Html.DisplayNameFor(model => model.Report[0].BillableAmount)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Report)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Client.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Duration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.BillableAmount)</td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>@Model.Report.Sum(x => x.Duration).ToString("0.00")</td>
+                    <td>@Model.Report.Sum(x => x.BillableAmount).ToString("0.00")</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Project.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Billable)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Duration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BillableAmount)
-                    </td>
+<fieldset>
+    <legend>Billable Tasks</legend>
+    <div class="table-responsive">
+        <table class="table activity-rt">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Duration</th>
+                    <th>@Html.DisplayNameFor(model => model.ActivityEntities[0].ActivityTypeId)/@Html.DisplayNameFor(model => model.ActivityEntities[0].Client)</th>
+                    <th>@Html.DisplayNameFor(model => model.ActivityEntities[0].Tasks)</th>
+                    <th></th>
                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ActivityEntities)
+                {
+                    switch (item.Date.DayOfWeek)
+                    {
+                        case DayOfWeek.Monday:
+                            @Html.Raw("<tr class='monday'>")
+                            break;
+                        case DayOfWeek.Tuesday:
+                            @Html.Raw("<tr class='tuesday'>");
+                            break;
+                        case DayOfWeek.Wednesday:
+                            @Html.Raw("<tr class='wednesday'>");
+                            break;
+                        case DayOfWeek.Thursday:
+                            @Html.Raw("<tr class='thursday'>");
+                            break;
+                        case DayOfWeek.Friday:
+                            @Html.Raw("<tr class='friday'>");
+                            break;
+                        case DayOfWeek.Saturday:
+                            @Html.Raw("<tr class='saturday'>");
+                            break;
+                        case DayOfWeek.Sunday:
+                            @Html.Raw("<tr class='sunday'>");
+                            break;
+                        default:
+                            @Html.Raw("<tr>");
+                            break;
+
+                    }
+            <td>
+                <span>@item.Date.ToString("yyyy/MM/dd")</span>
+                <span>
+                    @item.StartTime.ToString("HH:mm")-
+                    @if (item.EndTime.HasValue)
+                    {
+                        @item.EndTime.Value.ToString("HH:mm")
+                    }
+                </span>
+                <span>
+                    @item.Date.DayOfWeek
+                </span>
+            </td>
+                <td>@Model.MyConvert(item.DurationSec)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
+                    @if (!string.IsNullOrEmpty(item.Client.Name))
+                    {
+                        <span class="client-display-small">@Html.DisplayFor(modelItem => item.Client.Name)</span>
+                    }
+                </td>
+                <td>
+                    <div class="short-task-display">
+                        @if (!string.IsNullOrEmpty(item.Project.Name))
+                        {
+                            <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
+                        }
+                        @Html.Raw(item.Tasks)
+                    </div>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Billable)</td>
+                @Html.Raw("</tr>");
             }
-        </tbody>
-    </table>
-</div>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
