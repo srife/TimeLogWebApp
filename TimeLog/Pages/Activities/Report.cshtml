@@ -9,7 +9,9 @@
     <div class="p-3 bg-primary flex-grow-1">
         <form method="post">
             <button type="submit" class="btn btn-link" asp-page-handler="LastWeek">Last Week</button>
-            <button type="submit" class="btn btn-link" asp-page-handler="TwoWeeksAgo">Two Weeks Ago</button>
+            <button type="submit" class="btn btn-link" asp-page-handler="TwoWeeksAgo">2 Weeks Ago</button>
+            <button type="submit" class="btn btn-link" asp-page-handler="ThreeWeeksAgo">3 Weeks Ago</button>
+            <button type="submit" class="btn btn-link" asp-page-handler="FourWeeksAgo">4 Weeks Ago</button>
         </form>
     </div>
     <div class="p-3 bg-primary">
@@ -21,11 +23,11 @@
 <fieldset>
     <legend>Billable By Day</legend>
     <div class="table-responsive">
-        <table class="table activity-rt">
+        <table class="table activity-d">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)</th>
                     <th></th>
+                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)</th>
                     <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)</th>
                     <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Amt)</th>
                 </tr>
@@ -34,15 +36,43 @@
                 @foreach (var item in Model.ReportDetailsByDay)
                 {
                     <tr class="@item.DayOfWeek.ToString().ToLower()">
-                        <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
                         <td>@Html.DisplayFor(modelItem => item.DayOfWeek)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Hrs)</td>
+                        <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
+                        <td>
+                            @{
+                                var ts = Model.ActivityEntities.Where(x => x.StartTime.Year == item.StartDay.Year && x.StartTime.Month == item.StartDay.Month && x.StartTime.Day == item.StartDay.Day).OrderBy(x => x.Client.Name).ThenBy(x => x.Project.Name).Sum(x => x.DurationSec);
+                                var decTs = (decimal)ts;
+                                decTs = Math.Round(decTs / 900) * 900;
+                            }
+                            @TimeSpan.FromSeconds((double)decTs).TotalHours
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.Amt)</td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            @foreach (var child in Model.ActivityEntities.Where(x => x.StartTime.Year == item.StartDay.Year && x.StartTime.Month == item.StartDay.Month && x.StartTime.Day == item.StartDay.Day).OrderBy(x => x.Client.Name).ThenBy(x => x.Project.Name).ToList())
+                            {
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:50%">@child.Client.Name @child.Project.Name</td>
+                                        <td style="width:25%">@child.StartTime.ToString("HH:mm") - @child.EndTime?.ToString("HH:mm")<br /></td>
+                                        @{
+                                            var convertedEndTime = (DateTimeOffset)child.EndTime;
+                                        }
+                                        <td style="width:25%">@Model.ConvertDurationToDecimal(convertedEndTime.Subtract(child.StartTime).TotalSeconds).ToString("0.00")</td>
+                                    </tr>
+                                </table>
+                            }
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
                 }
                 <tr>
-                    <td>Total:</td>
                     <td></td>
+                    <td>Total:</td>
                     <td>@Model.ReportDetailsByDay.Sum(x => x.Hrs).ToString("0.00")</td>
                     <td>@Model.ReportDetailsByDay.Sum(x => x.Amt).ToString("0.00")</td>
                 </tr>
@@ -127,20 +157,20 @@
                             break;
 
                     }
-            <td>
-                <span>@item.Date.ToString("yyyy/MM/dd")</span>
-                <span>
-                    @item.StartTime.ToString("HH:mm")-
-                    @if (item.EndTime.HasValue)
-                    {
-                        @item.EndTime.Value.ToString("HH:mm")
-                    }
-                </span>
-                <span>
-                    @item.Date.DayOfWeek
-                </span>
-            </td>
-                <td>@Model.MyConvert(item.DurationSec)</td>
+                <td>
+                    <span>@item.Date.ToString("yyyy/MM/dd")</span>
+                    <span>
+                        @item.StartTime.ToString("HH:mm")-
+                        @if (item.EndTime.HasValue)
+                        {
+                            @item.EndTime.Value.ToString("HH:mm")
+                        }
+                    </span>
+                    <span>
+                        @item.Date.DayOfWeek
+                    </span>
+                </td>
+                <td>@Model.ConvertDurationToTimeSpan(item.DurationSec)</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
                     @if (!string.IsNullOrEmpty(item.Client.Name))

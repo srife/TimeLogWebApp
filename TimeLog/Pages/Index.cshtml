@@ -11,118 +11,118 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-9">
-        <div class="row">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)</th>
-                            <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].DayOfWeek)</th>
-                            <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.ReportDetailsByDay)
-                        {
+@*<div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
-                                <td>@Html.DisplayFor(modelItem => item.DayOfWeek)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Hrs)</td>
+                                <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)</th>
+                                <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].DayOfWeek)</th>
+                                <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)</th>
                             </tr>
-                        }
-                        <tr>
-                            <td><span class="Bold">Total Weekly Hours</span></td>
-                            <td></td>
-                            <td>@Html.DisplayFor(model => model.TotalWeeklyHours)</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ReportDetailsByDay)
+                            {
+                                <tr>
+                                    <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DayOfWeek)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Hrs)</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><span class="Bold">Total Weekly Hours</span></td>
+                                <td></td>
+                                <td>@Html.DisplayFor(model => model.TotalWeeklyHours)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <svg class="graph"
+                         version="1.2"
+                         xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         aria-labelledby="title"
+                         role="img">
+                        <title id="title">A line chart showing some information</title>
+                        <g class="grid" id="xGrid">
+                            <line x1="90" x2="90" y1="5" y2="400"></line>
+                        </g>
+                        <g class="grid" id="yGrid">
+                            <line x1="90" x2="700" y1="400" y2="400"></line>
+                        </g>
+                        <g class="labels x-labels">
+                            <text x="100" y="425">Monday</text>
+                            <text x="197" y="425">Tuesday</text>
+                            <text x="294" y="425">Wednesday</text>
+                            <text x="391" y="425">Thursday</text>
+                            <text x="488" y="425">Friday</text>
+                            <text x="585" y="425">Saturday</text>
+                            <text x="682" y="425">Sunday</text>
+                            <text x="400" y="450" class="label-title">Day of Week</text>
+                        </g>
+                        <g class="labels y-labels">
+                            <text x="80" y="15">20</text>
+                            <text x="80" y="100">15</text>
+                            <text x="80" y="200">10</text>
+                            <text x="80" y="300">5</text>
+                            <text x="80" y="400">0</text>
+                            <text x="50" y="200" class="label-title">Hours</text>
+                        </g>
+                        <polyline fill="none"
+                                  stroke="#0074d9"
+                                  stroke-width="2"
+                                  points="@Model.Project1Points"></polyline>
+                    </svg>
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="col-md-3">
+            @if (Model.ActivityEntityExists)
+            {
+                <form method="post">
+                    <div class="d-flex">
+                        <div class="p-1 bg-primary"><a asp-page="Activities/Create" class="btn btn-link"><i class="fa fa-plus"></i> New</a></div>
+                        <div class="p-1 bg-primary"><a asp-page="Activities/Edit" asp-route-id="@Model.ActivityEntity.Id" class="btn btn-link"><i class="fa fa-edit"></i> Edit</a></div>
+                        <div class="p-1 bg-primary"><a asp-page="Activities/Details" asp-route-id="@Model.ActivityEntity.Id" class="btn btn-link"><i class="fa fa-angle-right"></i> View</a></div>
+                        <div class="p-1 bg-primary"><a asp-page-handler="Close" asp-route-id="@Model.ActivityEntity.Id" class="btn btn-link"><i class="fa fa-flag-checkered"></i>Close</a></div>
+                    </div>
+                    <div class="row m-1">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="ActivityEntity.Id" />
+                        <div class="form-group">
+                            <label asp-for="ActivityEntity.Tasks"></label>
+                            <textarea asp-for="ActivityEntity.Tasks" class="form-control"></textarea>
+                            <span asp-validation-for="ActivityEntity.Tasks" class="text-danger"></span>
+                            <script>CKEDITOR.replace("ActivityEntity.Tasks", { disableAutoInline: true });</script>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" asp-page-handler="SaveAe" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="form-row">
+                    <div class="d-flex">
+                        <div class="p-1 bg-primary"><a asp-page="Activities/Create" class="btn btn-link"><i class="fa fa-plus"></i> New</a></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>*@
+@*<div class="row">
+        <div class="col-md-9">
             <div>
-                <svg class="graph"
-                     version="1.2"
-                     xmlns="http://www.w3.org/2000/svg"
-                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                     aria-labelledby="title"
-                     role="img">
-                    <title id="title">A line chart showing some information</title>
-                    <g class="grid" id="xGrid">
-                        <line x1="90" x2="90" y1="5" y2="400"></line>
-                    </g>
-                    <g class="grid" id="yGrid">
-                        <line x1="90" x2="700" y1="400" y2="400"></line>
-                    </g>
-                    <g class="labels x-labels">
-                        <text x="100" y="425">Monday</text>
-                        <text x="197" y="425">Tuesday</text>
-                        <text x="294" y="425">Wednesday</text>
-                        <text x="391" y="425">Thursday</text>
-                        <text x="488" y="425">Friday</text>
-                        <text x="585" y="425">Saturday</text>
-                        <text x="682" y="425">Sunday</text>
-                        <text x="400" y="450" class="label-title">Day of Week</text>
-                    </g>
-                    <g class="labels y-labels">
-                        <text x="80" y="15">20</text>
-                        <text x="80" y="100">15</text>
-                        <text x="80" y="200">10</text>
-                        <text x="80" y="300">5</text>
-                        <text x="80" y="400">0</text>
-                        <text x="50" y="200" class="label-title">Hours</text>
-                    </g>
-                    <polyline fill="none"
-                              stroke="#0074d9"
-                              stroke-width="2"
-                              points="@Model.Project1Points"></polyline>
-                </svg>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        @if (Model.ActivityEntityExists)
-        {
-            <form method="post">
-                <div class="d-flex">
-                    <div class="p-1 bg-primary"><a asp-page="Activities/Create" class="btn btn-link"><i class="fa fa-plus"></i> New</a></div>
-                    <div class="p-1 bg-primary"><a asp-page="Activities/Edit" asp-route-id="@Model.ActivityEntity.Id" class="btn btn-link"><i class="fa fa-edit"></i> Edit</a></div>
-                    <div class="p-1 bg-primary"><a asp-page="Activities/Details" asp-route-id="@Model.ActivityEntity.Id" class="btn btn-link"><i class="fa fa-angle-right"></i> View</a></div>
-                    <div class="p-1 bg-primary"><a asp-page-handler="Close" asp-route-id="@Model.ActivityEntity.Id" class="btn btn-link"><i class="fa fa-flag-checkered"></i>Close</a></div>
-                </div>
-                <div class="row m-1">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="ActivityEntity.Id" />
-                    <div class="form-group">
-                        <label asp-for="ActivityEntity.Tasks"></label>
-                        <textarea asp-for="ActivityEntity.Tasks" class="form-control"></textarea>
-                        <span asp-validation-for="ActivityEntity.Tasks" class="text-danger"></span>
-                        <script>CKEDITOR.replace("ActivityEntity.Tasks", { disableAutoInline: true });</script>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Save" asp-page-handler="SaveAe" class="btn btn-primary" />
-                    </div>
-                </div>
-            </form>
-        }
-        else
-        {
-            <div class="form-row">
-                <div class="d-flex">
-                    <div class="p-1 bg-primary"><a asp-page="Activities/Create" class="btn btn-link"><i class="fa fa-plus"></i> New</a></div>
-                </div>
-            </div>
-        }
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-9">
-        @*<div>
                 <a href="https://css-tricks.com/how-to-make-charts-with-svg/">https://css-tricks.com/how-to-make-charts-with-svg/</a>
-            </div>*@
-        @*<div>
+            </div>
+            <div>
                 <svg class="chart1" width="420" height="150" aria-labelledby="title desc" role="img">
                     <title id="title">A bar chart showing information</title>
                     <desc id="desc">4 apples; 8 bananas; 15 kiwis; 16 oranges; 23 lemons</desc>
@@ -147,8 +147,8 @@
                         <text x="235" y="88" dy=".35em">23 lemons</text>
                     </g>
                 </svg>
-            </div>*@
-        @*<div>
+            </div>
+            <div>
                 <svg viewBox="0 0 500 100" class="chart">
                     <g class="grid">
                         <line x1="90" x2="90" y1="5" y2="371"></line>
@@ -160,30 +160,30 @@
                               stroke="#0074d9"
                               stroke-width="2"
                               points="00,120
-                      20,60
-                      40,80
-                      60,20
-                      80,80
-                      100,80
-                      120,60
-                      140,100
-                      160,90
-                      180,80
-                      200, 110
-                      220, 10
-                      240, 70
-                      260, 100
-                      280, 100
-                      300, 40
-                      320, 0
-                      340, 100
-                      360, 100
-                      380, 120
-                      400, 60
-                      420, 70
-                      440, 80"></polyline>
+                          20,60
+                          40,80
+                          60,20
+                          80,80
+                          100,80
+                          120,60
+                          140,100
+                          160,90
+                          180,80
+                          200, 110
+                          220, 10
+                          240, 70
+                          260, 100
+                          280, 100
+                          300, 40
+                          320, 0
+                          340, 100
+                          360, 100
+                          380, 120
+                          400, 60
+                          420, 70
+                          440, 80"></polyline>
                 </svg>
-            </div>*@
-    </div>
-    <div class="col-md-3"></div>
-</div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>*@
