@@ -58,10 +58,8 @@ class Main {
                     }
                 });
             });
-            var edit = document.getElementById("edit");
-            var editTasks = document.getElementById("ActivityEntity_Tasks");
         });
     }
 }
-var main = new Main();
+let main = new Main();
 //# sourceMappingURL=site.js.map

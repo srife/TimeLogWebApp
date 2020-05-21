@@ -3,22 +3,22 @@
 @{ ViewData["Title"] = "Report";}
 <h1>Activities</h1>
 
-<div class="d-flex">
-    <div class="p-3 bg-primary"></div>
-    <div class="p-3 bg-primary flex-grow-1"></div>
-    <div class="p-3 bg-primary flex-grow-1">
-        <form method="post">
-            <button type="submit" class="btn btn-link" asp-page-handler="LastWeek">Last Week</button>
-            <button type="submit" class="btn btn-link" asp-page-handler="TwoWeeksAgo">2 Weeks Ago</button>
-            <button type="submit" class="btn btn-link" asp-page-handler="ThreeWeeksAgo">3 Weeks Ago</button>
-            <button type="submit" class="btn btn-link" asp-page-handler="FourWeeksAgo">4 Weeks Ago</button>
-        </form>
+<form method="post">
+    <div class="d-flex">
+        <div class="p-3 bg-primary"></div>
+        <div class="p-3 bg-primary">
+            <select asp-for="SelectedTimeFrame" class="form-control" asp-items="@Model.TimeFramesSelectList"></select>
+        </div>
+        <div class="p-3 bg-primary flex-grow-1">
+            <button type="submit" class="btn btn-link" asp-page-handler="TimeFrame">Go</button>
+        </div>
+
+        <div class="p-3 bg-primary">
+            <div><span>Start: @Html.DisplayFor(model => model.StartTime)</span></div>
+            <div><span>End: @Html.DisplayFor(model => model.EndTime)</span></div>
+        </div>
     </div>
-    <div class="p-3 bg-primary">
-        <div><span>Start: @Html.DisplayFor(model => model.StartTime)</span></div>
-        <div><span>End: @Html.DisplayFor(model => model.EndTime)</span></div>
-    </div>
-</div>
+</form>
 
 <fieldset>
     <legend>Billable By Day</legend>

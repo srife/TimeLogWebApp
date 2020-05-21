@@ -38,7 +38,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.6.3">
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.8.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -53,11 +53,5 @@
 
   <ItemGroup>
     <None Include="wwwroot\lib\requirejs\dist\require.js\require.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Update="site.ts">
-      <CopyToOutputDirectory></CopyToOutputDirectory>
-    </TypeScriptCompile>
   </ItemGroup>
 </Project>
