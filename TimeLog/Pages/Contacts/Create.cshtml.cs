@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TimeLog.Models;
 
-namespace TimeLog.Pages.Invoices
+namespace TimeLog.Pages.Contacts
 {
     public class CreateModel : BasePageModelModel
     {
@@ -14,17 +18,16 @@ namespace TimeLog.Pages.Invoices
             _context = context;
         }
 
-        [BindProperty]
-        public Invoice Invoice { get; set; }
-
         public IActionResult OnGet()
         {
-            Invoice = new Invoice();
+            Contact = new Contact();
             PopulateClientDropDownList(_context);
-            PopulateContactDropDownList(_context);
 
             return Page();
         }
+
+        [BindProperty]
+        public Contact Contact { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -33,7 +36,15 @@ namespace TimeLog.Pages.Invoices
                 return Page();
             }
 
-            _context.Invoices.Add(Invoice);
+            var emptyContact = new Contact();
+            if (await TryUpdateModelAsync(
+                emptyContact,
+                "Contact",
+                s => s.DisplayName,
+                s => s.FirstName,
+                s => s.LastName,
+                s => s.ClientId))
+                _context.Contacts.Add(Contact);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

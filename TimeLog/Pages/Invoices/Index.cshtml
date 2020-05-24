@@ -8,95 +8,63 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].RowVersion)
+                @Html.DisplayNameFor(model => model.Invoices[0].InvoiceNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].InvoiceNumber)
+                @Html.DisplayNameFor(model => model.Invoices[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].Date)
+                @Html.DisplayNameFor(model => model.Invoices[0].PurchaseOrderNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].PurchaseOrderNumber)
+                @Html.DisplayNameFor(model => model.Invoices[0].Client.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].ClientId)
+                @Html.DisplayNameFor(model => model.Invoices[0].Contact.DisplayName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].ContactId)
+                @Html.DisplayNameFor(model => model.Invoices[0].Address.AddressLine1)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].AddressId)
+                @Html.DisplayNameFor(model => model.Invoices[0].TotalHours)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].TotalHours)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].TotalAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].PublicNote)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].PrivateNote)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].SubmittedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].SubmitTypeId)
+                @Html.DisplayNameFor(model => model.Invoices[0].TotalAmount)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Invoice) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RowVersion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvoiceNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PurchaseOrderNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClientId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddressId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublicNote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrivateNote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubmittedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubmitTypeId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Invoices)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseOrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contact.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -15,11 +15,11 @@ namespace TimeLog.Pages.Invoices
             _context = context;
         }
 
-        public IList<Invoice> Invoice { get; set; }
+        public IList<Invoice> Invoices { get; set; }
 
         public async Task OnGetAsync()
         {
-            Invoice = await _context.Invoices.ToListAsync();
+            Invoices = await _context.Invoices.ToListAsync();
         }
     }
 }

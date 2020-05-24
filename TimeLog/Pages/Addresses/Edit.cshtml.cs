@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using TimeLog.Models;
 
-namespace TimeLog.Pages.Clients
+namespace TimeLog.Pages.Addresses
 {
     public class EditModel : PageModel
     {
@@ -16,7 +20,7 @@ namespace TimeLog.Pages.Clients
         }
 
         [BindProperty]
-        public Client Client { get; set; }
+        public Address Address { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -25,12 +29,14 @@ namespace TimeLog.Pages.Clients
                 return NotFound();
             }
 
-            Client = await _context.Clients.FirstOrDefaultAsync(m => m.Id == id);
+            Address = await _context.Addresses
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Client == null)
+            if (Address == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -41,15 +47,21 @@ namespace TimeLog.Pages.Clients
                 return Page();
             }
 
-            var clientToUpdate = await _context.Clients.FindAsync(id);
+            var addressToUpdate = await _context.Addresses.FindAsync(id);
 
-            if (!await TryUpdateModelAsync(clientToUpdate,
-                "Client",
-                s => s.Name,
-                s => s.IsDefault,
-                s => s.DefaultBillableRate))
+            if (await TryUpdateModelAsync(addressToUpdate,
+                "Address",
+                s => s.AddressLine1,
+                s => s.AddressLine2,
+                s => s.AddressLine3,
+                s => s.City,
+                s => s.Region,
+                s => s.PostalCode,
+                s => s.County,
+                s => s.Country))
             {
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("./Index");
             }
 

@@ -17,6 +17,9 @@ namespace TimeLog.Pages.Activities
             _context = context;
         }
 
+        [BindProperty]
+        public ActivityEntity ActivityEntity { get; set; }
+
         public IActionResult OnGet()
         {
             ActivityEntity = new ActivityEntity() { StartTime = DateTime.Now };
@@ -28,9 +31,6 @@ namespace TimeLog.Pages.Activities
 
             return Page();
         }
-
-        [BindProperty]
-        public ActivityEntity ActivityEntity { get; set; }
 
         public bool InterruptCurrentActivity { get; set; } = true;
 

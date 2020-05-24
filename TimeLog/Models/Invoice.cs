@@ -43,6 +43,12 @@ namespace TimeLog.Models
 
         public int SubmitTypeId { get; set; }
 
+        public Client Client { get; set; }
+
+        public Contact Contact { get; set; }
+
+        public Address Address { get; set; }
+
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
     }
 }

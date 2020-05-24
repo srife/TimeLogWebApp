@@ -13,6 +13,8 @@ namespace TimeLog.Pages
         public SelectList LocationSelectList { get; set; }
         public SelectList ClientSelectList { get; set; }
 
+        public SelectList ContactSelectList { get; set; }
+
         protected void PopulateProjectsDropDownList(TimeLogContext context, object selectedProject = null)
         {
             ProjectsSelectList = new SelectList(context.Projects.AsNoTracking().OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name", selectedProject);
@@ -31,6 +33,11 @@ namespace TimeLog.Pages
         protected void PopulateClientDropDownList(TimeLogContext context, object selectedClient = null)
         {
             ClientSelectList = new SelectList(context.Clients.OrderByDescending(x => x.IsDefault).ThenBy(x => x.Name), "Id", "Name", selectedClient);
+        }
+
+        protected void PopulateContactDropDownList(TimeLogContext context, object selectedContact = null)
+        {
+            ContactSelectList = new SelectList(context.Contacts.OrderBy(x => x.DisplayName), "Id", "Name", selectedContact);
         }
     }
 }

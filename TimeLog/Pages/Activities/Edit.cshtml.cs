@@ -26,7 +26,8 @@ namespace TimeLog.Pages.Activities
                 return NotFound();
             }
 
-            ActivityEntity = await _context.ActivityEntity.FirstOrDefaultAsync(m => m.Id == id);
+            ActivityEntity = await _context.ActivityEntity
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (ActivityEntity == null)
             {
@@ -48,7 +49,8 @@ namespace TimeLog.Pages.Activities
                 return Page();
             }
 
-            var activityEntityToUpdate = await _context.ActivityEntity.FindAsync(id);
+            var activityEntityToUpdate = await _context.ActivityEntity
+                .FindAsync(id);
 
             if (await TryUpdateModelAsync(activityEntityToUpdate,
                 "ActivityEntity",

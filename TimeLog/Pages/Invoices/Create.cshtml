@@ -24,14 +24,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Invoice.ClientId"></label>
-                <input asp-for="Invoice.ClientId" class="form-control" />
-                <span asp-validation-for="Invoice.ClientId" class="text-danger"></span>
+                <select asp-for="Invoice.ClientId" class="form-control" asp-items="@Model.ClientSelectList"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="Invoice.ContactId"></label>
-                <input asp-for="Invoice.ContactId" class="form-control" />
-                <span asp-validation-for="Invoice.ContactId" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+                    <label asp-for="Invoice.ContactId"></label>
+                    <select asp-for="Invoice.ContactId" class="form-control" asp-items="@Model.ContactSelectList"></select>
+                </div>*@
             <div class="form-group">
                 <label asp-for="Invoice.AddressId"></label>
                 <input asp-for="Invoice.AddressId" class="form-control" />
