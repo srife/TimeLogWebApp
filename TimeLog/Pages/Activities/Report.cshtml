@@ -26,60 +26,127 @@
         <table class="table activity-d">
             <thead>
                 <tr>
+                    <th>Date</th>
+                    <th>Description</th>
                     <th></th>
-                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].StartDay)</th>
-                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Hrs)</th>
-                    <th>@Html.DisplayNameFor(model => model.ReportDetailsByDay[0].Amt)</th>
+                    <th>Amount</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.ReportDetailsByDay)
                 {
                     <tr class="@item.DayOfWeek.ToString().ToLower()">
-                        <td>@Html.DisplayFor(modelItem => item.DayOfWeek)</td>
                         <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
+                        <td>
+                            @foreach (var child in Model.ActivityEntities.Where(x => x.StartTime.Year == item.StartDay.Year && x.StartTime.Month == item.StartDay.Month && x.StartTime.Day == item.StartDay.Day).OrderBy(x => x.Client.Name).ThenBy(x => x.Project.Name).ToList())
+                            {
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:60%">@child.Client.Name @child.Project.Name</td>
+                                        <td style="width:20%">@child.StartTime.ToString("HH:mm") - @child.EndTime?.ToString("HH:mm")<br /></td>
+                                        @{
+                                            var convertedEndTime = (DateTimeOffset)child.EndTime;
+                                        }
+                                        <td style="width:20%">@Model.ConvertDurationToDecimal(convertedEndTime.Subtract(child.StartTime).TotalSeconds).ToString("0.00")</td>
+                                    </tr>
+                                </table>
+                            }
+                        </td>
                         <td>
                             @{
                                 var ts = Model.ActivityEntities.Where(x => x.StartTime.Year == item.StartDay.Year && x.StartTime.Month == item.StartDay.Month && x.StartTime.Day == item.StartDay.Day).OrderBy(x => x.Client.Name).ThenBy(x => x.Project.Name).Sum(x => x.DurationSec);
                                 var decTs = (decimal)ts;
                                 decTs = Math.Round(decTs / 900) * 900;
                             }
-                            @TimeSpan.FromSeconds((double)decTs).TotalHours
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.Amt)</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            @foreach (var child in Model.ActivityEntities.Where(x => x.StartTime.Year == item.StartDay.Year && x.StartTime.Month == item.StartDay.Month && x.StartTime.Day == item.StartDay.Day).OrderBy(x => x.Client.Name).ThenBy(x => x.Project.Name).ToList())
-                            {
-                                <table style="width:100%">
-                                    <tr>
-                                        <td style="width:50%">@child.Client.Name @child.Project.Name</td>
-                                        <td style="width:25%">@child.StartTime.ToString("HH:mm") - @child.EndTime?.ToString("HH:mm")<br /></td>
-                                        @{
-                                            var convertedEndTime = (DateTimeOffset)child.EndTime;
-                                        }
-                                        <td style="width:25%">@Model.ConvertDurationToDecimal(convertedEndTime.Subtract(child.StartTime).TotalSeconds).ToString("0.00")</td>
-                                    </tr>
-                                </table>
-                            }
+                            @TimeSpan.FromSeconds((double)decTs).TotalHours.ToString().Replace("0", "")
                         </td>
                         <td></td>
-                        <td></td>
                     </tr>
-
                 }
                 <tr>
                     <td></td>
-                    <td>Total:</td>
+                    <td>Total Hours</td>
                     <td>@Model.ReportDetailsByDay.Sum(x => x.Hrs).ToString("0.00")</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Total</td>
+                    <td></td>
                     <td>@Model.ReportDetailsByDay.Sum(x => x.Amt).ToString("0.00")</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </fieldset>
+
+<fieldset>
+    <legend>Billable By Day Formatted</legend>
+    <div class="d-flex">
+        <div class="p-2">
+            <div class="table-responsive">
+                <table id="TableBillableByDayFormatted" class="table activity-d-formatted">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Hours</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReportDetailsByDay)
+                        {
+                        <tr>
+                            <td>@item.StartDay.ToString("yyyy/MM/dd")</td>
+                            <td>
+                                <table>
+                                @foreach (var child in Model.ActivityEntities.Where(x => x.StartTime.Year == item.StartDay.Year && x.StartTime.Month == item.StartDay.Month && x.StartTime.Day == item.StartDay.Day).OrderBy(x => x.Client.Name).ThenBy(x => x.Project.Name).ToList())
+                                {
+                                    <tr>
+                                        <td>@child.Project.Name</td>
+                                        <td>@child.StartTime.ToString("HH:mm") - @child.EndTime?.ToString("HH:mm")</td>
+                                        @{
+                                            var convertedEndTime = (DateTimeOffset)child.EndTime;
+                                            }
+                                        <td>@Model.ConvertDurationToDecimal(convertedEndTime.Subtract(child.StartTime).TotalSeconds).ToString("0.00")</td>
+                                    </tr>
+                                    }</table></td>
+                            <td>@{
+                                    var ts = Model.ActivityEntities.Where(x => x.StartTime.Year == item.StartDay.Year && x.StartTime.Month == item.StartDay.Month && x.StartTime.Day == item.StartDay.Day).OrderBy(x => x.Client.Name).ThenBy(x => x.Project.Name).Sum(x => x.DurationSec);
+                                    var decTs = (decimal)ts;
+                                    decTs = Math.Round(decTs / 900) * 900;
+                            }@TimeSpan.FromSeconds((double)decTs).TotalHours.ToString().Replace("0", "")</td>
+                            <td></td>
+                        </tr>
+                        }
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Total Hours</td>
+                            <td>@Model.ReportDetailsByDay.Sum(x => x.Hrs).ToString("0.00")</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>TOTAL</td>
+                            <td></td>
+                            <td>@Model.ReportDetailsByDay.Sum(x => x.Amt).ToString("0.00")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="p-2"><span id="ButtonBillableByDayFormattedButton" style="cursor:pointer;"><i class="fa fa-copy"></i></span></div>
+    </div>
+</fieldset>
+
 <fieldset>
     <legend>Billable By Project</legend>
     <div class="table-responsive">
@@ -114,16 +181,53 @@
 </fieldset>
 
 <fieldset>
+    <legend>Billable By Project Formatted</legend>    
+    <div class="d-flex">
+        <div class="p-2">
+            <div class="table-responsive">
+                <table id="TableBillableByProjectFormatted" class="table activity-r-formatted">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Hours</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Report)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Duration)</td>
+                                <td>@Html.DisplayFor(modelItem => item.BillableAmount)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>TOTAL</td>                            
+                            <td>@Model.Report.Sum(x => x.Duration).ToString("0.00")</td>
+                            <td>@Model.Report.Sum(x => x.BillableAmount).ToString("0.00")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="p-2">
+            <span id="ButtonBillableByProjectFormatted" style="cursor:pointer;"><i class="fa fa-copy"></i></span>
+        </div>        
+    </div>
+</fieldset>
+
+<fieldset>
     <legend>Billable Tasks</legend>
     <div class="table-responsive">
         <table class="table activity-rt">
             <thead>
                 <tr>
                     <th>Date</th>
+                    <th>Times</th>
                     <th>Duration</th>
                     <th>@Html.DisplayNameFor(model => model.ActivityEntities[0].ActivityTypeId)/@Html.DisplayNameFor(model => model.ActivityEntities[0].Client)</th>
                     <th>@Html.DisplayNameFor(model => model.ActivityEntities[0].Tasks)</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -158,16 +262,18 @@
 
                     }
                 <td>
-                    <span>@item.Date.ToString("yyyy/MM/dd")</span>
+                    <a asp-page="/Activities/Details" asp-route-id="@item.Id" target="_blank">
+                        <span>@item.Date.ToString("yyyy/MM/dd")</span>
+                        <span>@item.Date.DayOfWeek</span>
+                    </a>
+                </td>
+                <td>
                     <span>
                         @item.StartTime.ToString("HH:mm")-
                         @if (item.EndTime.HasValue)
                         {
                             @item.EndTime.Value.ToString("HH:mm")
                         }
-                    </span>
-                    <span>
-                        @item.Date.DayOfWeek
                     </span>
                 </td>
                 <td>@Model.ConvertDurationToTimeSpan(item.DurationSec)</td>
@@ -184,13 +290,69 @@
                         {
                             <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
                         }
-                        @Html.Raw(item.Tasks)
+                        @if (!string.IsNullOrEmpty(item.InvoiceStatement))
+                        {
+                            @Html.Raw(item.InvoiceStatement)
+                        }
+                        else
+                        {
+                            <span class="alert-danger">Tasks:</span>
+                            @Html.Raw(item.Tasks)
+                        }
                     </div>
                 </td>
-                <td>@Html.DisplayFor(modelItem => item.Billable)</td>
+
                 @Html.Raw("</tr>");
             }
                 </tbody>
             </table>
+        </div>
+    </fieldset>
+
+<fieldset>
+        <legend>Billable Tasks Formatted</legend>
+        <div class="d-flex">
+            <div class="p-2">
+                <div class="table-responsive">
+                    <table id="TableBillableTasksFormatted" class="table activity-rt-formatted">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Duration</th>
+                                <th>Project/Type</th>
+                                <th>@Html.DisplayNameFor(model => model.ActivityEntities[0].InvoiceStatement)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ActivityEntities)
+                            {
+                            <tr>
+                                <td>
+                                    <span>@item.Date.ToString("yyyy/MM/dd")</span>
+                                </td>
+
+                                <td>@Model.ConvertDurationToTimeSpan(item.DurationSec)</td>
+                                <td>@if (!string.IsNullOrEmpty(item.Project.Name)){@Html.DisplayFor(modelItem => item.Project.Name)<br />}@Html.DisplayFor(modelItem => item.ActivityType.Name)</td>
+                                <td>                                   
+                                    @if (!string.IsNullOrEmpty(item.InvoiceStatement))
+                                    {
+                                        @Html.Raw(item.InvoiceStatement)
+                                    }
+                                    else
+                                    {
+                                        <span class="alert-danger">Tasks:</span>
+                                        @Html.Raw(item.Tasks)
+                                    }
+                                    
+                                </td>
+                            </tr>
+                                }
+                        </tbody>
+                    </table>                    
+                </div>
+            </div>
+            <div class="p-2">
+                <span id="ButtonBillableTasksFormatted" style="cursor:pointer;"><i class="fa fa-copy"></i></span>
+            </div>
         </div>
     </fieldset>

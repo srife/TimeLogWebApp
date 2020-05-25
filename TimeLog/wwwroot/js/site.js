@@ -59,6 +59,34 @@ class Main {
                 });
             });
         });
+        let TableBillableTasksFormatted = document.querySelector('#TableBillableTasksFormatted');
+        let ButtonBillableTasksFormatted = document.querySelector('#ButtonBillableTasksFormatted');
+
+        let TableBillableByProjectFormatted = document.querySelector('#TableBillableByProjectFormatted');
+        let ButtonBillableByProjectFormatted = document.querySelector('#ButtonBillableByProjectFormatted');
+
+        let TableBillableByDayFormatted = document.querySelector('#TableBillableByDayFormatted');
+        let ButtonBillableByDayFormattedButton = document.querySelector('#ButtonBillableByDayFormattedButton');
+        function selectNode(node) {
+            let range = document.createRange();
+            range.selectNodeContents(node)
+            let select = window.getSelection()
+            select.removeAllRanges()
+            select.addRange(range)
+        }
+        ButtonBillableTasksFormatted.addEventListener('click', function () {
+            selectNode(TableBillableTasksFormatted);
+            document.execCommand('copy')
+        }); 
+        ButtonBillableByProjectFormatted.addEventListener('click', function () {
+            selectNode(TableBillableByProjectFormatted);
+            document.execCommand('copy')
+        }); 
+        ButtonBillableByDayFormattedButton.addEventListener('click', function () {
+            selectNode(TableBillableByDayFormatted);
+            document.execCommand('copy')
+        }); 
+
     }
 }
 let main = new Main();

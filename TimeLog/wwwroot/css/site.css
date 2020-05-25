@@ -190,11 +190,11 @@ body {
         }
 
         .table.activity-d > thead > tr > th:nth-child(2) {
-            width: 55%;
+            width: 60%;
         }
 
         .table.activity-d > thead > tr > th:nth-child(3) {
-            width: 15%;
+            width: 10%;
         }
 
         .table.activity-d > thead > tr > th:nth-child(4) {
@@ -202,8 +202,90 @@ body {
         }
 
     .table.activity-d > tbody > tr > td:nth-child(2) table {
-        font-size: x-small;
+        /*font-size: x-small;*/
     }
+
+.table.activity-d-formatted {
+    background-color: white;
+    color: black !important;
+    font-family: 'Segoe UI';
+    font-size: 11px;
+    width: 710px;
+    margin: auto;
+}
+    .table.activity-d-formatted > thead > th{
+        border:1px solid #444;
+    }
+    .table.activity-d-formatted > thead > tr > th {        
+        text-align:center;
+        font-variant:small-caps;
+        border:1px solid #444;
+        border-bottom:2px solid#444;
+        padding:6px;
+    }
+
+        .table.activity-d-formatted > thead > tr > th:nth-child(1) {
+            width: 13%;            
+        }
+
+        .table.activity-d-formatted > thead > tr > th:nth-child(2) {
+            width: 72%;
+        }
+
+        .table.activity-d-formatted > thead > tr > th:nth-child(3) {
+            width: 5%;
+        }
+
+        .table.activity-d-formatted > thead > tr > th:nth-child(4) {
+            width: 10%;
+        }
+
+    .table.activity-d-formatted > tbody > tr > td {        
+        border: 1px solid #444;        
+    }
+        .table.activity-d-formatted > tbody > tr > td:nth-child(3) {
+            text-align: center;
+        }
+        .table.activity-d-formatted > tbody > tr > td:nth-child(4) {
+            text-align:right;
+        }
+        .table.activity-d-formatted > tbody > tr > td:nth-child(2) table {
+            border: none;
+        }
+        
+        .table.activity-d-formatted > tbody > tr:last-child td {
+            border-left:none;
+            border-bottom:none;
+        }
+            .table.activity-d-formatted > tbody > tr:last-child td:nth-child(3) {
+                border-left: 1px solid #444;
+                border-right: none;
+                border-bottom: 1px solid #444;
+            }
+            .table.activity-d-formatted > tbody > tr:last-child td:nth-child(4) {                
+                border-bottom: 1px solid #444;
+            }
+    .table.activity-d-formatted > tbody > tr > td:nth-child(2) table  {
+        width: 100%;        
+    }
+    .table.activity-d-formatted > tbody > tr > td:nth-child(2) table > tbody > tr > td {        
+        padding: 0 !important;
+        border: none;
+        font-family: 'Segoe UI';
+        font-size: 11px;        
+    }
+        .table.activity-d-formatted > tbody > tr > td:nth-child(2) table > tbody > tr > td:nth-child(1) {
+            width:70%;
+        }
+        .table.activity-d-formatted > tbody > tr > td:nth-child(2) table > tbody > tr > td:nth-child(2) {
+            width: 20%;
+            text-align:center;
+        }
+        .table.activity-d-formatted > tbody > tr > td:nth-child(2) table > tbody > tr > td:nth-child(3) {
+            width: 10%;
+            padding-right:15px !important;
+            text-align:right;
+        }
 
 /* report table activity-r */
 .table.activity-r {
@@ -229,8 +311,46 @@ body {
 
         .table.activity-r > thead > tr > th:nth-child(4) {
             width: 25%;
-        }        
+        }
 
+.table.activity-r-formatted {
+    background-color: white;
+    color: black !important;
+    font-family: 'Segoe UI';
+    font-size: 11px;
+    width: 710px;
+    margin: auto;
+}
+    .table.activity-r-formatted > thead > tr > th {
+        border: 1px solid #444;
+        border-bottom:2px solid #444;
+        font-variant: small-caps;
+    }    
+    .table.activity-r-formatted > thead > tr > th:nth-child(1) {        
+        text-align: left;
+    }
+    .table.activity-r-formatted > thead > tr > th:nth-child(2) {        
+        text-align:center;
+    }
+    .table.activity-r-formatted > thead > tr > th:nth-child(3) {        
+        text-align: right;
+    }
+    .table.activity-r-formatted > tbody > tr > td {
+        border: 1px solid #444;        
+    }
+    .table.activity-r-formatted > tbody > tr > td:nth-child(1) {
+        width: 70%;
+    }
+    .table.activity-r-formatted > tbody > tr > td:nth-child(2) {
+        width: 10%;
+        text-align: center;
+    }
+    .table.activity-r-formatted > tbody > tr > td:nth-child(3) {
+        width: 20%;
+        padding-right: 15px;
+        text-align: right;
+    }
+    
 .short-task-display {
     max-height: 8em;
     overflow: hidden;
@@ -253,33 +373,33 @@ body {
     table-layout: fixed;
     width: 100%;
 }
-
+    .table.activity-rt th, .table.activity-rt td {
+        padding: .5rem !important;
+    }
     .table.activity-rt > thead > tr > th {
         width: auto;
     }
-
         .table.activity-rt > thead > tr > th:nth-child(1) {
-            width: 30%;
+            width: 17%;
         }
-
         .table.activity-rt > thead > tr > th:nth-child(2) {
+            width: 10%;
+        } 
+        .table.activity-rt > thead > tr > th:nth-child(3) {
             width: 8%;
         }
-
-        .table.activity-rt > thead > tr > th:nth-child(3) {
+        .table.activity-rt > thead > tr > th:nth-child(4) {
             width: 20%;
         }
-
-        .table.activity-rt > thead > tr > th:nth-child(4) {
-            width: 40%;
-        }
-
         .table.activity-rt > thead > tr > th:nth-child(5) {
-            width: 3%;
-        }
+            width: 46%;
+        }        
+        .table.activity-rt > tbody > tr > td:nth-child(1) span{
+            padding: 0 3px;
+        }             
 
 .short-task-display {
-    max-height: 8em;
+    max-height: 24em;
     overflow: hidden;
 }
 
@@ -293,8 +413,52 @@ body {
     font-variant: small-caps;
 }
 
-/* report table activity-rt */
+.table.activity-rt-formatted{    
+    background-color:white;
+    color:black !important;
+    font-family:'Segoe UI' ;
+    font-size:11px ;
+    width:710px;
+    margin: auto;
+}
+    .table.activity-rt-formatted > thead > tr > th {
+        border: 1px solid #444;
+        border-bottom:2px solid #444;
+        font-variant: small-caps;
+    }
 
+        .table.activity-rt-formatted > thead > tr > th:nth-child(1) {
+            width: 10%;
+        }
+        .table.activity-rt-formatted > thead > tr > th:nth-child(2) {
+            width: 10%;
+        }
+        .table.activity-rt-formatted > thead > tr > th:nth-child(3) {
+            width: 25%;
+        }
+        .table.activity-rt-formatted > thead > tr > th:nth-child(4) {
+            width: 55%;
+        }
+    .table.activity-rt-formatted > tbody > tr > td {
+        border: 1px solid #444;
+        padding: 6px 3px;
+    }
+        .table.activity-rt-formatted > tbody > tr > td:nth-child(2) {
+            white-space:nowrap;
+        }
+        .table.activity-rt-formatted > tbody > tr > td:nth-child(2) {
+            text-align: center;
+            white-space: nowrap;
+        }
+        .table.activity-rt-formatted > tbody > tr > td:nth-child(3) {
+            white-space: nowrap;
+        }
+        .table.activity-rt-formatted > tbody > tr > td:nth-child(3) {
+            white-space:pre-wrap;
+        }
+        
+
+/* report table activity-rt */
 /* SVG tests */
 /* Chart Stuff */
 .chart, .chart2 {
