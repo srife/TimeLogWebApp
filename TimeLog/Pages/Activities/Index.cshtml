@@ -122,15 +122,8 @@
                     @item.Date.DayOfWeek
                 </span>
             </td>
-            <td>
-                @Model.MyConvert(item.DurationSec)
-            </td>
-            @*<td>
-                                                                @if (item.EndTime.HasValue)
-                {
-                    @item.EndTime.Value.Subtract(@item.StartTime)
-                                                                }
-                                                            </td>*@
+            <td>@Model.MyConvert(item.DurationSec)</td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.ActivityType.Name)<br />
                 @if (!string.IsNullOrEmpty(item.Client.Name))
@@ -141,10 +134,23 @@
             <td>
                 <div class="short-task-display">
                     @if (!string.IsNullOrEmpty(item.Project.Name))
+                    {<span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />}
+                    @if (item.Billable)
                     {
-                        <span class="project-display-small">@Html.DisplayFor(modelItem => item.Project.Name)</span><br />
+                        @if (!string.IsNullOrEmpty(item.InvoiceStatement))
+                        {
+                            @Html.Raw(item.InvoiceStatement)
+                        }
+                        else
+                        {
+                            <span class="alert-danger">Tasks:</span>@Html.Raw(item.Tasks)
+                        }
                     }
-                    @Html.Raw(item.Tasks)
+                    else
+                    {
+                        @Html.Raw(item.Tasks)
+                    }
+
                 </div>
             </td>
             <td>

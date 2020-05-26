@@ -25,6 +25,9 @@ namespace TimeLog.Models
         public virtual DbSet<ViewModels.Report> Report { get; set; }
 
         [NotMapped]
+        public virtual DbSet<ViewModels.ReportDetail> ReportDetails { get; set; }
+
+        [NotMapped]
         public virtual DbSet<ViewModels.ReportDetailsByDay> ReportDetailsByDay { get; set; }
 
         [NotMapped]

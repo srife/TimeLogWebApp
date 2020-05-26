@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Remotion.Linq.Parsing.Structure.IntermediateModel;
+using TimeLog.ViewModels;
 
 namespace TimeLog.Pages.Activities
 {
@@ -30,9 +31,11 @@ namespace TimeLog.Pages.Activities
         public string SelectedTimeFrame { get; set; }
         public IList<Client> Clients { get; set; }
         public IList<Project> Projects { get; set; }
+        public IList<ActivityType> ActivityTypes { get; set; }
         public IList<ViewModels.Report> Report { get; set; }
+        public IList<ViewModels.ReportDetail> ReportDetails { get; set; }
         public IList<ViewModels.ReportDetailsByDay> ReportDetailsByDay { get; set; }
-        public IList<ActivityEntity> ActivityEntities { get; set; }
+        //public IList<ActivityEntity> ActivityEntities { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -61,19 +64,25 @@ namespace TimeLog.Pages.Activities
 
             Clients = await _context.Clients.ToListAsync();
             Projects = await _context.Projects.ToListAsync();
+            ActivityTypes = await _context.ActivityTypes.ToListAsync();
+
             Report = await _context
                 .Report
                 .FromSql("execute sp_Report @p0, @p1, @p2, @p3", p)
                 .TagWith("my statement")
                 .ToListAsync();
 
-            ReportDetailsByDay = await _context.ReportDetailsByDay
-                .FromSql("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
+            ReportDetails = await _context.ReportDetails
+                .FromSql("execute sp_ReportDetails @p0, @p1, @p2, @p3", p)
                 .TagWith("my second statement")
                 .ToListAsync();
 
-            ActivityEntities = await PopulateActivityEntities(StartTime, EndTime);
+            ReportDetailsByDay = await _context.ReportDetailsByDay
+                .FromSql("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
+                .TagWith("my third statement")
+                .ToListAsync();
 
+            //ActivityEntities = await PopulateActivityEntities(StartTime, EndTime);
             return Page();
         }
 
@@ -86,6 +95,7 @@ namespace TimeLog.Pages.Activities
 
             StartTime = DateTimeOffset.Parse(splitSelectedTimeFrame[0]);
             EndTime = DateTimeOffset.Parse(splitSelectedTimeFrame[1]);
+            EndTime = EndTime.AddHours(23).AddMinutes(59).AddSeconds(59).AddMilliseconds(999);
 
             Rate = 37.5M;
             var p = new object[]
@@ -98,10 +108,17 @@ namespace TimeLog.Pages.Activities
 
             Clients = await _context.Clients.ToListAsync();
             Projects = await _context.Projects.ToListAsync();
+            ActivityTypes = await _context.ActivityTypes.ToListAsync();
+
             Report = await _context
                 .Report
                 .FromSql("execute sp_Report @p0, @p1, @p2, @p3", p)
                 .TagWith("my statement")
+                .ToListAsync();
+
+            ReportDetails = await _context.ReportDetails
+                .FromSql("execute sp_ReportDetails @p0, @p1, @p2, @p3", p)
+                .TagWith("my second statement")
                 .ToListAsync();
 
             ReportDetailsByDay = await _context.ReportDetailsByDay
@@ -109,7 +126,7 @@ namespace TimeLog.Pages.Activities
                 .TagWith("my second statement")
                 .ToListAsync();
 
-            ActivityEntities = await PopulateActivityEntities(StartTime, EndTime);
+            //ActivityEntities = await PopulateActivityEntities(StartTime, EndTime);
             return Page();
         }
 
@@ -139,8 +156,6 @@ namespace TimeLog.Pages.Activities
                 var adjustedSeconds = thirdvalue * 900;
                 var result = Math.Round(adjustedSeconds / 60.0m / 60.0m, 2);
                 return result;
-
-                //return Math.Round((double)seconds / 60.0m / 60.0m, 2);
             }
         }
 
@@ -197,15 +212,6 @@ namespace TimeLog.Pages.Activities
                 }
             }
             TimeFramesSelectList = new SelectList(listOfReportDates, "Name", "Value", "");
-
-            //foreach (SelectListItem item in TimeFramesSelectList.Items)
-            //{
-            //    if (item.Text == selected)
-            //    {
-            //        item.Selected = true;
-            //        break;
-            //    }
-            //}
         }
 
         public async Task<List<ActivityEntity>> PopulateActivityEntities(DateTimeOffset startDate, DateTimeOffset endDate)

@@ -7,8 +7,11 @@ namespace TimeLog.ViewModels
 {
     public class ReportDetailsByDay
     {
+        [Key]
         public long Id { get; set; }
+
         public DateTime StartDay { get; set; }
+
         public string DayOfWeek { get; set; }
 
         [Display(Name = "Hrs")]

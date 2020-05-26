@@ -7,7 +7,7 @@ namespace TimeLog.Models
 {
     public class ActivityEntity
     {
-        [Key, Column(Order = 0)]
+        [Column(Order = 0)]
         public int Id { get; set; }
 
         [Column(Order = 1)]
