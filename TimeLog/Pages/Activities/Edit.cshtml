@@ -36,6 +36,18 @@
             </div>
             <div class="form-row">
                 <div class="col-md-3 mb-3">
+                    <label asp-for="ActivityEntity.OriginalStartTime"></label>
+                    <input asp-for="ActivityEntity.OriginalStartTime" class="form-control" />
+                    <span asp-validation-for="ActivityEntity.OriginalStartTime" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="ActivityEntity.OriginalEndTime"></label>
+                    <input asp-for="ActivityEntity.OriginalEndTime" class="form-control" />
+                    <span asp-validation-for="ActivityEntity.OriginalEndTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
                     <label asp-for="ActivityEntity.ActivityTypeId"></label>
                     <select asp-for="ActivityEntity.ActivityTypeId" class="form-control" asp-items="@Model.ActivityTypesSelectList"></select>
                     <span asp-validation-for="ActivityEntity.ActivityTypeId" class="text-danger"></span>

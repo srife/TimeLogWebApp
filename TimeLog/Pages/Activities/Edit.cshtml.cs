@@ -62,6 +62,8 @@ namespace TimeLog.Pages.Activities
                 s => s.ClientId,
                 s => s.Billable,
                 s => s.Tasks,
+                s => s.OriginalStartTime,
+                s => s.OriginalEndTime,
                 s => s.InvoiceStatement))
             {
                 activityEntityToUpdate.StartTime = DateTimeExtensions.RoundUp2(activityEntityToUpdate.StartTime, TimeSpan.FromMinutes(1));
