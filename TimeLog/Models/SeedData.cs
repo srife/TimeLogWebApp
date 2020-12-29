@@ -27,7 +27,7 @@ namespace TimeLog.Models
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT ActivityTypes ON");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ActivityTypes ON");
 
                     using (var file = File.OpenText(@"Models/CustomSeedData/activityTypes.json"))
                     {
@@ -37,8 +37,8 @@ namespace TimeLog.Models
                         context.SaveChanges();
                     }
 
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT ActivityTypes OFF");
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Clients ON");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ActivityTypes OFF");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Clients ON");
                     using (var file = File.OpenText(@"Models/CustomSeedData/clients.json"))
                     {
                         JsonSerializer serializer = new JsonSerializer();
@@ -47,8 +47,8 @@ namespace TimeLog.Models
                         context.SaveChanges();
                     }
 
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Clients OFF");
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Locations ON");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Clients OFF");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Locations ON");
 
                     using (var file = File.OpenText(@"Models/CustomSeedData/locations.json"))
                     {
@@ -58,8 +58,8 @@ namespace TimeLog.Models
                         context.SaveChanges();
                     }
 
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Locations OFF");
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Projects ON");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Locations OFF");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Projects ON");
 
                     using (var file = File.OpenText(@"Models/CustomSeedData/projects.json"))
                     {
@@ -69,8 +69,8 @@ namespace TimeLog.Models
                         context.SaveChanges();
                     }
 
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Projects OFF");
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT ActivityEntity ON");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Projects OFF");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ActivityEntity ON");
 
                     using (var file = File.OpenText(@"Models/CustomSeedData/activities.json"))
                     {

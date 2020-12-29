@@ -11,14 +11,14 @@
                 <a class="nav-link text-light" asp-area="" asp-page="/Locations/Index">Locations</a>
                 <a class="nav-link text-light" asp-area="" asp-page="/Projects/Index">Projects</a>
                 <div class="dropdown-divider"></div>
-                <a class="nav-link text-light" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Sign out</a>
+                <a class="nav-link text-light" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
             </div>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Sign in</a>
+            <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
         </li>
     }
 </ul>

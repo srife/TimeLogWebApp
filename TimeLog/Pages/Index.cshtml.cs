@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -60,7 +60,7 @@ namespace TimeLog.Pages
             };
 
             ReportDetailsByDay = await _context.ReportDetailsByDay
-                .FromSql("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
+                .FromSqlRaw("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
                 .ToListAsync();
 
             for (int i = 0; i < ReportDetailsByDay.Count; i++)

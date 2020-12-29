@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using TimeLog.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
 using TimeLog.ViewModels;
+using Microsoft.Data.SqlClient;
 
 namespace TimeLog.Pages.Activities
 {
@@ -54,12 +53,13 @@ namespace TimeLog.Pages.Activities
             EndTime = StartTime.AddDays(6).AddHours(23).AddMinutes(59).AddSeconds(59).AddMilliseconds(999);
 
             Rate = 37.5M;
+
             var p = new object[]
             {
-                new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) {Value = StartTime},
-                new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) {Value = EndTime},
-                new SqlParameter("@p2", SqlDbType.Money, 4) {Value = Rate},
-                new SqlParameter("@p3", SqlDbType.Bit, 1) {Value = true}
+                new SqlParameter("@p0", SqlDbType.DateTimeOffset, 7) { Value = StartTime },
+                new SqlParameter("@p1", SqlDbType.DateTimeOffset, 7) { Value = EndTime },
+                new SqlParameter("@p2", SqlDbType.Money, 4) { Value = Rate },
+                new SqlParameter("@p3", SqlDbType.Bit, 1) { Value = true }
             };
 
             Clients = await _context.Clients.ToListAsync();
@@ -68,17 +68,17 @@ namespace TimeLog.Pages.Activities
 
             Report = await _context
                 .Report
-                .FromSql("execute sp_Report @p0, @p1, @p2, @p3", p)
+                .FromSqlRaw("EXEC sp_Report @p0, @p1, @p2, @p3", p)
                 .TagWith("my statement")
                 .ToListAsync();
 
             ReportDetails = await _context.ReportDetails
-                .FromSql("execute sp_ReportDetails @p0, @p1, @p2, @p3", p)
+                .FromSqlRaw("EXEC sp_ReportDetails @p0, @p1, @p2, @p3", p)
                 .TagWith("my second statement")
                 .ToListAsync();
 
             ReportDetailsByDay = await _context.ReportDetailsByDay
-                .FromSql("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
+                .FromSqlRaw("EXEC sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
                 .TagWith("my third statement")
                 .ToListAsync();
 
@@ -112,17 +112,17 @@ namespace TimeLog.Pages.Activities
 
             Report = await _context
                 .Report
-                .FromSql("execute sp_Report @p0, @p1, @p2, @p3", p)
+                .FromSqlRaw("execute sp_Report @p0, @p1, @p2, @p3", p)
                 .TagWith("my statement")
                 .ToListAsync();
 
             ReportDetails = await _context.ReportDetails
-                .FromSql("execute sp_ReportDetails @p0, @p1, @p2, @p3", p)
+                .FromSqlRaw("execute sp_ReportDetails @p0, @p1, @p2, @p3", p)
                 .TagWith("my second statement")
                 .ToListAsync();
 
             ReportDetailsByDay = await _context.ReportDetailsByDay
-                .FromSql("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
+                .FromSqlRaw("execute sp_ReportDetailsByDay @p0, @p1, @p2, @p3", p)
                 .TagWith("my second statement")
                 .ToListAsync();
 
@@ -193,23 +193,16 @@ namespace TimeLog.Pages.Activities
                 reportStartTime = reportStartTime.AddDays(-7);
                 reportEndTime = reportEndTime.AddDays(-7);
 
-                if (context.ActivityEntity.Any(x => x.StartTime > reportStartTime && x.EndTime < reportEndTime))
+                var item = new MyDropDownItem()
                 {
-                    var item = new MyDropDownItem()
-                    {
-                        Name = $"{reportStartTime:yyyy/MM/dd} - {reportEndTime:yyyy/MM/dd}",
-                        Value = $"{reportStartTime:yyyy/MM/dd} - {reportEndTime:yyyy/MM/dd}"
-                    };
-                    if (item.Name == selected)
-                    {
-                        item.Selected = true;
-                    }
-                    listOfReportDates.Add(item);
-                }
-                else
+                    Name = $"{reportStartTime:yyyy/MM/dd} - {reportEndTime:yyyy/MM/dd}",
+                    Value = $"{reportStartTime:yyyy/MM/dd} - {reportEndTime:yyyy/MM/dd}"
+                };
+                if (item.Name == selected)
                 {
-                    break;
+                    item.Selected = true;
                 }
+                listOfReportDates.Add(item);
             }
             TimeFramesSelectList = new SelectList(listOfReportDates, "Name", "Value", "");
         }
